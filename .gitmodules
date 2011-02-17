@@ -1,0 +1,6 @@
+[submodule "vendor/plugins/blacklight"]
+	path = vendor/plugins/blacklight
+	url = git://github.com/projectblacklight/blacklight.git
+[submodule "vendor/plugins/compass_extensions/yui"]
+	path = vendor/plugins/compass_extensions/yui
+	url = https://github.com/chriseppstein/yui-compass-plugin.git
