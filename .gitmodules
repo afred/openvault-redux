@@ -6,4 +6,4 @@
 	url = https://github.com/chriseppstein/yui-compass-plugin.git
 [submodule "vendor/plugins/blacklight_mlt"]
 	path = vendor/plugins/blacklight_mlt
-	url = git@github.com:cbeer/blacklight_mlt.git
+	url = git://github.com/cbeer/blacklight_mlt.git
