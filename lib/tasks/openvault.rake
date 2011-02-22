@@ -187,9 +187,14 @@ end
 
 h['media_dsid_s'].uniq!
 
-format = ''
+format = []
+format << 'video' if h['media_dsid_s'].any? { |x| x =~ /video/i }
+format << 'audio' if h['media_dsid_s'].any? { |x| x =~ /audio/i }
+format << 'image' if h['media_dsid_s'].any? { |x| x =~ /image/i }
+format << 'tei' if h['media_dsid_s'].any? { |x| x =~ /tei/i }
+format << 'newsml' if h['media_dsid_s'].any? { |x| x =~ /newsml/i }
 
-h['format'] = format
+h['format'] = format.join("_")
 
 
 h['merlot_s'] = h['merlot_s'].map do |x|
