@@ -75,9 +75,7 @@ body.bp a {
 
 #doc3 {
   margin: 0;
-  background-image: url('/images/bg-border.gif');
-  background-repeat: repeat-y;
-  background-color: white;
+  background: white url('/images/bg-border.gif') repeat-y;
 }
 
 #bd {
@@ -218,11 +216,14 @@ body.bp a {
   }
 
   #document {
+    .document_heading {
+      border-bottom: 1px solid #CCC;
+      padding-bottom: 0.2em;
+
+    }
     h1 {
       color: $wgbh-blue;
       font-size: 21px;
-      border-bottom: 1px solid #CCC;
-      padding-bottom: 0.2em;
     }
   }
   
