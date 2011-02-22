@@ -34,8 +34,8 @@ Blacklight.configure(:shared) do |config|
   # Recommendation: Use field names from Dublin Core
   SolrDocument.field_semantics.merge!(    
     :title => "title_display",
-    :author => "author_display",
-    :language => "language_facet"  
+    :author => "dc_creator",
+    :language => "tei.lang"  
   )
         
   
@@ -70,21 +70,27 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => (facet_fields = [
       "format",
-      "pub_date",
-      "subject_topic_facet",
-      "language_facet",
-      "lc_1letter_facet",
-      "subject_geo_facet",
-      "subject_era_facet"
+      "dc_date_year_i",
+      "person_cv",
+      "place_cv",
+      "event_cv",
+      "objModel_s",
+      "keywords_cv",
+      "rel_isMemberOfCollection_s",
+      "pbcore_pbcoreTitle_series_s",
+      "pbcore_pbcoreTitle_program_s"
     ]),
     :labels => {
-      "format"              => "Format",
-      "pub_date"            => "Publication Year",
-      "subject_topic_facet" => "Topic",
-      "language_facet"      => "Language",
-      "lc_1letter_facet"    => "Call Number",
-      "subject_era_facet"   => "Era",
-      "subject_geo_facet"   => "Region"
+      "format" => "format",
+      "dc_date_year_i" => "Date",
+      "person_cv" => "People",
+      "place_cv" => "Place",
+      "event_cv" => "Event",
+      "objModel_s" => "Model",
+      "keywords_cv" => "Keywords",
+      "rel_isMemberOfCollection_s" => "Is Member Of Collection",
+      "pbcore_pbcoreTitle_series_s" => "Series title",
+      "pbcore_pbcoreTitle_program_s" => "Program title",
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -100,8 +106,13 @@ Blacklight.configure(:shared) do |config|
     # sniffing requires solr requests to be made with "echoParams=all", for
     # app code to actually have it echo'd back to see it.     
     :limits => {
-      "subject_facet" => 20,
-      "language_facet" => true
+      "format" => 15, 
+      "dc_date_year_i" => 15, 
+      "person_cv" => 15, 
+      "place_cv" => 15, 
+      "event_cv" => 15, 
+      "objModel_s" => 15, 
+      "keywords_cv" => 15
     }
   }
 
@@ -116,25 +127,9 @@ Blacklight.configure(:shared) do |config|
   config[:index_fields] = {
     :field_names => [
       "title_display",
-      "title_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display"
+      "objModel_s"
     ],
     :labels => {
-      "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:"
     }
   }
 
@@ -143,37 +138,9 @@ Blacklight.configure(:shared) do |config|
   config[:show_fields] = {
     :field_names => [
       "title_display",
-      "title_vern_display",
-      "subtitle_display",
-      "subtitle_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
-      "url_fulltext_display",
-      "url_suppl_display",
-      "material_type_display",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display",
-      "isbn_t"
     ],
     :labels => {
       "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "subtitle_display"        => "Subtitle:",
-      "subtitle_vern_display"   => "Subtitle:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "url_fulltext_display"    => "URL:",
-      "url_suppl_display"       => "More Information:",
-      "material_type_display"   => "Physical description:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:",
-      "isbn_t"                  => "ISBN:"
     }
   }
 
@@ -219,31 +186,6 @@ Blacklight.configure(:shared) do |config|
       :pf => "$title_pf"
     }
   }
-  config[:search_fields] << {
-    :key =>'author',     
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "author" 
-    },
-    :solr_local_parameters => {
-      :qf => "$author_qf",
-      :pf => "$author_pf"
-    }
-  }
-
-  # Specifying a :qt only to show it's possible, and so our internal automated
-  # tests can test it. In this case it's the same as 
-  # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
-  config[:search_fields] << {
-    :key => 'subject', 
-    :qt=> 'search',
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "subject"
-    },
-    :solr_local_parameters => {
-      :qf => "$subject_qf",
-      :pf => "$subject_pf"
-    }
-  }
   
   # "sort results by" select (pulldown)
   # label in pulldown is followed by the name of the SOLR field to sort by and
@@ -252,16 +194,15 @@ Blacklight.configure(:shared) do |config|
   # label is key, solr field is value
   config[:sort_fields] ||= []
   config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['year', 'pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['author', 'author_sort asc, title_sort asc']
   config[:sort_fields] << ['title', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['year', 'dc_date_year_i desc, title_sort asc']
   
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
   config[:spell_max] = 5
 
   config[:mlt] = {
-    :fields => ["title", "description", "author"],
+    :fields => ["title_t", "dc_description_t", "pbcore_pbcoreTitle_s"],
     :count => 3
   }
 end
