@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
     stylesheet_links << ["application", "openvault"]
 
-    javascript_includes << ['jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'blacklight', 'application', 'accordion', { :plugin=>:blacklight } ]
+    javascript_includes << ['jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'application', { :plugin=>:blacklight } ]
     javascript_includes << ["application", "openvault"]
 
   end
