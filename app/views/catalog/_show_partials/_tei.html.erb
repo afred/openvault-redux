@@ -1,0 +1,10 @@
+<div class="datastream primary-datastream datastream-transcript datastream-transcript-tei-xml">
+<% 
+  require 'open-uri'
+xslt = Nokogiri::XSLT(File.read("public/xslt/tei2timedtranscript.xsl"))
+xml = Nokogiri::XML(open("http://localhost:8180/fedora/get/#{document.get('pid_s')}/Transcript.tei.xml").read)
+%>
+
+ <%= xslt.transform(xml) %>
+
+</div>

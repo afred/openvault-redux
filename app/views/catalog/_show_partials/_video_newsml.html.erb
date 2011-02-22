@@ -1,0 +1,18 @@
+<div class="datastream primary-datastream datastream-video datastream-video-mp4">
+<video width="320" height="240" controls>
+<source src="http://localhost:8180/fedora/get/<%= document.get('pid_s') %>/Video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+</video>
+</div>
+
+<div class="secondary-datastream-container">
+<div class="datastream secondary-datastream datastream-transcript datastream-transcript-newsml-xml">
+<% 
+  require 'open-uri'
+xslt = Nokogiri::XSLT(File.read("public/xslt/newsml2html.xsl"))
+xml = Nokogiri::XML(open("http://localhost:8180/fedora/get/#{document.get('pid_s')}/Transcript.newsml.xml").read)
+%>
+
+ <%= xslt.transform(xml) %>
+
+</div>
+</div>
