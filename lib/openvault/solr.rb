@@ -1,0 +1,3 @@
+module Openvault::Solr
+
+end

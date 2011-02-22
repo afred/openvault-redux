@@ -1,0 +1,15 @@
+<%# default partial to display solr document fields in catalog index view -%>
+<!-- <div class="thumbnail">
+  <img src="http://localhost:8180/fedora/get/<%= document.get('pid_s') %>/Thumbnail" />
+</div> -->
+<%= image_tag document.thumbnail.url(:style => :preview) %>
+<dl class="defList">
+  
+  <% index_field_names.each do |solr_fname| -%>
+    <% if document.has? solr_fname %>
+	    <dt class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_label :field => solr_fname %></dt>
+	    <dd class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_value :document => document, :field => solr_fname %></dd>
+    <% end -%>
+  <% end -%>
+
+</dl>
