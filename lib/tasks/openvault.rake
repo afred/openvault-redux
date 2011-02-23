@@ -64,9 +64,9 @@ datastreams = Nokogiri::XML(client['datastreams?format=xml'].get)
        when 'date'
          # replace with chronic parsing??
          doc << ["dc_date_year_i", (tag.text.scan(/(19\d\d)/) || tag.text.scan(/(\d{4})/)).flatten.first]
-         doc << ["#{tag.namespace.prefix}.#{tag.name}_s", "#{tag.text}"]
+         doc << ["#{tag.namespace.prefix}_#{tag.name}_s", "#{tag.text}"]
        else
-         doc << ["#{tag.namespace.prefix}.#{tag.name}_s", "#{tag.text}"]
+         doc << ["#{tag.namespace.prefix}_#{tag.name}_s", "#{tag.text}"]
        end
      end
 
@@ -94,7 +94,7 @@ collections = FedoraRepo.relsext('SELECT ?collection FROM <#ri> WHERE {
                    collections.shift
 
                    collections.flatten.each do |c|
-                     doc << ['rel.isMemberOfCollection_s', c.gsub('info:fedora/', '')]
+                     doc << ['rel_isMemberOfCollection_s', c.gsub('info:fedora/', '')]
                    end
 
 
