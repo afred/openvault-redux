@@ -71,6 +71,7 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => (facet_fields = [
       "format",
+      "media_dsid_s",
       "dc_date_year_i",
       "person_cv",
       "place_cv",
@@ -83,6 +84,7 @@ Blacklight.configure(:shared) do |config|
     ]),
     :labels => {
       "format" => "format",
+      "media_dsid_s" => "Media",
       "dc_date_year_i" => "Date",
       "person_cv" => "People",
       "place_cv" => "Place",
@@ -127,10 +129,20 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "title_display",
-      "objModel_s"
+      "dc_description_s",
+      "dc_date_s",
+      "media_dsid_s",
+      "pbcore_pbcoreInstantiation_formatGenerations_s",
+      "pbcore_pbcoreTitle_program_s" 
     ],
     :labels => {
+      "dc_description_s" => "Description",
+      "dc_date_s" => "Date Created",
+      "media_dsid_s" => "Media",
+      "pbcore_pbcoreInstantiation_formatGenerations_s" => "Generation",
+      "pbcore_pbcoreTitle_program_s" => "Program",
+
+
     }
   }
 

@@ -194,6 +194,10 @@ format << 'image' if h['media_dsid_s'].any? { |x| x =~ /image/i }
 format << 'tei' if h['media_dsid_s'].any? { |x| x =~ /tei/i }
 format << 'newsml' if h['media_dsid_s'].any? { |x| x =~ /newsml/i }
 
+format = ['collection'] if h['objModel_s'].any? { |x| x =~ /collection/i } or h['dc_type_s'].any? { |x| x =~ /collection/i }
+format = ['program'] if h['objModel_s'].any? { |x| x =~ /program/i } or h['dc_type_s'].any? { |x| x =~ /program/i }
+format = ['series'] if h['objModel_s'].any? { |x| x =~ /series/i } or h['dc_type_s'].any? { |x| x =~ /series/i }
+
 h['format'] = format.join("_")
 
 
