@@ -225,7 +225,8 @@ Blacklight.configure(:shared) do |config|
   }
 
   config[:highlight] = {
-   'hl.fl' => ['fulltext_t', 'dc_description_t']
+   'hl.fl' => ['fulltext_t', 'dc_description_t'],
+   'f.dc_description_t.hl.fragsize' => 50000
   }
 end
 
