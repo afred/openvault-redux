@@ -62,6 +62,8 @@ body.bp a {
   height: 63px;
   margin: 0;
   float: left;
+  position: absolute;
+  top: 0; left: 0;
 }
 
 .site_title a {
@@ -684,4 +686,8 @@ dl.defList dt {
   right: 0;
   float: none;
   margin: 0;
+}
+
+.bookmark_toggle {
+  display: none;
 }
