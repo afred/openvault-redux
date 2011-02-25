@@ -29,6 +29,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv"
   config.gem "rest-client", :lib => "rest_client"
   config.gem "acl9"
+  require 'open-uri'
   gem "soap4r"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
