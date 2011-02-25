@@ -4,12 +4,17 @@ require_dependency( 'vendor/plugins/blacklight/app/controllers/catalog_controlle
 
 class CatalogController < ApplicationController
   include Openvault::SolrHelper::DefaultSort
+  include Openvault::SolrHelper::BoostMedia
   include Openvault::SolrHelper::Restrictions
   include Openvault::SolrHelper::FacetDomsearch
 
   # displays values and pagination links for a single facet field
   def facet
     @pagination = get_facet_pagination(params[:id], params)
+  end
+
+  def embed
+    render 
   end
 
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
