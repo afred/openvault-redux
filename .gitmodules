@@ -7,3 +7,6 @@
 [submodule "vendor/plugins/blacklight_mlt"]
 	path = vendor/plugins/blacklight_mlt
 	url = git://github.com/cbeer/blacklight_mlt.git
+[submodule "vendor/plugins/blacklight_highlight"]
+	path = vendor/plugins/blacklight_highlight
+	url = git://github.com/cbeer/blacklight_highlight.git

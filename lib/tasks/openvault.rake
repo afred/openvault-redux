@@ -61,6 +61,8 @@ datastreams = Nokogiri::XML(client['datastreams?format=xml'].get)
 
      dc.xpath('//dc:*', xmlns).each do |tag|
        case tag.name
+       when 'description'
+         doc << ["#{tag.namespace.prefix}_#{tag.name}_t", "#{tag.text}"]
        when 'date'
          # replace with chronic parsing??
          doc << ["dc_date_year_i", (tag.text.scan(/(19\d\d)/) || tag.text.scan(/(\d{4})/)).flatten.first]
@@ -146,7 +148,7 @@ datastreams.xpath('//datastream/@dsid').each do |ds|
             end
           end
         end
-    when 'Transcript.tei_xml'
+    when 'Transcript.tei.xml'
       tei = Nokogiri::XML(client["datastreams/#{dsid}/content"].get)
       xmlns = { 'tei' => 'http://www.tei-c.org/ns/1.0' }
 
@@ -167,9 +169,13 @@ datastreams.xpath('//datastream/@dsid').each do |ds|
         doc << ["tei_title_s", tag.text]
       end
 
-      doc << ["tei_t", tei.xpath('//tei:body', xmlns).first.text]
+      doc << ["fulltext_t", tei.xpath('//tei:body', xmlns).map { |x| x.text }.join("\n")]
 
     when 'Transcript.newsml.xml'
+      newsml = Nokogiri::XML(client["datastreams/#{dsid}/content"].get)
+      xmlns = { 'newsml' => 'http://iptc.org/std/nar/2006-10-01/' }
+
+      doc << ["fulltext_t", newsml.xpath('//newsml:partMeta', xmlns).map { |x| x.text }.join("\n")]
     when /Video/
     when /Audio/
     when /Image/
@@ -227,7 +233,6 @@ h['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s
 
 
 h['id'] = "#{h['pid_short_s']}-#{h['slug_s']}" unless h['slug_s'].blank?
-
 
 
 
