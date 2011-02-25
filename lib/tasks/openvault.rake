@@ -31,7 +31,7 @@ pids.flatten.map { |x| x.gsub('info:fedora/', '') }.each do |pid|
 
 doc = []
 
-doc << ['id', pid.parameterize]
+doc << ['id', pid.parameterize.to_s]
 doc << ['pid_s', pid]
 
 client = FedoraRepo.fedora_client(pid)
@@ -75,7 +75,7 @@ datastreams = Nokogiri::XML(client['datastreams?format=xml'].get)
    #    doc << ['slug_s', objectProfile.xpath('/objectProfile/objLabel').first.text.parameterize.to_s]
    #  else
        doc << ['title_s', dc.xpath('//dc:title', xmlns).first.text || pid]
-       doc << ['slug_s', dc.xpath('//dc:title', xmlns).first.text.parameterize.to_s || pid.parameterize ]
+       doc << ['slug_s', dc.xpath('//dc:title', xmlns).first.text.parameterize.to_s || pid.parameterize.to_s ]
    #  end
 
 collections = FedoraRepo.relsext('SELECT ?collection FROM <#ri> WHERE {
@@ -187,6 +187,8 @@ end
 
 h['media_dsid_s'].uniq!
 
+h['dc_type_s'] ||= []
+
 format = []
 format << 'video' if h['media_dsid_s'].any? { |x| x =~ /video/i }
 format << 'audio' if h['media_dsid_s'].any? { |x| x =~ /audio/i }
@@ -195,7 +197,7 @@ format << 'tei' if h['media_dsid_s'].any? { |x| x =~ /tei/i }
 format << 'newsml' if h['media_dsid_s'].any? { |x| x =~ /newsml/i }
 
 format = ['collection'] if h['objModel_s'].any? { |x| x =~ /collection/i } or h['dc_type_s'].any? { |x| x =~ /collection/i }
-format = ['program'] if h['objModel_s'].any? { |x| x =~ /program/i } or h['dc_type_s'].any? { |x| x =~ /program/i }
+format = ['subcollection'] if h['objModel_s'].any? { |x| x =~ /subcollection/i } or h['dc_type_s'].any? { |x| x =~ /subcollection/i }
 format = ['series'] if h['objModel_s'].any? { |x| x =~ /series/i } or h['dc_type_s'].any? { |x| x =~ /series/i }
 
 h['format'] = format.join("_")
@@ -221,9 +223,11 @@ h['pbcore_pbcoreTitle_program_s'] = (h['pbcore_pbcoreTitle_series_s'] + " / " + 
 prefix = h['pid_s'].split(':').last
 prefix = prefix.slice(-6, 6) if prefix.length > 10
 
-h['id'] = "#{prefix.parameterize}-#{h['slug_s']}" unless h['slug_s'].blank?
+h['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s
 
-h['pid_short_s'] = prefix
+
+h['id'] = "#{h['pid_short_s']}-#{h['slug_s']}" unless h['slug_s'].blank?
+
 
 
 
