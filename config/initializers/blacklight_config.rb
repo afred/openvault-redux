@@ -71,6 +71,7 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => (facet_fields = [
       "format",
+      "dc_type_s",
       "media_dsid_s",
       "dc_date_year_i",
       "person_cv",
@@ -83,7 +84,8 @@ Blacklight.configure(:shared) do |config|
       "pbcore_pbcoreTitle_program_s"
     ]),
     :labels => {
-      "format" => "format",
+      "format" => "display partial",
+      "dc_type_s" => "Format",
       "media_dsid_s" => "Media",
       "dc_date_year_i" => "Date",
       "person_cv" => "People",
