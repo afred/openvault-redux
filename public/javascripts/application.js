@@ -11,3 +11,10 @@
     };
     Blacklight.do_more_facets_behavior.selector = "a.more_facets_link";
 
+    $(function() {
+       $('.user_util_links a').ajaxyDialog({
+        width: $(window).width() / 2,
+        chainAjaxySelector: ".folderTools a, .search_history a"
+         });
+        });
+
