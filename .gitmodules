@@ -10,3 +10,21 @@
 [submodule "vendor/plugins/blacklight_highlight"]
 	path = vendor/plugins/blacklight_highlight
 	url = git://github.com/cbeer/blacklight_highlight.git
+[submodule "vendor/plugins/blacklight_advanced_search"]
+	path = vendor/plugins/blacklight_advanced_search
+	url = git://github.com/projectblacklight/blacklight_advanced_search.git
+[submodule "vendor/plugins/blacklight_range_limit"]
+	path = vendor/plugins/blacklight_range_limit
+	url = git://github.com/projectblacklight/blacklight_range_limit.git
+[submodule "vendor/plugins/blacklight_cql"]
+	path = vendor/plugins/blacklight_cql
+	url = git://github.com/projectblacklight/blacklight_cql.git
+[submodule "vendor/plugins/blacklight_oai_provider"]
+	path = vendor/plugins/blacklight_oai_provider
+	url = git://github.com/cbeer/blacklight_oai_provider.git
+[submodule "vendor/plugins/blacklight_unapi"]
+	path = vendor/plugins/blacklight_unapi
+	url = git://github.com/cbeer/blacklight_unapi.git
+[submodule "vendor/plugins/blacklight_oembed"]
+	path = vendor/plugins/blacklight_oembed
+	url = git://github.com/cbeer/blacklight_oembed.git
