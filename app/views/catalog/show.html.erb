@@ -1,7 +1,7 @@
 <% @page_title = "#{document_show_html_title} - #{application_name}" %>
 <% extra_head_content << render_link_rel_alternates %>
 <% sidebar_items << render(:partial => 'basic_search_form') %>
-<% sidebar_items << render_more_like_this %>
+<% sidebar_items << (render(:partial => 'blacklight_mlt/mlt', :collection => get_more_like_this.sort_by { |x| x.get 'title_s' } )) %>
 <% sidebar_items << render_document_metadata_partial %>
 
 
