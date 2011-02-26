@@ -3,7 +3,7 @@
   <img src="http://localhost:8180/fedora/get/<%= document.get('pid_s') %>/Thumbnail" />
 </div> -->
 <div  class="thumbnail">
-  <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview).html_safe!)) %>
+  <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview)).html_safe) %>
 </div>
 <div class="defList_container">
 <dl class="defList">
