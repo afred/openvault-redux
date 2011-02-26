@@ -112,12 +112,14 @@ Blacklight.configure(:shared) do |config|
     # app code to actually have it echo'd back to see it.     
     :limits => {
       "format" => 15, 
-      "dc_date_year_i" => 15, 
       "person_cv" => 15, 
       "place_cv" => 15, 
       "event_cv" => 15, 
       "objModel_s" => 15, 
       "keywords_cv" => 15
+    },
+      :range => {
+       "dc_date_year_i" => true
     }
   }
 
@@ -132,7 +134,7 @@ Blacklight.configure(:shared) do |config|
   config[:index_fields] = {
     :field_names => [
       "dc_description_t",
-      "fulltext_t_highlight",
+      "fulltext_t",
       "dc_date_s",
       "media_dsid_s",
       "pbcore_pbcoreInstantiation_formatGenerations_s",
@@ -140,14 +142,15 @@ Blacklight.configure(:shared) do |config|
     ],
     :labels => {
       "dc_description_t" => "Description",
-      "fulltext_t_highlight" => "Text",
+      "fulltext_t" => "Text",
       "dc_date_s" => "Date Created",
       "media_dsid_s" => "Media",
       "pbcore_pbcoreInstantiation_formatGenerations_s" => "Generation",
       "pbcore_pbcoreTitle_program_s" => "Program",
     },
     :highlight => [
-     "dc_description_t"
+     "dc_description_t",
+     "fulltext_t"
     ]
   }
 
@@ -226,7 +229,21 @@ Blacklight.configure(:shared) do |config|
 
   config[:highlight] = {
    'hl.fl' => ['fulltext_t', 'dc_description_t'],
+   'f.fulltext_t.hl.snippets' => 3,
+   'f.fulltext_t.hl.fragsize' => 300,
    'f.dc_description_t.hl.fragsize' => 50000
+  }
+
+  config[:oai] = {
+   :provider => {
+     :repository_name => 'WGBH Open Vault',
+     :repository_url => 'http://localhost:3000',
+     :record_prefix => 'http://openvault.wgbh.org/catalog',
+     :admin_email => 'root@localhost'
+  },
+  :document => {
+   :timestamp => 'timestamp'
+  }
   }
 end
 
