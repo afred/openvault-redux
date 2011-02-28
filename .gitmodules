@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/blacklight_oembed"]
 	path = vendor/plugins/blacklight_oembed
 	url = git://github.com/cbeer/blacklight_oembed.git
+[submodule "vendor/plugins/blacklight_user_generated_content"]
+	path = vendor/plugins/blacklight_user_generated_content
+	url = git://github.com/cbeer/blacklight_user_generated_content.git
