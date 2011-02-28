@@ -44,8 +44,8 @@
         <xsl:template match="tei:incident" mode="teibody">
 		<div class="incident">
 			<xsl:attribute name="id"><xsl:value-of select="@xml:id" /></xsl:attribute>
-			<xsl:if test="@smil:begin"><xsl:attribute name="smil:begin"><xsl:value-of select="@smil:begin" /></xsl:attribute></xsl:if>
-			<xsl:if test="@smil:end"><xsl:attribute name="smil:end"><xsl:value-of select="@smil:end" /></xsl:attribute></xsl:if>
+			<xsl:if test="@smil:begin"><xsl:attribute name="data-timecode_begin"><xsl:value-of select="@smil:begin" /></xsl:attribute></xsl:if>
+			<xsl:if test="@smil:end"><xsl:attribute name="data-timecode_end"><xsl:value-of select="@smil:end" /></xsl:attribute></xsl:if>
 			 <xsl:apply-templates mode="seg" />
 		</div>
         </xsl:template>
@@ -75,8 +75,8 @@
 		<div>
 			<xsl:attribute name="id"><xsl:value-of select="@xml:id" /></xsl:attribute>
 			<xsl:attribute name="class">para</xsl:attribute>
-			<xsl:if test="@smil:begin"><xsl:attribute name="smil:begin"><xsl:value-of select="@smil:begin" /></xsl:attribute></xsl:if>
-			<xsl:if test="@smil:end"><xsl:attribute name="smil:end"><xsl:value-of select="@smil:end" /></xsl:attribute></xsl:if>
+			<xsl:if test="@smil:begin"><xsl:attribute name="data-timecode_begin"><xsl:value-of select="@smil:begin" /></xsl:attribute></xsl:if>
+			<xsl:if test="@smil:end"><xsl:attribute name="data-timecode_end"><xsl:value-of select="@smil:end" /></xsl:attribute></xsl:if>
 		<xsl:apply-templates mode="seg" />
 		<div class="tei-metadata">
 			<xsl:apply-templates select="tei:name" mode="teimeta" />
