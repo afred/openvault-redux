@@ -10,6 +10,7 @@
 $font-color: #736854;
 $link-color: #749807;
 $wgbh-blue: #02065F;
+$wgbh-orange: #E28D1E;
 $blueprint-background-color: #02065F;
 $blueprint-font-family: Verdana, Arial, sans-serif;
 $blueprint-font-size: 11px;
@@ -592,16 +593,19 @@ dl.defList dd {float: left; text-align: left; margin: 0; padding: 2px 0; width: 
       position: relative;
          @include clearfix;
 
-.datastream-transcript h2 {
+         .datastream-transcript {
+    color: #444443;
+
+ h2 {
     text-transform: uppercase;
 }
 
-.datastream-transcript strong {
+ strong {
 	font-size: 11px;
     font-weight: bold;
 }
 
-.datastream-transcript .incident {
+.incident {
    color: #636363;
    font-size: 10px;
    margin-top: 1em;
@@ -609,7 +613,7 @@ dl.defList dd {float: left; text-align: left; margin: 0; padding: 2px 0; width: 
     font-style: italic;
 }
 
-.datastream-transcript h3 {
+ h3 {
 	font-size: 14px;
 	color: #51493a;
 	margin-top: 0.75em;
@@ -617,40 +621,41 @@ dl.defList dd {float: left; text-align: left; margin: 0; padding: 2px 0; width: 
 	line-height: 1.3em;
 }
 
-.datastream-transcript .tei-l {
+ .tei-l {
 	display: block;	
 	text-indent: -20px;
 	padding-left: 20px;
 	line-height: 1.5em;
 }
 
-.datastream-transcript .tei-bibl {
+.tei-bibl {
 	display: block;
 	text-align: right;
 	font-style: italic;
 	margin-bottom: 1em;
 }
 
-.datastream-transcript .tei-metadata {
+ .tei-metadata {
 	display: none;
 }
 
-.datastream-transcript .para {
-    color: #444443;
+ .para {
     margin-left: -70px;
     padding-left: 70px;
     margin-bottom: 1em;
     position: relative;
 }
 
-.datastream-transcript .active {
+.current, .active {
     color: #c54e26;
     margin-right: 0px;
 }
 
-.datastream-transcript .highlight {
+.highlight {
 	background-color: #FFFF99;
 }
+
+         }
 
 }
 
@@ -692,3 +697,4 @@ dl.defList dt {
 .bookmark_toggle {
   display: none;
 }
+
