@@ -17,6 +17,12 @@
     <div class="tools"><%= render :partial => 'show_tools' %></div>
     <div class="document">
       <%= render_document_partial @document, :show %>
+      <div class="comments">
+        <ul>
+          <%= render :partial => 'comments/comment', :collection => @document.comments %>
+          <%= render :partial => 'comments/form', :locals => { :document => @document, :comment => Comment.new } %>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

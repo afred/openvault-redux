@@ -14,6 +14,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :search_history, :collection => {:clear => :delete}
   map.resources :saved_searches, :collection => {:clear => :delete}, :member => {:save => :put}
 
+  map.resources(:comments)
+
   map.resources(:catalog,
     :only => [:index, :show, :update],
     # /catalog/:id/image <- for ajax cover requests
@@ -22,8 +24,9 @@ ActionController::Routing::Routes.draw do |map|
     :member=>{:image=>:get, :embed => :get, :status=>:get, :availability=>:get, :librarian_view=>:get},
     # /catalog/map
     :collection => {:map => :get, :opensearch=>:get, :citation=>:get, :email=>:get, :sms=>:get, :endnote=>:get, :send_email_record=>:post},
-      :requirements => { :id => /([A-Za-z0-9]|:|-|\.)+/ }
-  )
+      :requirements => { :id => /([A-Za-z0-9]|:|-|\.)+/ },
+      :has_many => :comments
+  ) 
     
 
   map.feedback 'feedback', :controller=>'feedback', :action=>'show'
