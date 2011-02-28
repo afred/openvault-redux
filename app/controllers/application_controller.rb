@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ["compiled/print", { :media => 'print' }]
     stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
 
-    javascript_includes << ['jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js',  'application', { :plugin=>:blacklight } ]
-    javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "application"]
+    javascript_includes << ['jquery.min.js']
+    javascript_includes << ['jquery-ui-1.8.1.custom.min.js',  'application', { :plugin=>:blacklight } ]
+    javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "jquery.hotkeys.js", "application"]
 
   end
 
