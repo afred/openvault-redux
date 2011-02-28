@@ -187,8 +187,10 @@ end
 h = {}
 
 doc.reject { |x| x.last.nil? or x.last.empty? }.each do |t|
+  value = t.last.strip
+  next if value =~ /n\/d/
   h[t.first.strip.gsub('__', '_')] ||= []
-  h[t.first.strip.gsub('__', '_')] << t.last.strip
+  h[t.first.strip.gsub('__', '_')] << value
 end
 
 h['media_dsid_s'].uniq!
