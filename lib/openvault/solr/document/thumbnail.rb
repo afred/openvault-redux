@@ -5,6 +5,7 @@ module Openvault::Solr::Document::Thumbnail
 
   def self.register_export_formats(document)
     document.will_export_as(:jpg)
+    document.export_formats[:jpg][:thumbnails] = document._thumbnail
   end
 
   def export_as_jpg
@@ -12,6 +13,10 @@ module Openvault::Solr::Document::Thumbnail
   end
 
   def thumbnail
-    @thumbnail ||= Openvault::Solr::Document::Thumbnail::Generator.new(self)
+    @thumbnail ||= _thumbnail
+  end
+
+  def _thumbnail document=self
+    Openvault::Solr::Document::Thumbnail::Generator.new(document)
   end
 end

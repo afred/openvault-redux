@@ -7,6 +7,10 @@ module Openvault::Solr::Document::Thumbnail
       @format = "jpg"
     end
 
+    def to_json(*a)
+      { :url => url(:style => :preview) }.to_json(*a)
+    end
+
     def config
       { :style => {
           :preview => "160x90"
