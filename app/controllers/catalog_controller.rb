@@ -8,6 +8,21 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::Restrictions
   include Openvault::SolrHelper::FacetDomsearch
 
+  def index
+
+    extra_head_content << '<link rel="alternate" type="application/rss+xml" title="RSS for results" href="'+ url_for(params.merge("format" => "rss")) + '">'
+    extra_head_content << '<link rel="alternate" type="application/atom+xml" title="Atom for results" href="'+ url_for(params.merge("format" => "atom")) + '">'
+    
+    (@response, @document_list) = get_search_results
+    @filters = params[:f] || []
+    respond_to do |format|
+      format.html { save_current_search_params }
+      format.rss  { render :layout => false }
+      format.atom { render :layout => false }
+      format.json { render :json => @document_list }
+    end
+  end
+
   # displays values and pagination links for a single facet field
   def facet
     @pagination = get_facet_pagination(params[:id], params)
