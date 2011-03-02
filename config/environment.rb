@@ -34,6 +34,9 @@ Rails::Initializer.run do |config|
   config.gem "oai"
   require 'open-uri'
   gem "soap4r"
+config.gem "acts-as-taggable-on", :source => "http://gemcutter.org", :version => '2.0.0.rc1'
+config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
+config.gem "acts_as_rateable"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
