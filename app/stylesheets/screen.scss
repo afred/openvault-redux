@@ -154,6 +154,7 @@ body.bp a {
 }
 
 }
+
  
 .facets {
   h2 {
@@ -698,3 +699,7 @@ dl.defList dt {
   display: none;
 }
 
+ul.facet_extended_list {
+  max-height: 500px;
+  overflow-y: scroll;
+}
