@@ -1,6 +1,6 @@
 <%
 require 'lib/openvault/pbcore'
-pbcore = Openvault::Pbcore::Document.new(open("http://localhost:8180/fedora/get/#{@document.get('pid_s')}/PBCore"))
+pbcore = Openvault::Pbcore::Document.new(open("#{Openvault.fedora_config[:public_url]}/get/#{@document.get('pid_s')}/PBCore"))
 source_credits = '' 
 %>
 

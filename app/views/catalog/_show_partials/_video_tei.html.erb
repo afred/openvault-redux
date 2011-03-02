@@ -1,6 +1,6 @@
 <div class="datastream primary-datastream datastream-video datastream-video-mp4">
 <video width="320" height="240" controls>
-<source src="http://localhost:8180/fedora/get/<%= document.get('pid_s') %>/Video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+<source src="<%= Openvault.fedora_config[:public_url] %>/get/<%= document.get('pid_s') %>/Video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 </div>
 
@@ -9,7 +9,7 @@
 <% 
   require 'open-uri'
 xslt = Nokogiri::XSLT(File.read("public/xslt/tei2timedtranscript.xsl"))
-xml = Nokogiri::XML(open("http://localhost:8180/fedora/get/#{document.get('pid_s')}/Transcript.tei.xml").read)
+xml = Nokogiri::XML(open("#{Openvault.fedora_config[:private_url]}/get/#{document.get('pid_s')}/Transcript.tei.xml").read)
 %>
 
  <%= xslt.transform(xml) %>

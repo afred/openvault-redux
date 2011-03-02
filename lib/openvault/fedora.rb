@@ -8,7 +8,8 @@ class FedoraRepo
 	  'fedora'
 	end
 	def self.fedora_rest_uri
-	  'http://localhost:8180/fedora'
+	  #'http://localhost:8180/fedora'
+          Openvault.fedora_config[:private_url]
 	end
 	def self.base_url
 	  'http://openvault.wgbh.org/media'

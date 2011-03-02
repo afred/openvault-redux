@@ -1,0 +1,8 @@
+production:
+    url: http://127.0.0.1:8180/fedora
+development:
+    url: http://127.0.0.1:8180/fedora
+test: &TEST
+    url: http://127.0.0.1:8180/fedora
+cucumber:
+    <<: *TEST
