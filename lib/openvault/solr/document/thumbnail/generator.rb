@@ -27,6 +27,7 @@ module Openvault::Solr::Document::Thumbnail
 
       file = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
 
+
       file.write open(url()).read
       file.rewind
 
@@ -36,14 +37,19 @@ module Openvault::Solr::Document::Thumbnail
 
 
       FileUtils.mkdir_p File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize)
-      FileUtils.cp dst.path, File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize, "#{options[:style]}.jpg") 
+      FileUtils.mv dst.path, File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize, "#{options[:style]}.jpg") 
 
       file.unlink
       dst.unlink
 
       "/system/thumbnails/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
       rescue
-        ''
+        return "/system/thumbnails/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
+        file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
+        tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
+        dst = tn.make
+        FileUtils.mv dst.path, File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
+        "/system/thumbnails/no-image-available-#{options[:style]}.jpg"
       end
     end
 
