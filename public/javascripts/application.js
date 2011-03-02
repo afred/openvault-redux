@@ -16,6 +16,12 @@
         width: $(window).width() / 2,
         chainAjaxySelector: ".folderTools a, .search_history a"
          });
+
+       $('a.comments').ajaxyDialog({
+        width: $(window).width() / 2,
+        modal: false
+
+         });
         });
 
 
