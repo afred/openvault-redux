@@ -119,7 +119,9 @@ Blacklight.configure(:shared) do |config|
       "keywords_cv" => 15
     },
       :range => {
-       "dc_date_year_i" => true
+       "dc_date_year_i" => {
+          :num_segments => 20
+        }
     }
   }
 
