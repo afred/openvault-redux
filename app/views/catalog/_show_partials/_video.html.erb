@@ -3,3 +3,12 @@
 <source src="<%= Openvault.fedora_config[:public_url] %>/get/<%= document.get('pid_s') %>/Video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 </div>
+<%
+  stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
+  javascript_includes << ["/mediaelement/build/mediaelement-and-player.min.js"]
+%>
+<script type="text/javascript">
+  $(function() {
+      $('video').mediaelementplayer();
+      });
+</script>

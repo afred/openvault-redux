@@ -31,3 +31,6 @@
 [submodule "vendor/plugins/blacklight_user_generated_content"]
 	path = vendor/plugins/blacklight_user_generated_content
 	url = git://github.com/cbeer/blacklight_user_generated_content.git
+[submodule "public/mediaelement"]
+	path = public/mediaelement
+	url = https://github.com/johndyer/mediaelement.git

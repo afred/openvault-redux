@@ -16,3 +16,12 @@ xml = Nokogiri::XML(open("#{Openvault.fedora_config[:private_url]}/get/#{documen
 
 </div>
 </div>
+<%
+  stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
+  javascript_includes << ["/mediaelement/build/mediaelement-and-player.min.js"]
+%>
+<script type="text/javascript">
+  $(function() {
+      $('video').mediaelementplayer();
+      });
+</script>
