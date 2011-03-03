@@ -9,6 +9,7 @@ module Openvault::SolrHelper
   end
 
   def default_sort_params
+    return { :sort => "random_#{rand(9999)} asc"} if params[:sort] == 'random'
     return {} if params[:sort]
     return { :sort => 'timestamp desc' } if params[:q].blank? and params[:f] and params[:f]['rel_isMemberOfCollection_s'] and params[:f]['rel_isMemberOfCollection_s'].first == 'org.wgbh.mla:pledge'
     return { :sort => 'title_sort asc' } if params[:q].blank? 
