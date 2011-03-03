@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title><%= h(@page_title || application_name) %></title>
+    <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+    <%
+      stylesheet_links = []
+    stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
+    stylesheet_links << ["compiled/print", { :media => 'print' }]
+    stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
+
+    javascript_includes = []
+    javascript_includes << ['jquery.min.js']
+  %>
+  <%= render_js_includes %>
+  <%= render_stylesheet_includes %>
+  </head>
+    <body class="bp embed <%= render_body_class %>">
+            <%= yield %>
+  </body>
+  
+</html>
