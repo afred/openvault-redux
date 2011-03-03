@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
     :member=>{:image=>:get, :embed => :get, :status=>:get, :availability=>:get, :librarian_view=>:get},
     # /catalog/map
     :collection => {:map => :get, :opensearch=>:get, :citation=>:get, :email=>:get, :sms=>:get, :endnote=>:get, :send_email_record=>:post},
-      :requirements => { :id => /([A-Za-z0-9]|:|-|\.)+/ },
+      :requirements => { :id => /([A-Za-z0-9]|:|-)+/ },
       :has_many => :comments
   ) 
     
