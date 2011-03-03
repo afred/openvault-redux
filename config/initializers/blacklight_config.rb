@@ -28,6 +28,8 @@ Blacklight.configure(:shared) do |config|
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
   SolrDocument.use_extension( Blacklight::Solr::Document::DublinCore)
   SolrDocument.use_extension( Openvault::Solr::Document::Thumbnail)
+  SolrDocument.use_extension( Openvault::Solr::Document::Pbcore)
+  SolrDocument.use_extension( BlacklightOembed::Solr::Document::OembedRich )
     
   # Semantic mappings of solr stored fields. Fields may be multi or
   # single valued. See Blacklight::Solr::Document::ExtendableClassMethods#field_semantics
