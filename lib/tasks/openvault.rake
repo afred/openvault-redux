@@ -1,8 +1,8 @@
-require 'lib/openvault/fedora.rb'
 
 namespace :openvault do
   desc "Index"
   task :index => :environment do
+require 'lib/openvault/fedora.rb'
 
 pids = FedoraRepo.relsext '
  SELECT ?pid FROM <#ri> WHERE {
