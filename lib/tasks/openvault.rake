@@ -1,14 +1,4 @@
-require 'rubygems'
-gem 'soap4r'
-require 'rest_client'
-require 'nokogiri'
-require 'fastercsv'
-require 'ap'
 require 'lib/openvault/fedora.rb'
-require 'nokogiri'
-require 'chronic'
-require 'active_support/all'
-$KCODE = 'UTF8'
 
 namespace :openvault do
   desc "Index"
