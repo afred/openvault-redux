@@ -20,6 +20,25 @@ module MediaHelper
     html += image_tag options[:poster], :width => options[:width] if options[:poster]
     html += tag("audio", options)
 
+    extra_head_content << <<EOF
+<script type="text/javascript">
+  $(function() {
+      $('audio').one('canplay', function() {
+         var start = 0;
+         try {
+          start = /t=(\\d+)/.exec(location.hash).pop();
+         }
+         catch(err) {
+          start = #{params[:t]};
+         }
+          if(start > 0) {
+            this.currentTime = start;
+          }
+      });
+      });
+</script>
+EOF
+
     html
   end
   def render_video_player sources, options = {}
@@ -29,6 +48,18 @@ module MediaHelper
 <script type="text/javascript">
   $(function() {
       $('video').mediaelementplayer();
+      $('video').one('canplay', function() {
+         var start = 0;
+         try {
+          start = /t=(\\d+)/.exec(location.hash).pop();
+         }
+         catch(err) {
+          start = #{params[:t]};
+         }
+          if(start > 0) {
+            this.currentTime = start;
+          }
+      });
       });
 </script>
 EOF
