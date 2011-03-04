@@ -1,10 +1,3 @@
 <div class="datastream primary-datastream datastream-transcript datastream-transcript-tei-xml">
-<% 
-  require 'open-uri'
-xslt = Nokogiri::XSLT(File.read("public/xslt/tei2timedtranscript.xsl"))
-xml = Nokogiri::XML(open("#{Openvault.fedora_config[:private_url]}/get/#{document.get('pid_s')}/Transcript.tei.xml").read)
-%>
-
- <%= xslt.transform(xml) %>
-
+  <%= render_tei_transcript(document.datastream_url("Transcript.tei.xml", :private => true)) %>
 </div>

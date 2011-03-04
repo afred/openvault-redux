@@ -1,27 +1,9 @@
 <div class="datastream primary-datastream datastream-video datastream-video-mp4">
-<video width="320" height="240" controls>
-<source src="<%= Openvault.fedora_config[:public_url] %>/get/<%= document.get('pid_s') %>/Video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-</video>
+  <%= render_video_player(document.datastream_url("Video.mp4"), :size => "320x240", :controls => true) %>
 </div>
 
 <div class="secondary-datastream-container">
 <div class="datastream secondary-datastream datastream-transcript datastream-transcript-newsml-xml">
-<% 
-  require 'open-uri'
-xslt = Nokogiri::XSLT(File.read("public/xslt/newsml2html.xsl"))
-xml = Nokogiri::XML(open("#{Openvault.fedora_config[:private_url]}/get/#{document.get('pid_s')}/Transcript.newsml.xml").read)
-%>
-
- <%= xslt.transform(xml) %>
-
+  <%= render_newsml_transcript(document.datastream_url("Transcript.newsml.xml", :private => true)) %>
 </div>
 </div>
-<%
-  stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
-  javascript_includes << ["/mediaelement/build/mediaelement-and-player.min.js"]
-%>
-<script type="text/javascript">
-  $(function() {
-      $('video').mediaelementplayer();
-      });
-</script>
