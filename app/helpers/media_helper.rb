@@ -13,8 +13,14 @@ module MediaHelper
   end
   def render_audio_player source, options = {}
     options.symbolize_keys!
+    options[:width] ||= 320
     options[:src] = source
-    tag("audio", options)
+    html = ''
+
+    html += image_tag options[:poster], :width => options[:width] if options[:poster]
+    html += tag("audio", options)
+
+    html
   end
   def render_video_player sources, options = {}
     stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
