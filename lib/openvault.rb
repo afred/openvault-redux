@@ -17,4 +17,6 @@ module Openvault
     Openvault.fedora_config[:private_url] ||= Openvault.fedora_config[:url] 
   end
 
+  class PermissionDenied < Exception; end
+
 end
