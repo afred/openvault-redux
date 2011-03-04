@@ -1,8 +1,8 @@
 production:
-    url: http://127.0.0.1:8983/solr
+    url: http://127.0.0.1:8180/solr/development
 development:
-    url: http://127.0.0.1:8983/solr
+    url: http://127.0.0.1:8180/solr/development
 test: &TEST
-    url: http://127.0.0.1:8983/solr
+    url: http://127.0.0.1:8180/solr/development
 cucumber:
     <<: *TEST
