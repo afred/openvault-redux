@@ -1,3 +1,3 @@
 <div class="datastream primary-datastream datastream-transcript datastream-transcript-tei-xml">
-  <%= render_tei_transcript(document.datastream_url("Transcript.tei.xml", :private => true)) %>
+  <%= render_tei_transcript(document.fedora_object.datastream_url("Transcript.tei.xml", :private => true)) %>
 </div>

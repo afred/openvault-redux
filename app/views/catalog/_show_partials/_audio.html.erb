@@ -1,3 +1,3 @@
 <div class="datastream primary-datastream datastream-audio datastream-audio-mp3">
-  <%= render_audio_player(document.datastream_url("Audio.mp3"), :controls => true, :poster => document.datastream_url("Thumbnail")) %>
+  <%= render_audio_player(document.fedora_object.datastream_url("Audio.mp3"), :controls => true, :poster => document.fedora_object.datastream_url("Thumbnail")) %>
 </div>

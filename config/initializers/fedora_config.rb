@@ -1,1 +1,1 @@
-Openvault.init
+Fedora.init

@@ -26,6 +26,7 @@ Blacklight.configure(:shared) do |config|
   end
 
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
+  SolrDocument.use_extension( Openvault::Solr::Document::Fedora)
   SolrDocument.use_extension( Blacklight::Solr::Document::DublinCore)
   SolrDocument.use_extension( Openvault::Solr::Document::Thumbnail)
   SolrDocument.use_extension( Openvault::Solr::Document::Pbcore)

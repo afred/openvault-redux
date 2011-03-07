@@ -22,7 +22,7 @@ module Openvault::Solr::Document::Thumbnail
       require 'open-uri'
       begin
       if options[:style] == :default
-        return @document.get('thumbnail_url_s') || @document.datastream_url("Thumbnail")
+        return @document.get('thumbnail_url_s') || @document.fedora_object.datastream_url("Thumbnail")
       end
 
       return "/system/thumbnails/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize, "#{options[:style]}.jpg")

@@ -1,1 +1,3 @@
-_video.html.erb
+<div class="datastream primary-datastream datastream-video datastream-video-mp4">
+  <%= render_video_player(document.fedora_object.fedora_object.datastream_url("Video.mp4"), :size => "640x480", :controls => true) %>
+</div>
