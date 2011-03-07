@@ -29,7 +29,7 @@ module MediaHelper
           start = /t=(\\d+)/.exec(location.hash).pop();
          }
          catch(err) {
-          start = #{params[:t]};
+          start = #{params[:t] || 0};
          }
           if(start > 0) {
             this.currentTime = start;
@@ -54,7 +54,7 @@ EOF
           start = /t=(\\d+)/.exec(location.hash).pop();
          }
          catch(err) {
-          start = #{params[:t]};
+          start = #{params[:t] || 0};
          }
           if(start > 0) {
             this.currentTime = start;
