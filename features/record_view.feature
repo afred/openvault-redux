@@ -7,6 +7,7 @@ Feature: Record View
     Scenario: Metadata-only record
         Given I am on the document page for id sbro01401-15-annual-gala-celebration
         Then I should see "15 Annual Gala Celebration" within ".document_heading"
+        And I should see a "span.Z3988" tag
 
     Scenario: Video record
         Given I am on the document page for id 95e868-17th-parallel-wrecked-landscape

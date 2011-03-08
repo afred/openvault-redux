@@ -158,6 +158,16 @@ Then /^(?:|I )should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
   end
 end
 
+Then /^(?:|I )should see a "([^\"]*)" tag$/ do |text|
+  response.should have_tag(text)
+end
+
+Then /^(?:|I )should see a "([^\"]*)" tag within "([^\"]*)"$/ do |text, selector|
+  within(selector) do |content|
+      content.should have_tag(text)
+  end
+end
+
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
   if defined?(Spec::Rails::Matchers)
