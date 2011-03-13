@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources(:datasets)
+
   # Login, Logout, UserSessions
   map.resources :user_sessions, :protocol => ((defined?(SSL_ENABLED) and SSL_ENABLED) ? 'https' : 'http')
   map.login "login", :controller => "user_sessions", :action => "new"

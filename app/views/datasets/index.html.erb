@@ -1,0 +1,35 @@
+<h1 class="page-title">Listing datasets</h1>
+<hr class="strong" />
+
+<% @datasets.each do |dataset| %>
+<h3><%= link_to dataset.name,dataset %></h3>
+<%= dataset.description %>
+
+<dl class="defList">
+  <% if dataset.attachment.file? %>
+  <dt>Content Type</dt>
+  <dd><%= dataset.attachment.content_type %></dd>
+
+  <dt>File Size</dt>
+  <dd><%= number_to_human_size dataset.attachment.size %></dd>
+  <% end %>
+
+  <dt>Submitted</dt>
+  <dd><%= dataset.created_at %></dd>
+
+  <dt>Submitted By</dt>
+  <dd><%= dataset.user.name %> (<%= dataset.user.email %>)</dd>
+
+  <% unless @organization and !current_user.has_role? :admin %>
+  <dt>Organization</dt>
+  <dd><%= link_to dataset.organization.name, dataset.organization %></dd>
+  <% end %>
+
+  <dt>Status</dt>
+  <dd><%= dataset.state %></dd>
+</dl>
+<% end %>
+
+<br />
+
+<%= link_to 'New dataset', new_dataset_path %>
