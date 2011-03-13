@@ -34,7 +34,7 @@ module Artesia
 
       self.doc.xpath('//LINK').each do |link|
         options = {:subject => entities[link['SOURCE']], :relationship => link['LINK_TYPE'], :object => entities[link['DESTINATION']]}
-      Fedora.repository.soap.addRelationship :pid => options[:subject], :relationship => "info:artesia/link_type##{options[:relationship]}", :object => "info:fedora/#{options[:object]}", :isLiteral => false, :datatype => nil
+      Fedora.repository.soap.addRelationship :pid => options[:subject], :relationship => "info:artesia/link_type##{options[:relationship]}", :object => "#{options[:object]}", :isLiteral => false, :datatype => nil
       end
     end
   end
