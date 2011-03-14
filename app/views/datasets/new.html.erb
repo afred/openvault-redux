@@ -1,0 +1,11 @@
+<%= render :partial => 'organizations/header', :locals => { :organization => @organization } if @organization %>
+<h1 >New dataset</h1>
+
+<% form_for(@dataset, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => 'dataset', :locals => { :dataset => f, :show_processing_instructions => @show_processing_instructions } %>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

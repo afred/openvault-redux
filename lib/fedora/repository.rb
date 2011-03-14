@@ -37,7 +37,7 @@ module Fedora
     end
 
     def fedora_parts pid
-         sqarqp 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+         sparql 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
           PREFIX dc: <http://purl.org/dc/elements/1.1/>
           PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
           SELECT ?pid

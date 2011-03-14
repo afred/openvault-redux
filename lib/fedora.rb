@@ -15,6 +15,8 @@ module Fedora
     Fedora.repository_config[:public_url] ||= Fedora.repository_config[:url] 
     Fedora.repository_config[:private_url] = repository_config[RAILS_ENV]['private_url']  
     Fedora.repository_config[:private_url] ||= Fedora.repository_config[:url] 
+    Fedora.repository_config[:user] = repository_config[RAILS_ENV]['user']
+    Fedora.repository_config[:pass] = repository_config[RAILS_ENV]['pass']
   end
 
   def self.repository

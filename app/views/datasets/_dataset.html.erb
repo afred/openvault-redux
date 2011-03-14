@@ -1,0 +1,10 @@
+    <%= dataset.label :attachment, 'Upload a file' %>
+    <%= dataset.file_field :attachment %>
+    <% if @dataset.attachment.exists? %>
+    <%= dataset.label :attachment, 'File' %>
+      <%= link_to @dataset.attachment, @dataset.attachment.url %>
+    <% end %>
+
+  <%= dataset.label :name, 'Title' %>
+  <%= dataset.text_field :name %>
+

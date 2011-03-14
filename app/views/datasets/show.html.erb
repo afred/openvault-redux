@@ -1,0 +1,25 @@
+<%= link_to 'Download', @dataset.attachment.url, :class => 'secondary-action  fancy-button-base light button-small'  if  @dataset.attachment.file? %>
+<h2><%= @dataset.name %>
+<%= link_to 'Edit', edit_dataset_path(@dataset), :class => 'primary-action fancy-button-base light button-small'  %>
+</h2>
+<%= @dataset.description %>
+
+<dl class="defList">
+  <% if @dataset.attachment.file? %>
+  <dt>Content Type</dt>
+  <dd><%= @dataset.attachment.content_type %></dd>
+
+  <dt>File Size</dt>
+  <dd><%= number_to_human_size @dataset.attachment.size %></dd>
+  <% end %>
+
+  <dt>Submitted</dt>
+  <dd><%= @dataset.created_at %></dd>
+
+  <dt>Submitted By</dt>
+  <dd><%= @dataset.user.login %> (<%= @dataset.user.email %>)</dd>
+
+  <dt>Status</dt>
+  <dd><%= @dataset.status %></dd>
+</dl>
+
