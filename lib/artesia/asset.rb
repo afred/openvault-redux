@@ -72,22 +72,17 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
       # PBCore  -- from disseminator?
       Fedora::Datastream.new('PBCore', {:dsLocation => Fedora.repository.object_url({:pid => self.pid, :datastream => 'sdef:METADATA/PBCore'}), :mimeType => 'text/xml'}).add(obj.client)
 
-      # Media
-      Fedora::Datastream.new('File', {:controlGroup => 'R', :dsLocation => uois['NAME'], :mimeType => nil }).add(obj.client)
-
-      case uois.xpath('WGBH_FORMAT/@MIME_TYPE').to_s
-        when /video/
-          Fedora::Datastream.new('Video.mp4', {:controlGroup => 'R',:dsLocation => uois['NAME'].gsub(File.extname(uois['NAME']), '.mp4'), :mimeType => 'video/mp4' }).add(obj.client)
-        when /audio/
-          Fedora::Datastream.new('Audio.mp3', {:controlGroup => 'R',:dsLocation => uois['NAME'].gsub(File.extname(uois['NAME']), '.mp3'), :mimeType => 'audio/mp3' }).add(obj.client)
-          Fedora::Datastream.new('Audio.flv', {:controlGroup => 'R',:dsLocation => uois['NAME'].gsub(File.extname(uois['NAME']), '.flv'), :mimeType => 'audio/x-flv' }).add(obj.client)
-        when /image/
-          Fedora::Datastream.new('Image.jpg', {:controlGroup => 'R',:dsLocation => uois['NAME'].gsub(File.extname(uois['NAME']), '.jpg'), :mimeType => 'image/jpg' }).add(obj.client)
+      if  dsLocation = Openvault::Media.filename_to_url(uois['NAME'])
+        Fedora::Datastream.new('File', {:controlGroup => 'R', :dsLocation => dsLocation}).add(obj.client)
       end
-      
-      Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R',:dsLocation => uois['NAME'].gsub(File.extname(uois['NAME']), '.jpg'), :mimeType => 'image/jpg' }).add(obj.client)
-
-
+      # Media
+      ['.mp4'=> 'video/mp4', '.mp3' => 'audio/mp3', '.flv' => 'audio/x-flv', '.jpg' => 'image/jpg'].each do |ext, mime|
+        if dsLocation = Openvault::Media.filename_to_url( uois['NAME'].gsub(File.extname(uois['NAME']), ".#{ext}"))
+          dsid = mime.sub('/', '.').capitalize
+          Fedora::Datastream.new(dsid, {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client)
+          Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client) if ext == '.jpg'
+        end
+      end
       
       # contains/belongs_to -> isPartOf
       #
