@@ -74,6 +74,7 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => (facet_fields = [
       "format",
+      "timestamp_query",
       "dc_type_s",
       "media_dsid_s",
       "dc_date_year_i",
@@ -88,6 +89,7 @@ Blacklight.configure(:shared) do |config|
     ]),
     :labels => {
       "format" => "display partial",
+      "timestamp_query" => "date indexed",
       "dc_type_s" => "Format",
       "media_dsid_s" => "Media",
       "dc_date_year_i" => "Date",
@@ -121,10 +123,28 @@ Blacklight.configure(:shared) do |config|
       "objModel_s" => 15, 
       "keywords_cv" => 15
     },
-      :range => {
+      :rangex => {
        "dc_date_year_i" => {
-          :num_segments => 20
-        }
+         :start => 1940,
+         :end => 2010,
+         :gap => 10
+       }
+    },
+    :tag => {
+      "format" => {
+        :ex => "format"
+      }
+    },
+    :query => {
+      "timestamp_query" => {
+         'tody' => 'timestamp:[NOW/DAY TO *]',
+         'this week' => "timestamp:[NOW-#{Time.now.wday}DAY/DAY TO *]",
+         'this month' => 'timestamp:[NOW/MONTH TO *]',
+         'this year' => 'timestamp:[NOW/YEAR TO *]'
+    }
+    },
+    :pivot => {
+      "pbcore_pbcoreTitle_series_s" => ["pbcore_pbcoreTitle_series_s", "pbcore_pbcoreTitle_program_s"]
     }
   }
 
