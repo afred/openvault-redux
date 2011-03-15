@@ -6,15 +6,16 @@ Feature: Search
 
     Scenario: Default sort order
         Given I have done a search with term "vietnam"
-        Then I should be on the catalog page
-        and I should see "relevance"
+        Then the "search" field should contain "vietnam"
+        And I should see "relevance"
 
     Scenario: Changing sort order 
         Given I have done a search with term "vietnam"
         When I select "title" from "sort"
         And I press "sort results" 
-        Then I should be on "the catalog page"
+        Then the "search" field should contain "vietnam"
         And I should see "You searched for:"
         And I should see "vietnam"
-        Then I should see "BU Theology students talk about the Persian Gulf War" before "Interview with Arthur Egendorf, 1983"
-
+        And I should see select list "select#sort" with "title" selected
+        And I should get ckey "95e868-17th-parallel-wrecked-landscape" before ckey "485-acquisition-radar-against-enemy-mortars-dong-tam"
+        And I should see "17th Parallel Wrecked Landscape" before "Acquisition radar (against enemy mortars); Dong Tam."

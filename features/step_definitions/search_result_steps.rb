@@ -46,21 +46,21 @@ Then /^I should get (at least|at most) (\d+) total results?$/i do |comparator, c
   end
 end
 
-Then /^I should get ckey (\d+) in the results$/i do |ckey|
+Then /^I should get ckey "([^"]+)" in the results$/i do |ckey|
   response.should have_tag("a[href*=?]", /view\/#{ckey}/)
 end
 
-Then /^I should not get ckey (\d+) in the results$/i do |ckey|
+Then /^I should not get ckey "([^"]+)" in the results$/i do |ckey|
   response.should_not have_tag("a[href*=?]", /^.*#{ckey}.*$/)
 end
 
-Then /^I should get ckey (\d+) in the first (\d+) results?$/i do |ckey, max_num|
+Then /^I should get ckey "([^"]+)" in the first (\d+) results?$/i do |ckey, max_num|
   pos = get_position_in_result_page(response, ckey) 
   pos.should_not == -1
   pos.should < max_num.to_i
 end
 
-Then /^I should not get ckey (\d+) in the first (\d+) results?$/i do |ckey, max_num|
+Then /^I should not get ckey "([^"]+)" in the first (\d+) results?$/i do |ckey, max_num|
   pos = get_position_in_result_page(response, ckey) 
   if pos != -1
     pos.should >= max_num.to_i
@@ -86,7 +86,7 @@ Then /^the facet "(.*)" should not display$/ do |facet|
   get_facet_item_position(response,facet).should == -1
 end
 
-Then /^I should get ckey (\d+) before ckey (\d+)$/ do |ckey1, ckey2|
+Then /^I should get ckey "([^\"]+)" before ckey "([^\"]+)"$/ do |ckey1, ckey2|
   pos1 = get_position_in_result_page(response, ckey1) 
   pos2 = get_position_in_result_page(response, ckey2)
   pos1.should_not == -1
@@ -133,7 +133,7 @@ Then /^I should get at least (\d+) of these ckeys in the first (\d+) results: "(
   count.should >= how_many.to_i
 end
 
-Then /^I should get ckey (\d+) and ckey (\d+) within (\d+) positions? of each other$/i do |ckey1, ckey2, how_far|
+Then /^I should get ckey "([^"]+)" and ckey "([^"]+)" within (\d+) positions? of each other$/i do |ckey1, ckey2, how_far|
   pos1 = get_position_in_result_page(response, ckey1) 
   pos2 = get_position_in_result_page(response, ckey2)
   pos1.should_not == -1
@@ -263,7 +263,7 @@ end
 
 # The below methods are private
 def get_position_in_result_page(response, ckey)
-  doc_link_ckeys = response.body.scan(/class="index_title".*<a.*href=.*\/view\/(\d+)"[^\d].*>/)
+  doc_link_ckeys = response.body.scan(/class="index_title".*<a.*href=.*\/catalog\/([^"]+)"[^\d].*>/)
   doc_link_ckeys.each_with_index do |doc_link_ckey, num|
     if doc_link_ckey.to_s.match(/^#{ckey}$/) != nil
       return num

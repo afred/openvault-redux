@@ -50,9 +50,9 @@ Feature: Search
     Scenario: Click on a record
         Given I have done a search with term "Holbrooke"
         When I follow "Interview with Richard C. Holbrooke [1], 1983" 
-        Then I should be on the record page
+        Then I should be on the document page for id 6c7004-interview-with-richard-c-holbrooke-1-1983
 
     Scenario: Click on a record thumbnail
         Given I have done a search with term "Holbrooke"
-        When I follow ""
-        Then I should be on the record page
+        When I follow "Preview"
+        Then I should be on the document page for id 6c7004-interview-with-richard-c-holbrooke-1-1983
