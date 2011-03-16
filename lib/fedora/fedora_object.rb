@@ -24,14 +24,15 @@ module Fedora
     def profile
       @profile ||= Nokogiri::XML(client['/?format=xml'].get)
       h = {}
-      h['models'] ||= []
-      @profile.xpath('/objectProfile/*').map { |tag| h[tag.name] ||= []; h[tag.name] << tag.text }
-      @profile.xpath('/objectProfile/objModels/model').each { |tag| h['models'] << tag.text }
+      xmlns = { 'access' => "http://www.fedora.info/definitions/1/0/access/"}
+      @profile.xpath('/access:objectProfile/*', xmlns).map { |tag| h[tag.name] ||= []; h[tag.name] << tag.text }
+      h['objModels'] = []
+      @profile.xpath('/access:objectProfile/access:objModels/access:model', xmlns).each { |tag| h['objModels'] << tag.text }
       h
     end
 
     def models
-      self.profile['models']
+      self.profile['objModels']
     end
 
     
@@ -68,10 +69,12 @@ module Fedora
     end
 
     def to_solr
-      ({
+      doc = ({
         :id => self.pid.parameterize.to_s,
         :pid_s => self.pid,
-      }).merge(object_profile_to_solr).merge(datastreams_to_solr).reject { |k,v| v.blank? }
+      }).merge(object_profile_to_solr).merge(datastreams_to_solr).merge(relations_to_solr).reject { |k,v| v.blank? }
+
+      doc
     end
 
     protected
@@ -80,8 +83,6 @@ module Fedora
 
       self.profile.each do |key, value|
          case key
-           when "models"
-             h["objModel_s"] = value
            when /Date/
              h["#{key}_dt"] = value
              h["#{key}_s"] = value
@@ -90,12 +91,34 @@ module Fedora
          end
       end
 
+      h
     end
 
     def datastreams_to_solr
-      self.datastreams.select { |x| self.respond_to? "#{x.parameterize("_")}_to_solr".to_sym }.inject({}) do |sum, datastream|
+      self.datastreams.select { |x| self.respond_to? "#{x.parameterize("_")}_to_solr".to_sym }.inject({:disseminates => self.datastreams}) do |sum, datastream|
         sum.merge(self.send("#{datastream.parameterize("_")}_to_solr".to_sym, sum, datastream))
       end
+    end
+
+    def relations_to_solr
+      @repository.sparql('SELECT ?relation ?object FROM <#ri> WHERE {
+                                          {
+  <info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?object
+} UNION {
+<info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?parent.
+?parent ?relation ?object
+} UNION {
+<info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?parent.
+?parent ?relation ?parent2.
+?parent2 ?relation ?object
+}
+FILTER (?relation = <fedora-rels-ext:isMemberOfCollection>)
+                          }').inject({}) do |h, row|
+                            solr_field = "rel_#{row.first.split('#').last}_s"
+                            h[solr_field] ||= []
+                            h[solr_field] << row.last
+                            h
+                          end
     end
 
     def dc_to_solr sum,dsid
