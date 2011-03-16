@@ -46,9 +46,15 @@ module Fedora
       url = @repository.object_url(:pid => pid, :datastream => datastream, :private => options[:private])
     end
   
-    def datastream datastream, options = {}
-      instance_variable_get "@#{datastream}" if instance_variable_defined? "@#{datastream}"
-      instance_variable_set "@#{datastream}", client["datastreams/#{datastream}/content"].get
+    def datastream dsid, options = {}
+      @datastream ||= {}
+      return @datastream[dsid] if @datastream[dsid]
+
+      content = client["datastreams/#{dsid}/content"].get
+      ds = "Fedora::Datastream::#{dsid.downcase.camelize}".constantize.new(dsid, {}, content) rescue nil
+
+      @datastream[dsid] = ds || content
+
     end
   end
 
@@ -95,9 +101,18 @@ module Fedora
     end
 
     def datastreams_to_solr
-      self.datastreams.select { |x| self.respond_to? "#{x.parameterize("_")}_to_solr".to_sym }.inject({:disseminates => self.datastreams}) do |sum, datastream|
-        sum.merge(self.send("#{datastream.parameterize("_")}_to_solr".to_sym, sum, datastream))
+      sum = {:disseminates => self.datastreams }
+
+      self.datastreams.select { |x| "Fedora::Datastream::#{x.downcase.camelize}".constantize rescue false }.map { |x| self.datastream(x) }.select { |x| x.respond_to? :to_solr }.each do |datastream|
+        sum.merge!(datastream.to_solr(sum))
       end
+
+
+      self.datastreams.select { |x| self.respond_to? "#{x.parameterize("_")}_to_solr".to_sym }.each do |datastream|
+        sum.merge!(self.send("#{datastream.parameterize("_")}_to_solr".to_sym, sum, datastream))
+      end
+
+      sum
     end
 
     def relations_to_solr
@@ -138,14 +153,14 @@ FILTER (?relation = <fedora-rels-ext:isMemberOfCollection>)
         end
       end
 
-      h["title_s"] = doc.xpath('//dc:title', xmlns).first.text || h["pid_s"]
+      h["title_s"] = (doc.xpath('//dc:title/text()', xmlns).first || h["pid_s"]).to_s
       h["slug_s"] = h["title_s"].parameterize.to_s
       h
     end
 
     private
     def pid_to_module m
-      m.gsub('info:fedora/', '').titleize.gsub(':', '::').gsub(' ', '').constantize rescue nil
+      m.gsub('info:fedora/', '').titleize.gsub(':', '/').camelize.constantize rescue nil
     end
   end
 end
