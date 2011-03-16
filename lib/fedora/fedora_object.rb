@@ -38,7 +38,7 @@ module Fedora
     def datastreams
       @datastreams ||= Nokogiri::XML(client['datastreams?format=xml'].get)
   
-      @datasteams.xpath('//datastream/@dsid').map { |ds| ds.to_s }
+      @datastreams.xpath('//access:datastream/@dsid', {'access' => "http://www.fedora.info/definitions/1/0/access/"}).map { |ds| ds.to_s }
     end
   
     def datastream_url datastream, options = {}
@@ -65,6 +65,59 @@ module Fedora
         end
       end
 
+    end
+
+    def to_solr
+      ({
+        :id => self.pid.parameterize.to_s,
+        :pid_s => self.pid,
+      }).merge(object_profile_to_solr).merge(datastreams_to_solr).reject { |k,v| v.blank? }
+    end
+
+    protected
+    def object_profile_to_solr
+      h = Hash.new
+
+      self.profile.each do |key, value|
+         case key
+           when "models"
+             h["objModel_s"] = value
+           when /Date/
+             h["#{key}_dt"] = value
+             h["#{key}_s"] = value
+           else
+             h["#{key}_s"] = value
+         end
+      end
+
+    end
+
+    def datastreams_to_solr
+      self.datastreams.select { |x| self.respond_to? "#{x.parameterize("_")}_to_solr".to_sym }.inject({}) do |sum, datastream|
+        sum.merge(self.send("#{datastream.parameterize("_")}_to_solr".to_sym, sum, datastream))
+      end
+    end
+
+    def dc_to_solr sum,dsid
+      h = {}
+      doc = Nokogiri::XML(self.datastream(dsid))
+      xmlns = {'dc' =>"http://purl.org/dc/elements/1.1/", 'dcterms' =>"http://purl.org/dc/terms/", 'fedora-rels-ext' =>"info:fedora/fedora-system:def/relations-external#", 'oai_dc' =>"http://www.openarchives.org/OAI/2.0/oai_dc/", 'rdf' =>"http://www.w3.org/1999/02/22-rdf-syntax-ns#", 'xsi' =>"http://www.w3.org/2001/XMLSchema-instance"}
+
+      doc.xpath('//dc:*', xmlns).each do |tag|
+        case tag.name
+          when 'description'
+            h["#{tag.namespace.prefix}_#{tag.name}_t"] = tag.text
+          when 'date'
+            h["dc_date_year_i"] = tag.text.scan(/(\d{4})/).flatten.first
+            h["#{tag.namespace.prefix}_#{tag.name}_s"] = tag.text
+          else
+            h["#{tag.namespace.prefix}_#{tag.name}_s"] = tag.text
+        end
+      end
+
+      h["title_s"] = doc.xpath('//dc:title', xmlns).first.text || h["pid_s"]
+      h["slug_s"] = h["title_s"].parameterize.to_s
+      h
     end
 
     private
