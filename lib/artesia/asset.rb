@@ -23,7 +23,7 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
     end
 
     def uois
-      self.doc
+      self.doc.root
     end
 
     def validate_datastreams
@@ -43,7 +43,7 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
       Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isDerivationOf', :object => "info:fedora/#{self.pid}", :isLiteral => false, :datatype => nil
       Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => "info:fedora/org.mla.openvault", :isLiteral => false, :datatype => nil
 
-      cmodel = nil
+      cmodel = []
 
       # RELS
 
@@ -78,6 +78,7 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
       # Media
       ['.mp4'=> 'video/mp4', '.mp3' => 'audio/mp3', '.flv' => 'audio/x-flv', '.jpg' => 'image/jpg'].each do |ext, mime|
         if dsLocation = Openvault::Media.filename_to_url( uois['NAME'].gsub(File.extname(uois['NAME']), ".#{ext}"))
+          cmodel << mime.split('/').first
           dsid = mime.sub('/', '.').capitalize
           Fedora::Datastream.new(dsid, {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client)
           Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client) if ext == '.jpg'
@@ -105,13 +106,16 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
       contains.each do |p, label|
         case label
           when /xml/
-            Fedora::Datastream.new('Transcript.tei.xml', {:controlGroup => 'R',:dsLocation => label, :mimeType => 'text/xml' }).add(obj.client)
+            cmodel << 'tei'
+            dsLocation = Openvault::Media.filename_to_url(label)
+            Fedora::Datastream.new('Transcript.tei.xml', {:controlGroup => 'R',:dsLocation => dsLocation, :mimeType => 'text/xml' }).add(obj.client)
           when /jpg/
-            Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R',:dsLocation => label.gsub(File.extname(label), '.jpg'), :mimeType => 'image/jpg' }).add(obj.client)
+            dsLocation = Openvault::Media.filename_to_url(label)
+            Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R',:dsLocation => dsLocation, :mimeType => 'image/jpg' }).add(obj.client)
         end
       end
 
-      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/model#hasModel', :object => "info:fedora/openvault:#{cmodel.join('-').parameterize}", :isLiteral => false, :datatype => nil
+      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/model#hasModel', :object => "info:fedora/openvault:#{cmodel.join('-').parameterize}", :isLiteral => false, :datatype => nil unless cmodel.empty?
       
       self.doc.xpath
     end
