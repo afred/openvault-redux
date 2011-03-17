@@ -22,7 +22,12 @@ module Fedora
     end
   
     def profile
-      @profile ||= Nokogiri::XML(client['/?format=xml'].get)
+      unless @profile
+        profilexml = client['/?format=xml'].get
+        profilexml.gsub! '<objectProfile', '<objectProfile xmlns="http://www.fedora.info/definitions/1/0/access/"' unless profilexml =~ /xmlns=/
+        @profile ||= Nokogiri::XML(profilexml)
+      end
+
       h = {}
       xmlns = { 'access' => "http://www.fedora.info/definitions/1/0/access/"}
       @profile.xpath('/access:objectProfile/*', xmlns).map { |tag| h[tag.name] ||= []; h[tag.name] << tag.text }
@@ -37,7 +42,11 @@ module Fedora
 
     
     def datastreams
-      @datastreams ||= Nokogiri::XML(client['datastreams?format=xml'].get)
+      unless @datastreams
+        datastreamsxml = client['datastreams?format=xml'].get
+        datastreamsxml.gsub! '<objectDatastreams', '<objectDatastreams xmlns="http://www.fedora.info/definitions/1/0/access/"' unless datastreamsxml =~ /xmlns=/
+        @datastreams ||= Nokogiri::XML(datastreamsxml)
+      end
   
       @datastreams.xpath('//access:datastream/@dsid', {'access' => "http://www.fedora.info/definitions/1/0/access/"}).map { |ds| ds.to_s }
     end
@@ -51,7 +60,7 @@ module Fedora
       return @datastream[dsid] if @datastream[dsid]
 
       content = client["datastreams/#{dsid}/content"].get
-      ds = "Fedora::Datastream::#{dsid.downcase.camelize}".constantize.new(dsid, {}, content) rescue nil
+      ds = "Fedora::Datastream::#{dsid.downcase.parameterize('_').camelize}".constantize.new(dsid, {}, content) rescue nil
 
       @datastream[dsid] = ds || content
 
@@ -76,8 +85,8 @@ module Fedora
 
     def to_solr
       doc = ({
-        :id => self.pid.parameterize.to_s,
-        :pid_s => self.pid,
+        "id" => self.pid.parameterize.to_s,
+        "pid_s" => self.pid,
       }).merge(object_profile_to_solr).merge(datastreams_to_solr).merge(relations_to_solr).reject { |k,v| v.blank? }
 
       doc
@@ -101,9 +110,9 @@ module Fedora
     end
 
     def datastreams_to_solr
-      sum = {:disseminates => self.datastreams }
+      sum = {"disseminates_s" => self.datastreams }
 
-      self.datastreams.select { |x| "Fedora::Datastream::#{x.downcase.camelize}".constantize rescue false }.map { |x| self.datastream(x) }.select { |x| x.respond_to? :to_solr }.each do |datastream|
+      self.datastreams.select { |x| "Fedora::Datastream::#{x.downcase.parameterize("_").camelize}".constantize rescue false }.map { |x| self.datastream(x) }.select { |x| x.respond_to? :to_solr }.each do |datastream|
         sum.merge!(datastream.to_solr(sum))
       end
 

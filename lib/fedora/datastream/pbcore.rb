@@ -50,7 +50,7 @@ module Fedora::Datastream
         end
 
         doc.inject({}) do |sum, (key,value)|
-          next if value.blank?
+          next sum if value.blank?
           key.gsub!('__', '_')
           sum[key] ||= []
           sum[key] <<  value.strip
