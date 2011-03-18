@@ -9,7 +9,7 @@ module Openvault::SolrHelper::Restrictions
   end
 
   def authorization_params
-    return { :phrase_filters => { :objState_s => "A", :rel_isMemberOfCollection_s => "org.wgbh.openvault" } }
+    return { :phrase_filters => { :objState_s => "A", :rel_isMemberOfCollection_s => "info:fedora/org.wgbh.openvault" } }
 
   end
 

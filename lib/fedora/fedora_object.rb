@@ -125,19 +125,19 @@ module Fedora
     end
 
     def relations_to_solr
-      @repository.sparql('SELECT ?relation ?object FROM <#ri> WHERE {
+      @repository.sparql("SELECT ?relation ?object FROM <#ri> WHERE {
                                           {
-  <info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?object
+  <info:fedora/#{pid}> ?relation ?object
 } UNION {
-<info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?parent.
+<info:fedora/#{pid}> ?relation ?parent.
 ?parent ?relation ?object
 } UNION {
-<info:fedora/org.wgbh.mla:122a2700c27dd6d2071de58e33c750101938a2e0> ?relation ?parent.
+<info:fedora/#{pid}> ?relation ?parent.
 ?parent ?relation ?parent2.
 ?parent2 ?relation ?object
 }
 FILTER (?relation = <fedora-rels-ext:isMemberOfCollection>)
-                          }').inject({}) do |h, row|
+                          }").inject({}) do |h, row|
                             solr_field = "rel_#{row.first.split('#').last}_s"
                             h[solr_field] ||= []
                             h[solr_field] << row.last

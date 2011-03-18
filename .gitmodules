@@ -34,3 +34,6 @@
 [submodule "public/mediaelement"]
 	path = public/mediaelement
 	url = https://github.com/johndyer/mediaelement.git
+[submodule "vendor/plugins/blacklight_facet_extras"]
+	path = vendor/plugins/blacklight_facet_extras
+	url = git://github.com/cbeer/blacklight_facet_extras.git

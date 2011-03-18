@@ -37,6 +37,7 @@ Rails::Initializer.run do |config|
 config.gem "acts-as-taggable-on", :source => "http://gemcutter.org", :version => '2.0.0.rc1'
 config.gem 'jackdempsey-acts_as_commentable', :lib => 'acts_as_commentable', :source => "http://gems.github.com"
 config.gem "acts_as_rateable"
+config.gem "progressbar"
 
 
 
