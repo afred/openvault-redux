@@ -5,50 +5,11 @@ source_credits = ''
 %>
 <div class="pbcore-metadata">
 
-<div>
-  <h3 class="toggler">Source</h3>
-  <div>
-    <% pbcore.titles.each do |type, value| %>
-      <div><strong><%= type %></strong> <%= value %></div>
-    <% end %>
-
-    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
-      <div><strong><%= type %></strong> <%= value %></div>
-      <% source_credits << "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>" if value =~ /ABC/ %>
-      <% source_credits << "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>" if value =~ /CBS/ %>
-    <% end %>
-    <div class="source-credits">
-      <%= source_credits %>
-    </div>
-  </div>
-</div>
-
-<div>
-  <h3 class="toggler">Description</h3>
-  <div>
-    <div>
-      <% pbcore.descriptions.reject{|type, value| type == 'Abstract' }.each do |type, value| %>
-        <div><strong><%= type %></strong> <%= value.gsub('</resource_link>', '</a>').gsub('<resource_link res="', '<a class="resource_link" href="/catalog/org.wgbh.mla:') %></div>
-      <% end %>
-    </div>
-    
-<% subjects = pbcore.subjects("").merge(pbcore.subjects("Subject Heading")).merge(pbcore.subjects("LC")).map { |authority, value| value }.flatten %>
-<% unless subjects.blank? %>
-      <div><strong>Topics</strong>
-      <ul>
-      <% subjects.map { |v| v[:subject] }.uniq.each do |s| %>
-    	<%= content_tag(:li, link_to(s, catalog_index_path({:f =>{ 'topic' => [ s ]}}))) %>
-      <% end %>
-      </ul>
-    </div>
-<% end %>
-
-</div>
-</div>
+  <div class="pbcore-source-metadata">
 
 <% instantiations = pbcore.instantiation %>
 <% unless instantiations.blank? %>
-<div>
+<div class="media">
 <h3 class="toggler">Media</h3>
 <% instantiations.each do |inst| %>
 <div>
@@ -72,12 +33,76 @@ source_credits = ''
 
 </div>
 <% end %>
+<div class="source">
+  <h3 class="toggler">Source</h3>
+  <div>
+    <% pbcore.titles.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+    <% end %>
 
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+      <% source_credits << "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>" if value =~ /ABC/ %>
+      <% source_credits << "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>" if value =~ /CBS/ %>
+    <% end %>
+    <div class="source-credits">
+      <%= source_credits %>
+    </div>
+  </div>
+</div>   
+
+<div class="description">
+  <h3 class="toggler">Description</h3>
+  <div>
+    <div>
+      <% pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.each do |type, value| %>
+        <div><strong><%= type %></strong> <%= value.gsub('</resource_link>', '</a>').gsub('<resource_link res="', '<a class="resource_link" href="/catalog/org.wgbh.mla:') %></div>
+      <% end %>
+    </div>
+    
+
+</div>
+</div>
+
+</div>
+
+<div class="pbcore-description-metadata">
+
+
+
+
+<% coverage = pbcore.coverage %>
+
+<% unless coverage['Temporal'].blank? %>
+<div class="date">   
+<div><strong>Date Covered</strong>
+
+<ul>
+      <% coverage['Temporal'].uniq.each do |s| %>
+        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
+      <% end %>
+</ul>
+</div>
+</div>
+<% end %>
+        
+<% unless coverage['Spatial'].blank? %>
+<div class="place">   
+<div><strong>Place Covered</strong>
+
+<ul>
+      <% coverage['Spatial'].uniq.each do |s| %>
+        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
+      <% end %>
+</ul>
+</div>
+</div>
+<% end %>
+<div class="people">
 <% contributors = pbcore.contributors %>
 <% creators = pbcore.creators %>
 <% unless contributors.blank? and creators.blank? %>
 <div>
-<h3  class="toggler">People</h3>
 <% creators.each do |k, v| %>
 <% k = 'People' if k.blank? %>
 <div><strong><%= k %></strong>
@@ -104,35 +129,6 @@ end
 %>
 </div>
 <% end %>
-
-<% coverage = pbcore.coverage %>
-
-<% unless coverage['Temporal'].blank? %>
-<div>   
-<h3  class="toggler">Date</h3>
-<div><strong>Covered</strong>
-
-<ul>
-      <% coverage['Temporal'].uniq.each do |s| %>
-        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
-      <% end %>
-</ul>
+         </div>
 </div>
-</div>
-<% end %>
-        
-<% unless coverage['Spatial'].blank? %>
-<div>   
-<h3  class="toggler">Place</h3>
-<div><strong>Covered</strong>
-
-<ul>
-      <% coverage['Spatial'].uniq.each do |s| %>
-        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
-      <% end %>
-</ul>
-</div>
-</div>
-<% end %>
-
 </div>

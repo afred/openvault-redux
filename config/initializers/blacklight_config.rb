@@ -183,10 +183,12 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:show_fields] = {
     :field_names => [
-      "title_display",
+      "dc_description_t",
+      "topic_cv"
     ],
     :labels => {
-      "title_display"           => "Title:",
+      "dc_description_t"           => "Summary:",
+      "topic_cv" => "Topics:"
     }
   }
 

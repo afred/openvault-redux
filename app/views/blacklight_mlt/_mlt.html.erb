@@ -1,0 +1,7 @@
+<div class="mlt">
+<div  class="thumbnail">
+  <%= link_to_document object, :label=>(image_tag(object.thumbnail.url(:style => :preview)).html_safe) %>
+</div>
+<%= link_to_document object %>
+<%= object.get 'dc_description_t' %>
+</div>

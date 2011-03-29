@@ -689,3 +689,23 @@ ul.facet_extended_list {
 audio {
     width: 320px;
 }
+
+.pbcore-metadata {
+  .pbcore-source-metadata {
+    .media, .source {
+       float: left;
+       width: 200px;
+    }
+
+    @include clearfix;
+  }
+
+  .pbcore-description-metadata {
+    .date, .place, .people {
+      float: left;
+      width: 200px;
+    }
+    @include clearfix;
+
+  }
+}
