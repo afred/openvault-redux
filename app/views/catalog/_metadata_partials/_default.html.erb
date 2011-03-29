@@ -3,6 +3,7 @@ require 'lib/openvault/pbcore'
 pbcore = Openvault::Pbcore::Document.new(open(@document.fedora_object.datastream_url("PBCore")))
 source_credits = '' 
 %>
+<div class="pbcore-metadata">
 
 <div>
   <h3 class="toggler">Source</h3>
@@ -134,3 +135,4 @@ end
 </div>
 <% end %>
 
+</div>

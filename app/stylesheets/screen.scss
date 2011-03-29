@@ -201,28 +201,6 @@ body.bp a {
 }
 
 .blacklight-catalog-show {
-  #doc3 {
-    background-position: 100% 0px;
-    min-width: 1045px;
-  }
-
-  #yui-main {
-    float: left;
-    margin-left: 0;
-    margin-right: -304px;
-    .yui-b {
-        margin-right: 314px;
-        margin-left: 10px;
-
-    }
-  }
-
-
-  #bd {
-  .sidebar {
-     float: right;
-  }
-  }
 
   .pageEntriesInfo, #previousNextDocument {
       display: none;
@@ -585,6 +563,10 @@ dl.defList dd {float: left; text-align: left; margin: 0; padding: 2px 0; width: 
      overflow: auto;
 
    }
+}
+
+.pbcore-metadata {
+  clear: both;
 }
 
 
