@@ -3,17 +3,19 @@ module Openvault::SolrHelper
     def self.included(some_class)
     end
  
-  def solr_search_params extra_controller_params
+  def solr_search_params extra_controller_params = {}
     solr_params = super(extra_controller_params)
-    solr_params.merge(default_sort_params)
+    apply_default_sort_params(solr_params)
   end
 
-  def default_sort_params
-    return { :sort => "random_#{rand(9999)} asc"} if params[:sort] == 'random'
-    return {} if params[:sort]
-    return { :sort => 'timestamp desc' } if params[:q].blank? and params[:f] and params[:f]['rel_isMemberOfCollection_s'] and params[:f]['rel_isMemberOfCollection_s'].first == 'org.wgbh.mla:pledge'
-    return { :sort => 'title_sort asc' } if params[:q].blank? 
-    {}
+  def apply_default_sort_params solr_params
+
+    solr_params[:sort] = "random_#{rand(9999)} asc" if solr_params[:sort] == 'random'
+
+    solr_params[:sort] ||= 'timestamp desc' if solr_params[:q].blank? and solr_params[:fq] and solr_params[:fq].any? { |x| x =~ /rel_isMemberOfCollection_s/ and x =~ /org.wgbh.mla:pledge/}
+    solr_params[:sort] ||= 'title_sort asc' if solr_params[:q].blank?
+
+    solr_params
   end
 end
 end
