@@ -25,7 +25,7 @@ module Openvault::Solr::Document::Thumbnail
         return @document.get('thumbnail_url_s') || @document.fedora_object.datastream_url("Thumbnail")
       end
 
-      return "/system/thumbnails/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize, "#{options[:style]}.jpg")
+      return "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(dir_path, "#{options[:style]}.jpg")
 
       style = config[:style][options[:style]]
 
@@ -40,22 +40,33 @@ module Openvault::Solr::Document::Thumbnail
       dst = tn.make
 
 
-      FileUtils.mkdir_p File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize)
-      FileUtils.mv dst.path, File.join(Rails.root, "public", "system",  "thumbnails", @document.get('pid_s').parameterize, "#{options[:style]}.jpg") 
+      FileUtils.mkdir_p dir_path
+      FileUtils.mv dst.path, File.join(dir_path, "#{options[:style]}.jpg") 
 
       file.unlink
       dst.unlink
 
-      "/system/thumbnails/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
+      "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
       rescue
-        return "/system/thumbnails/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
+        return "#{base_url}/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
         file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
         tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
         dst = tn.make
-        FileUtils.mv dst.path, File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
-        "/system/thumbnails/no-image-available-#{options[:style]}.jpg"
+        FileUtils.mv dst.path, File.join(base_path, "no-image-available-#{options[:style]}.jpg")
+        "#{base_url}/no-image-available-#{options[:style]}.jpg"
       end
     end
 
+    protected
+    def base_url
+      "/system/thumbnails/"
+    end
+    def base_path
+       File.join(Rails.root, "public", "system",  "thumbnails")
+    end
+
+    def dir_path
+      File.join(base_path, @document.get('pid_s').parameterize)
+    end
   end
 end
