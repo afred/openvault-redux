@@ -1,6 +1,10 @@
 require_dependency 'vendor/plugins/blacklight/app/helpers/application_helper.rb'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def application_name
+    "WGBH Open Vault"
+  end
+
   def render_document_partial(doc, action_name)
     format = self.send "document_#{action_name}_partial_name", doc if self.respond_to? "document_#{action_name}_partial_name"
     format ||= document_partial_name(doc)
