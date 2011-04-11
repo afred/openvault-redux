@@ -17,9 +17,36 @@
 @import "partials/page";
 //@import "partials/form";
 //@import "partials/two_col";
-#bd {
-   @include container;
+
+#doc3 {
+  @include container;
+  @include showgrid;
    margin-left: 0;
+}
+
+#hd {
+    @include clearfix;
+    .yui-g {
+       @include column(12);
+
+    }
+
+    #search {
+      @include column(9, true);
+      h2 {
+       display: none;
+    } 
+
+    hr {
+      display: none;
+    }
+}
+
+}
+
+
+#bd {
+    @include clearfix;
 }
 
 #yui-main {
@@ -31,6 +58,53 @@
   @include column(6); 
   @include pull(24, true);
   @include last;
+}
+
+.search-results-header {
+   @include column(18, true);
+
+   .pageEntriesInfo {
+      @include column(6);
+      @include prepend(4);
+   }
+
+   #sortAndPerPage {
+      @include column(4);
+      @include pull(10);
+   }
+
+   .pagination {
+      @include clearfix;
+
+      .prev_page {
+         @include column(2);
+      }
+
+      .next_page {
+         @include column(2);
+         @include push(0);
+      }
+
+      .page_links {
+         @include column(4);
+         @include pull(0);
+      }
+
+   }
+}
+
+#documents {
+  @include column(18, true);
+}
+
+.per_page {
+   display: none;
+}
+
+.pagination {
+  h2 {
+      display: none;
+  }
 }
 
 .document {
