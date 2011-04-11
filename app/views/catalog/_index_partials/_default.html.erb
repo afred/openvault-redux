@@ -6,14 +6,15 @@
   <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview)).html_safe) %>
 </div>
 <div class="defList_container">
-<dl class="defList">
-  
+
+<%# default partial to display solr document fields in catalog show view -%>
   <% index_field_names.each do |solr_fname| -%>
-    <% if document.has? solr_fname or solr_fname =~ /highlight$/%>
-	    <dt class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_label :field => solr_fname %></dt>
-	    <dd class="blacklight-<%= solr_fname.parameterize %>"><%= render_index_field_value :document => document, :field => solr_fname %></dd>
+    <% value = render_index_field_value :document => document, :field => solr_fname %>
+    <% unless value.blank? %>
+      <div class="blacklight-<%= solr_fname.parameterize %>" >
+	    <div class="label"><%= render_index_field_label :field => solr_fname %></div>
+            <div class="value"><%= render_index_field_value :document => document, :field => solr_fname %></div>
+          </div>
     <% end -%>
   <% end -%>
-
-</dl>
 </div>

@@ -158,25 +158,23 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "dc_description_t",
       "fulltext_t",
+      "dc_description_t",
       "dc_date_s",
       "media_dsid_s",
-      "pbcore_pbcoreInstantiation_formatGenerations_s",
       "pbcore_pbcoreTitle_program_s" 
     ],
     :labels => {
-      "dc_description_t" => "Description",
       "fulltext_t" => "Text",
+      "dc_description_t" => "Summary",
       "dc_date_s" => "Date Created",
       "media_dsid_s" => "Media",
-      "pbcore_pbcoreInstantiation_formatGenerations_s" => "Generation",
-      "pbcore_pbcoreTitle_program_s" => "Program",
+      "pbcore_pbcoreTitle_program_s" => "Program"
     },
-    :highlight => [
-     "dc_description_t",
-     "fulltext_t"
-    ]
+    :highlight => {
+     "dc_description_t" => true,
+     "fulltext_t" => { :default => '' }
+    }
   }
 
   # solr fields to be displayed in the show (single result) view
@@ -258,6 +256,7 @@ Blacklight.configure(:shared) do |config|
    'hl.fl' => ['fulltext_t', 'dc_description_t'],
    'f.fulltext_t.hl.snippets' => 3,
    'f.fulltext_t.hl.fragsize' => 300,
+   'f.dc_description_t.hl.alternateField' => 'dc_description_t',
    'f.dc_description_t.hl.fragsize' => 50000
   }
 

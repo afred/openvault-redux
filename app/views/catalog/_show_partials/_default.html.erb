@@ -1,9 +1,25 @@
 <%# default partial to display solr document fields in catalog show view -%>
-<dl class="documentMetadata defList">
+<div class="defList_container">
   <% document_show_fields.each do |solr_fname| -%>
     <% if document.has? solr_fname %>
-	    <dt class="blacklight-<%= solr_fname.parameterize %>"><%= render_document_show_field_label :field => solr_fname %></dt>
-	    <dd class="blacklight-<%= solr_fname.parameterize %>"><%= render_document_show_field_value :document => document, :field => solr_fname %></dd>
+      <div class="blacklight-<%= solr_fname.parameterize %>" >
+	    <div class="label"><%= render_document_show_field_label :field => solr_fname %></div>
+            <div class="value"><%= render_document_show_field_value :document => document, :field => solr_fname %></div>
+          </div>
     <% end -%>
   <% end -%>
-</dl>
+  <div class="blacklight-tags">
+    <div class="label">Tags (<%= document.tags.length %>)</div>
+    <div class="value"><%= document.tags.join(", ") %></div>
+  </div>
+  <%= link_to "Add Tag", :class => 'new_tag' %>
+
+  <div class="blacklight-comments">
+    <div class="label">Annotations</div>
+    <div class="value">
+      <%= link_to "my annotations" if current_user %>
+      <%= link_to "public annotation (#{ document.comments.length })", catalog_comments_path(:catalog_id => document.id) %>
+    </div>
+  </div>
+  <%= link_to "Add Annotation", new_catalog_comment_path(:catalog_id => document.id), :class => 'new_annotation' %>
+  </div>
