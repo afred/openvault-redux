@@ -62,6 +62,7 @@
 
 .search-results-header {
    @include column(18, true);
+   }
 
    .pageEntriesInfo {
       @include column(6);
@@ -91,6 +92,10 @@
       }
 
    }
+
+#documents + .pagination {
+   @include column(10);
+   @include prepend(8);
 }
 
 #documents {
