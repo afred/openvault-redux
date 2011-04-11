@@ -14,7 +14,7 @@
         <%= render_index_doc_actions document %>
         
         <% # main title container for doc partial view -%>
-        <h3 class="index_title"><%= counter + 1 + @response.params[:start].to_i %>. <%= link_to_document document, :label=>document_show_link_field, :counter => (counter + 1 + @response.params[:start].to_i) %><%= " (Video Excerpt)" if document.get('media_dsid_s') =~ /Video/ and document.get('dc_type_s') =~ /excerpt/ %></h3>
+        <h3 class="index_title"><%= link_to_document document, :label=>document_show_link_field, :counter => (counter + 1 + @response.params[:start].to_i) %><%= " (Video Excerpt)" if document.get('media_dsid_s') =~ /Video/ and document.get('dc_type_s') =~ /excerpt/ %></h3>
 
         
       </div>
