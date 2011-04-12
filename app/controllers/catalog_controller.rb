@@ -8,7 +8,17 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::Restrictions
   include Openvault::SolrHelper::FacetDomsearch
 
+  before_filter :handle_search_start_over, :only => :index
+
+  def handle_search_start_over
+    if params[:search_context] == "all"
+      redirect_to catalog_index_url params.slice(:q, :search_field)
+    end
+  end
+
   def index
+
+    @search_context = 'result' if @template.has_search_parameters?
 
     extra_head_content << '<link rel="alternate" type="application/rss+xml" title="RSS for results" href="'+ url_for(params.merge("format" => "rss")) + '">'
     extra_head_content << '<link rel="alternate" type="application/atom+xml" title="Atom for results" href="'+ url_for(params.merge("format" => "atom")) + '">'

@@ -1,12 +1,25 @@
 <div id="search" class="search">
   <% form_tag catalog_index_path, :method => :get do %>
-    <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
+    <h2 class="search"><%= label_tag(:q, "Search Archive") %></h2>
+    <div>
     <%= text_field_tag :q, params[:q], :class => "q" %>
     
+    <%= hidden_field_tag :search_field, 'all_fields' %>
     <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]) %>        
     
     <%= submit_tag 'search', :class=>'submit' %>
+  </div>
+  <% if  @controller.controller_name == 'catalog' and  @controller.action_name == 'index' %>
+  <div class="search_context">
+  <%= radio_button_tag 'search_context', 'all', @search_context == 'all' || @search_context.nil? %><%= label_tag 'new_search_true', 'All Records' %>
+  <%= radio_button_tag 'search_context', 'result', @search_context == 'result' %><%= label_tag 'new_search_false', 'Within Results' %>
+  </div>
+<% end %>
   <% end %>
 
   <hr/>
+</div>
+
+<div id="browse">
+  <h2 class="search">Browse Archive</h2>
 </div>
