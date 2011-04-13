@@ -14,7 +14,7 @@ namespace :openvault do
 ?parent <fedora-rels-ext:isMemberOfCollection> ?parent2.
 ?parent2 <fedora-rels-ext:isMemberOfCollection> ?object
 }
-                                      FILTER (?object = <info:fedora/org.wgbh.openvault>) }")
+                                      FILTER (?object = <info:fedora/wgbh:openvault>) }")
 
     pids.shift
 

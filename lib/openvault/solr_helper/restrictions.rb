@@ -1,21 +1,16 @@
 module Openvault::SolrHelper::Restrictions
   def self.included(some_class)
-
+    some_class.solr_search_params_logic << :apply_authorization_params
   end
 
-  def solr_search_params(extra_controller_params = {})
-    solr_params = super(extra_controller_params)
-    apply_authorization_params(solr_params)
-  end
+  def apply_authorization_params solr_parameters, user_parameters
 
-  def apply_authorization_params solr_params
+    solr_parameters[:fq] ||= []
 
-    solr_params[:fq] ||= []
+    solr_parameters[:fq] << "objState_s:A"
+    solr_parameters[:fq] << "rel_isMemberOfCollection_s:wgbh\\:openvault"
 
-    solr_params[:fq] << "objState_s:A"
-    solr_params[:fq] << "rel_isMemberOfCollection_s:org.wgbh.openvault"
-
-    solr_params
+    solr_parameters
   end
 
 end
