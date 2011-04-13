@@ -33,7 +33,7 @@ module Fedora
 
     def sparql query
       rels_ext = risearch :dt => 'on', :format => 'CSV', :lang => 'sparql', :limit => nil, :query => query, :type => 'tuples'
-      FasterCSV.parse(rels_ext.body)
+      FasterCSV.parse(rels_ext.body, :headers => true)
     end
 
     def fedora_parts pid
