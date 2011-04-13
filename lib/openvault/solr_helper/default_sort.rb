@@ -1,21 +1,17 @@
 module Openvault::SolrHelper
   module DefaultSort
     def self.included(some_class)
+      some_class.solr_search_params_logic << :apply_default_sort_params
     end
  
-  def solr_search_params extra_controller_params = {}
-    solr_params = super(extra_controller_params)
-    apply_default_sort_params(solr_params)
-  end
+  def apply_default_sort_params solr_parameters, user_parameters
 
-  def apply_default_sort_params solr_params
+    solr_parameters[:sort] = "random_#{rand(9999)} asc" if user_parameters[:sort] == 'random'
 
-    solr_params[:sort] = "random_#{rand(9999)} asc" if solr_params[:sort] == 'random'
+    solr_parameters[:sort] ||= 'timestamp desc' if solr_parameters[:q].blank? and solr_parameters[:fq] and solr_parameters[:fq].any? { |x| x =~ /rel_isMemberOfCollection_s/ and x =~ /org.wgbh.mla:pledge/}
+    solr_parameters[:sort] ||= 'title_sort asc' if solr_parameters[:q].blank?
 
-    solr_params[:sort] ||= 'timestamp desc' if solr_params[:q].blank? and solr_params[:fq] and solr_params[:fq].any? { |x| x =~ /rel_isMemberOfCollection_s/ and x =~ /org.wgbh.mla:pledge/}
-    solr_params[:sort] ||= 'title_sort asc' if solr_params[:q].blank?
-
-    solr_params
+    solr_parameters
   end
 end
 end
