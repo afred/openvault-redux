@@ -5,7 +5,11 @@ class AddOpenvaultCollectionToFedoraObjects < ActiveRecord::Migration
     ?pid <info:fedora/fedora-system:def/model#hasModel> <info:fedora/wgbh:CONCEPT>
   } UNION {
     ?pid <info:fedora/fedora-system:def/model#hasModel> <info:fedora/wgbh:COLLECTION>
-  }
+  }.
+ OPTIONAL {
+    ?pid <info:fedora/fedora-system:def/relations-external#isThumbnailOf> ?tn
+  } .
+  FILTER(bound(?tn)) . 
 }'
 
     concept_pids.map { |x| x['pid'].gsub('info:fedora/', '') }.each do |pid|

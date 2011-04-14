@@ -61,7 +61,7 @@ end
 pids_to_collection = Fedora.repository.sparql '
 SELECT ?pid ?collection FROM <#ri> WHERE {
     ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> ?collection .
-    ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/org.wgbh.openvault>.
+    ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/wgbh:openvault>.
    OPTIONAL {  { ?pid <info:fedora/fedora-system:def/view#disseminates> ?tn .
      ?tn <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Thumbnail>
   } UNION {
@@ -74,13 +74,13 @@ SELECT ?pid ?collection FROM <#ri> WHERE {
 h = {}
 
 pids_to_collection.sort_by { |x| x['pid'].last.length }.reverse.each do |x|
-  next if h[pid]
+  next if h['pid']
   h[x['pid']] = true
 
   obj = Fedora::FedoraObject.find(x['pid'].gsub('info:fedora/', ''))
   print "#{obj.pid}\n"
 
-  Fedora.Datastream.new('Thumbnail', {:controlGroup => 'E', :dsLocation => "http://local.fedora.server/fedora/get/#{collection.gsub('info:fedora/', '')}/Thumbnail", :mimeType => 'image/jpg'}).add(obj.client)
+  Fedora::Datastream.new('Thumbnail', {:controlGroup => 'E', :dsLocation => "http://local.fedora.server/fedora/get/#{x['collection'].gsub('info:fedora/', '')}/Thumbnail", :mimeType => 'image/jpg'}).add(obj.client)
   
 end
 

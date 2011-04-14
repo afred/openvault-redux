@@ -16,11 +16,9 @@ namespace :openvault do
 }
                                       FILTER (?object = <info:fedora/wgbh:openvault>) }")
 
-    pids.shift
-
     pbar = ProgressBar.new("indexing", pids.length)
 
-    solrdocs = pids.flatten.map { |pid| pid.gsub('info:fedora/', '') }.map do |pid| 
+    solrdocs = pids.map { |x| x['pid'].gsub('info:fedora/', '') }.map do |pid| 
       pbar.inc
       Fedora::FedoraObject.find(pid).to_solr rescue nil
     end

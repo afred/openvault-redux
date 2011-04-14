@@ -138,9 +138,9 @@ module Fedora
 }
 FILTER (?relation = <fedora-rels-ext:isMemberOfCollection>)
                           }").inject({}) do |h, row|
-                            solr_field = "rel_#{row.first.split('#').last}_s"
+                            solr_field = "rel_#{row['relation'].split('#').last}_s"
                             h[solr_field] ||= []
-                            h[solr_field] << row.last
+                            h[solr_field] << row['object'].gsub('info:fedora/', '')
                             h
                           end
     end

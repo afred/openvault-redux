@@ -1,4 +1,3 @@
-require 'lib/openvault/Fedora-API-M-WSDLDriver.rb'
 module Fedora
   class Repository
     def initialize args
@@ -22,9 +21,13 @@ module Fedora
     end
 
     def soap
-      fedora = FedoraAPIM.new(@endpoint + "/services/management")
-      fedora.options['protocol.http.basic_auth'] << [@endpoint + "/services/management", @user, @pass]
-      fedora
+      return @soap if @soap
+      require 'soap/wsdlDriver'
+
+      @soap = SOAP::WSDLDriverFactory.new("#{ @endpoint }/services/management?wsdl").create_rpc_driver
+      @soap.options['protocol.http.basic_auth'] << [@soap.endpoint_url, @user, @pass]
+
+      @soap
     end
 
     def risearch options
