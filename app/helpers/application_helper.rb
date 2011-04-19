@@ -33,4 +33,8 @@ module ApplicationHelper
     label = render_document_index_label doc, opts
     return link_to(label, catalog_path(doc[:id]))
   end
+
+  def datastream_url datastream, options = {}
+    "http://localhost:8180/fedora/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
+  end
 end

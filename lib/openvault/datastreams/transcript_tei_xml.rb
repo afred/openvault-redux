@@ -1,13 +1,7 @@
-module Fedora::Datastream
-   class TranscriptTeiXml < Generic
-     def initialize name, opts={}, source=nil, content_type='text/plain'
-       @opts = {:controlGroup => 'M', :dsLabel => name, :checksumType => 'DISABLED'}.merge opts
-       @source = source
-       @name = name
-       @content_type = content_type
-     end
-
-     def to_solr sum
+module Openvault::Datastreams
+   module TranscriptTeiXml
+     def to_solr solr_doc = {}
+       super(solr_doc)
        tei = Nokogiri::XML(self.content)
        doc = []
        xmlns = { 'tei' => 'http://www.tei-c.org/ns/1.0' }
@@ -33,13 +27,10 @@ module Fedora::Datastream
 
 
 
-       doc.inject({}) do |sum, (key,value)|
-         next sum if value.blank?
+       doc.each do |key,value|
          key.gsub!('__', '_')
-         sum[key] ||= []
-         sum[key] <<  value.strip
-
-         sum
+         solr_doc[key] ||= []
+         solr_doc[key] <<  value.strip
        end
      end
    end

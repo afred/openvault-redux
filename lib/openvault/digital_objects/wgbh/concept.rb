@@ -1,9 +1,10 @@
-module Wgbh
+module Openvault::DigitalObjects::Wgbh
    module Concept
+     def self.extended(document)
+       document.solr_mapping_logic << :openvault_metadata_for_solr
+     end
 
-     def to_solr
-       doc = super
-
+     def openvault_metadata_for_solr(doc = {})
        doc['media_dsid_s'] = doc['disseminates_s']
        doc['media_dsid_s'].uniq!
 
@@ -41,9 +42,6 @@ module Wgbh
 
        doc['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s 
        doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s']}" unless doc['slug_s'].blank? 
-
-       doc
-
      end
    end
 end

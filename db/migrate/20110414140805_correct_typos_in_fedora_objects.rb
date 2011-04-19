@@ -15,6 +15,7 @@ class CorrectTyposInFedoraObjects < ActiveRecord::Migration
       'Speight, Alonzo' => 'Speight, Alonzo R.',
       'Stweart, Aubrey' => 'Stewart, Aubrey',
       'Barrow-Murray, Barabara' => 'Barrow-Murray, Barbara',
+      'Barrow - Murray, Barbara' => 'Barrow-Murray, Barbara',
       'Barrow, Barbara' => 'Barrow-Murray, Barbara',
       'Deere, Beth' => 'Deare, Beth',
       'Horn, Danny' => 'Horne, Danny',
@@ -96,7 +97,29 @@ SELECT ?pid FROM <#ri> WHERE {
 
       ['creator', 'contributor'].each do |n|
         doc.xpath("//pbcore:pbcore#{n.titlecase}/pbcore:#{n}", xmlns).each do |node|
-          next if node.text =~ /,/
+          
+          # last, first or other compound names 
+          next if node.text =~ /[,;]/
+
+          # LCSH
+          next if node.text =~ /--/
+
+          # Birth/Death dates
+          next if node.text =~ /[0-9]{3}/
+
+          # Vietnamese names
+          next if node.text =~ /[Đâỳễàầôạăê]/ or node.text =~ /Nguyen/ or node.text =~ /Ngo/
+
+          # words without title-casing, except de/di/da/le/la/van/etc 
+          next if node.text =~ /\s[^A-Zdlv][a-z]/ or node.text =~ /\s[a-z]{3}/  or node.text =~ /\sin\s/ or node.text =~ /\sand\s/ or node.ntext =~ /\sof\s/ or node.text =~ /American/ or node.text =~ /United/
+
+          # Acronyms
+          next if node.text =~ /[A-Z]{2}/ and not node.text =~ /LLoyd/
+
+          # other descriptors
+          next if node.text =~ /\)$/ and not  node.parent.xpath("pbcore:#{n}Role", xmlns).first == "Other"  
+          # nickname
+          next if node.text =~ /"$/
 
           name = node.text.dup
 
@@ -106,6 +129,7 @@ SELECT ?pid FROM <#ri> WHERE {
             role.strip!
             node.parent.xpath("pbcore:#{n}Role", xmlns).first.inner_html = role.titlecase
           end
+
 
 
           first, last = name.scan(/(\S+(?: [A-Z]\.)?) (.+)/).first rescue [nil, nil]

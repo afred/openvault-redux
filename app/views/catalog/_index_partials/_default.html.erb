@@ -1,7 +1,4 @@
 <%# default partial to display solr document fields in catalog index view -%>
-<!-- <div class="thumbnail">
-  <img src="http://localhost:8180/fedora/get/<%= document.get('pid_s') %>/Thumbnail" />
-</div> -->
 <div  class="thumbnail">
   <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview)).html_safe) %>
 </div>

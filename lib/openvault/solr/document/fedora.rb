@@ -7,6 +7,6 @@ module Openvault::Solr::Document::Fedora
   end
   
   def fedora_object
-    Fedora::FedoraObject.find(pid)
+    Rubydora.repository.find(pid)
   end
 end

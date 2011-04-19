@@ -1,13 +1,8 @@
-module Fedora::Datastream
-   class Pbcore < Generic
-     def initialize name, opts={}, source=nil, content_type='text/plain'
-       @opts = {:controlGroup => 'M', :dsLabel => name, :checksumType => 'DISABLED'}.merge opts
-       @source = source
-       @name = name
-       @content_type = content_type
-     end
+module Openvault::Datastreams
+   module Pbcore
+     def to_solr solr_doc = {}
+      super(solr_doc)
 
-     def to_solr sum
       pbcore = Nokogiri::XML(content)
       xmlns = { 'pbcore' => 'http://www.pbcore.org/PBCore/PBCoreNamespace.html'}
       doc = []
@@ -49,13 +44,10 @@ module Fedora::Datastream
           end
         end
 
-        doc.inject({}) do |sum, (key,value)|
-          next sum if value.blank?
+        doc.each do |key, value|
           key.gsub!('__', '_')
-          sum[key] ||= []
-          sum[key] <<  value.strip
-
-          sum
+          solr_doc[key] ||= []
+          solr_doc[key] <<  value.strip
         end
 
      end 

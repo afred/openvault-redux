@@ -1,5 +1,5 @@
 <div class="registration-required-splash">
-  <%= image_tag document.fedora_object.datastream_url("Thumbnail") %>
+  <%= image_tag document.thumbnail.url(:style => :preview) %>
   <div class="error">
     <h2>Registration Required</h2>
     <p>An Open Vault account is required to watch this record. Sign-up is quick and free. Please login above or <%= link_to 'register here', new_user_path %>. </p>

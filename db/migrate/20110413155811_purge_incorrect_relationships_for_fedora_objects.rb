@@ -1,6 +1,6 @@
 class PurgeIncorrectRelationshipsForFedoraObjects < ActiveRecord::Migration
   def self.up
-    rels = Fedora.repository.sparql '
+    rels = Rubydora.repository.sparql '
       SELECT ?pid  ?object FROM <#ri> WHERE {
          ?pid <info:fedora/fedora-system:def/relations-external#isThumbnailOf> ?object .
 
@@ -9,7 +9,7 @@ class PurgeIncorrectRelationshipsForFedoraObjects < ActiveRecord::Migration
     '
 
     rels.each do |r|
-      Fedora.repository.soap.purgeRelationship(:pid => r['pid'].gsub('info:fedora/', ''), :relationship => 'info:fedora/fedora-system:def/relations-external#isThumbnailOf', :object => r['object'], :isLiteral => false, :datatype => nil)
+      Rubydora.repository.purge_relationship(:subject => r['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isThumbnailOf', :object => r['object'], :isLiteral => false, :datatype => nil)
     end
   end
 
