@@ -13,8 +13,10 @@ describe Openvault::Solr::Document::Thumbnail::Generator do
 
     it "should return the fedora thumbnail datastream if no solr document thumbnail is present" do
       @mock_document = SolrDocument.new(:pid_s => 'pid')
-      @mock_fedora_object = mock("Fedora::FedoraObject")
-      @mock_fedora_object.should_receive(:datastream_url).with("Thumbnail").and_return('http://local.fedora.server/get/pid/Thumbnail') 
+      @mock_fedora_object = mock("Rubydora::DigitalObject")
+      @mock_thumbnail_datastream = mock(Rubydora::Datastream)
+      @mock_thumbnail_datastream.should_receive(:url).and_return('http://local.fedora.server/get/pid/Thumbnail')
+      @mock_fedora_object.should_receive(:datastream).and_return({ "Thumbnail" => @mock_thumbnail_datastream })
       @mock_document.should_receive(:fedora_object).and_return(@mock_fedora_object)
       @mock_generator = Openvault::Solr::Document::Thumbnail::Generator.new(@mock_document)
       @mock_generator.url.should == 'http://local.fedora.server/get/pid/Thumbnail'
