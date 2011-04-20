@@ -16,9 +16,11 @@ namespace :openvault do
 }
                                       FILTER (?object = <info:fedora/wgbh:openvault>) }"
 
-    pbar = ProgressBar.new("indexing", pids.length)
+      objs =  Rubydora.repository.find_by_sparql(sparql) 
 
-   solrdocs = Rubydora.repository.find_by_sparql(sparql).map { |x| pbar.inc; x.to_solr rescue nil }
+    pbar = ProgressBar.new("indexing", objs.length)
+
+   solrdocs = objs.map { |x| pbar.inc; x.to_solr rescue nil }
 
     Blacklight.solr.add solrdocs.compact
     Blacklight.solr.commit
