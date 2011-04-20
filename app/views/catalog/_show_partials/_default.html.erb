@@ -13,6 +13,12 @@
     <div class="value"><%= document.tags.join(", ") %></div>
   </div>
   <%= link_to "Add Tag", :class => 'new_tag' %>
+  <div id="new_tag" style="overflow: visible">
+    <% form_for document, :url => { :action => "tag" }, :html => { :method => :post } do |f| %>
+    <%= text_field_tag :tags %>
+    <%= f.submit %>
+  <% end %>
+  </div>
 
   <div class="blacklight-comments">
     <div class="label">Annotations</div>

@@ -85,7 +85,9 @@ Blacklight.configure(:shared) do |config|
       "keywords_cv",
       "rel_isMemberOfCollection_s",
       "pbcore_pbcoreTitle_series_s",
-      "pbcore_pbcoreTitle_program_s"
+      "pbcore_pbcoreTitle_program_s",
+      "tags_s",
+      "has_comments_query"
     ]),
     :labels => {
       "format" => "display partial",
@@ -101,6 +103,8 @@ Blacklight.configure(:shared) do |config|
       "rel_isMemberOfCollection_s" => "Is Member Of Collection",
       "pbcore_pbcoreTitle_series_s" => "Series title",
       "pbcore_pbcoreTitle_program_s" => "Program title",
+      "tags_s" => "Tags",
+      "has_comments_query" => "Comments"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -121,7 +125,8 @@ Blacklight.configure(:shared) do |config|
       "place_cv" => 15, 
       "event_cv" => 15, 
       "objModel_s" => 15, 
-      "keywords_cv" => 15
+      "keywords_cv" => 15,
+      "tags_s" => 15
     },
       :rangex => {
        "dc_date_year_i" => {
@@ -137,11 +142,15 @@ Blacklight.configure(:shared) do |config|
     },
     :query => {
       "timestamp_query" => {
-         'tody' => 'timestamp:[NOW/DAY TO *]',
+         'today' => 'timestamp:[NOW/DAY TO *]',
          'this week' => "timestamp:[NOW-#{Time.now.wday}DAY/DAY TO *]",
          'this month' => 'timestamp:[NOW/MONTH TO *]',
          'this year' => 'timestamp:[NOW/YEAR TO *]'
-    }
+      },
+      "has_comments_query" => {
+         'has comments' => 'comments_t:[* TO *]',
+         'has no comments' => '-comments_t:[* TO *]',
+         }
     },
     :pivot => {
       "pbcore_pbcoreTitle_series_s" => ["pbcore_pbcoreTitle_series_s", "pbcore_pbcoreTitle_program_s"]

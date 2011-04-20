@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
     # /catalog/:id/image <- for ajax cover requests
     # /catalog/:id/status
     # /catalog/:id/availability
-    :member=>{:image=>:get, :embed => :get, :status=>:get, :availability=>:get, :librarian_view=>:get},
+    :member=>{:image=>:get, :embed => :get, :status=>:get, :availability=>:get, :librarian_view=>:get, :tag => :post},
     # /catalog/map
     :collection => {:map => :get, :opensearch=>:get, :citation=>:get, :email=>:get, :sms=>:get, :endnote=>:get, :send_email_record=>:post},
       :requirements => { :id => /([A-Za-z0-9]|:|-)+/ },

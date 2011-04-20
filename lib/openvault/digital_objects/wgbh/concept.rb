@@ -2,6 +2,7 @@ module Openvault::DigitalObjects::Wgbh
    module Concept
      def self.extended(document)
        document.solr_mapping_logic << :openvault_metadata_for_solr
+       document.solr_mapping_logic << :openvault_user_generated_content_for_solr
      end
 
      def openvault_metadata_for_solr(doc = {})
@@ -42,6 +43,18 @@ module Openvault::DigitalObjects::Wgbh
 
        doc['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s 
        doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s']}" unless doc['slug_s'].blank? 
+     end
+
+     def openvault_user_generated_content_for_solr(doc = {})
+       doc['tags_s'] = []
+       doc['tags_s'] << surrogate.tags.map { |x| x.name }
+       doc['tags_s'] << surrogate.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}/#{x.tag.name}" }
+       doc['tags_s'] << surrogate.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}" }
+
+       doc['tags_s'].flatten!.uniq
+       doc['comments_t'] = surrogate.comments.map { |x| x.comment }
+       doc['comments_ids_s'] = surrogate.comments.map { |x| x.id }
+       surrogate.tags
      end
    end
 end
