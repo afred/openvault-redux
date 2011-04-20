@@ -7,10 +7,8 @@ module Openvault::SolrHelper::Restrictions
 
     solr_parameters[:fq] ||= []
 
-    solr_parameters[:fq] << "objState_s:A"
-    solr_parameters[:fq] << "rel_isMemberOfCollection_s:wgbh\\:openvault"
-
-    solr_parameters
+    solr_parameters[:fq] << "{!raw f=objState_s}A"
+    solr_parameters[:fq] << "{!raw f=ri_isMemberOfCollection_s}info:fedora/wgbh:openvault"
   end
 
 end
