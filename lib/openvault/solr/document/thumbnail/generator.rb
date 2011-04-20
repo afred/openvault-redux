@@ -47,13 +47,13 @@ module Openvault::Solr::Document::Thumbnail
       dst.unlink
 
       "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
- #     rescue
- #       return "#{base_url}/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
- #       file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
- #       tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
- #       dst = tn.make
- #       FileUtils.mv dst.path, File.join(base_path, "no-image-available-#{options[:style]}.jpg")
- #       "#{base_url}/no-image-available-#{options[:style]}.jpg"
+      rescue
+        return "#{base_url}/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
+        file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
+        tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
+        dst = tn.make
+        FileUtils.mv dst.path, File.join(base_path, "no-image-available-#{options[:style]}.jpg")
+        "#{base_url}/no-image-available-#{options[:style]}.jpg"
       end
     end
 
