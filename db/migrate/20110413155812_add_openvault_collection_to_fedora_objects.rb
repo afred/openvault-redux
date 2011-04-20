@@ -1,6 +1,6 @@
 class AddOpenvaultCollectionToFedoraObjects < ActiveRecord::Migration
   def self.up
-    concept_pids = Fedora.repository.sparql 'SELECT ?pid FROM <#ri> WHERE {
+    concept_pids = Rubydora.repository.sparql 'SELECT ?pid FROM <#ri> WHERE {
   {
     ?pid <info:fedora/fedora-system:def/model#hasModel> <info:fedora/wgbh:CONCEPT>
   } UNION {
@@ -9,11 +9,11 @@ class AddOpenvaultCollectionToFedoraObjects < ActiveRecord::Migration
  OPTIONAL {
     ?pid <info:fedora/fedora-system:def/relations-external#isThumbnailOf> ?tn
   } .
-  FILTER(bound(?tn)) . 
+  FILTER(!bound(?tn)) . 
 }'
 
-    concept_pids.map { |x| x['pid'].gsub('info:fedora/', '') }.each do |pid|
-      Fedora.repository.soap.addRelationship(:pid => pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/wgbh:openvault', :isLiteral => false, :datatype => nil)
+    concept_pids.map { |x| x['pid'] }.each do |pid|
+      Rubydora.repository.soap.addRelationship(:pid => pid.gsub('info:fedora/', ''), :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/wgbh:openvault', :isLiteral => false, :datatype => nil)
     end
   end
 

@@ -1,6 +1,6 @@
 class AddMediaDatastreamsToObjects < ActiveRecord::Migration
   def self.up
-pids_to_assets = Fedora.repository.sparql '
+pids_to_assets = Rubydora.repository.sparql '
 SELECT ?pid ?child ?cmodel ?ds FROM <#ri> WHERE {
   {
     ?pid <info:fedora/fedora-system:def/model#hasModel> <info:fedora/wgbh:CONCEPT>.
@@ -34,14 +34,18 @@ SELECT ?pid ?child ?cmodel ?ds FROM <#ri> WHERE {
 
 
  pids_to_assets.each do |arr|
-   client = Fedora::FedoraObject.find(arr['pid'].gsub('info:fedora/', '')).client
+   obj = Rubydora.repository.find(arr['pid'])
    print arr['pid'] + " " + arr['ds']
    headers = Streamly.head 'http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', '')
 
    case arr['cmodel']
      when /VIDEO/
        if headers =~ /302 Found/
-         Fedora::Datastream.new('Video.mp4', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first, :mimeType => 'video/mp4' }).add(client)
+         ds = obj.datastream['Video.mp4']
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first 
+         ds.mimeType = 'video/mp4'
+         ds.save
        else
          print "??"
        end
@@ -49,34 +53,58 @@ SELECT ?pid ?child ?cmodel ?ds FROM <#ri> WHERE {
 
      when /AUDIO/
        if headers =~ /302 Found/
-         Fedora::Datastream.new('Audio.flv', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first, :mimeType => 'video/x-flv' }).add(client)
-         Fedora::Datastream.new('Audio.mp3', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first.gsub('flv', 'mp3'), :mimeType => 'audio/mp3' }).add(client)
+         ds = obj.datastream['Audio.flv']
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first 
+         ds.mimeType = 'video/x-flv'
+         ds.save
+
+         ds = obj.datastream['Audio.mp3']
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first.gsub('flv', 'mp3') 
+         ds.mimeType = 'audio/mp3'
+         ds.save
        else
          print "??"
        end
        # Proxy -> x/Audio_flv
 
      when /IMAGE/
+       ds = obj.datastream['Image.jpg']
+       ds.mimeType = 'image/jpg'
        if headers =~ /302 Found/
-         Fedora::Datastream.new('Image.jpg', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first, :mimeType => 'image/jpg' }).add(client)
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first 
        else
-         Fedora::Datastream.new('Image.jpg', {:controlGroup => 'M'}, Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', '')), 'image/jpg').add(client)
+         ds.controlGroup = 'M'
+         ds.content = Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', ''))
        end
+       ds.save
 
 
      when /LOG_NEWSML/
+         ds = obj.datastream['Transcript.newsml.xml']
+         ds.mimeType = 'text/xml'
        if headers =~ /302 Found/
-         Fedora::Datastream.new('Transcript.newsml.xml', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first, :mimeType => 'text/xml' }).add(client)
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first 
        else
-         Fedora::Datastream.new('Transcript.newsml.xml', {:controlGroup => 'M'}, Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', '')), 'text/xml').add(client)
+         ds.controlGroup = 'M'
+         ds.content = Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', ''))
        end
        # File -> x/Transcript_NEWSML
+       ds.save
 
      when /LOG/
+         ds = obj.datastream['Transcript.tei.xml']
+         ds.mimeType = 'text/xml'
        if headers =~ /302 Found/
-         Fedora::Datastream.new('Transcript.tei.xml', {:controlGroup => 'R', :dsLocation => headers.scan(/Location: ([^\r]+)/).flatten.first, :mimeType => 'text/xml' }).add(client)
+         ds.controlGroup = 'R'
+         ds.dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first 
+         ds.save
        else
-         Fedora::Datastream.new('Transcript.tei.xml', {:controlGroup => 'M'}, Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', '')), 'text/xml').add(client)
+         ds.controlGroup = 'M'
+         ds.content = Streamly.get('http://localhost:8180/fedora/get/' + arr['ds'].gsub('info:fedora/', ''))
        end
        # File -> x/Transcript_TEI
 

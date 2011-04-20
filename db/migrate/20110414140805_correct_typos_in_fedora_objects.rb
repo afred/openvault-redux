@@ -2,10 +2,11 @@ class CorrectTyposInFedoraObjects < ActiveRecord::Migration
   def self.up
 
     # org.wgbh.mla:Vietnam -> org.wgbh.mla:vietnam
-    pids = Fedora.repository.sparql 'SELECT ?pid FROM <#ri> WHERE { ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/org.wgbh.mla:Vietnam>}'
+    pids = Rubydora.repository.sparql 'SELECT ?pid FROM <#ri> WHERE { ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/org.wgbh.mla:Vietnam>}'
     pids.each do |x|
-      Fedora.repository.soap.purgeRelationship(:pid => x['pid'].gsub('info:fedora/', ''), :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:Vietnam', :isLiteral => false, :datatype => nil)
-      Fedora.repository.soap.addRelationship(:pid => x['pid'].gsub('info:fedora/', ''), :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:vietnam', :isLiteral => false, :datatype => nil)
+      Rubydora.repository.soap.purgeRelationship(:pid => x['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:Vietnam', :isLiteral => false, :datatype => nil)
+      Rubydora.repository.soap.purgeRelationship(:pid => x['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:vietnam', :isLiteral => false, :datatype => nil)
+    
     end
 
     xmlns = { 'pbcore' => 'http://www.pbcore.org/PBCore/PBCoreNamespace.html' }
@@ -81,7 +82,7 @@ class CorrectTyposInFedoraObjects < ActiveRecord::Migration
       'Joe White, Sonny' => 'Joe White, Sunny',
       'La Billios, Ann' => 'LaBillios, Ann'
     }
-pids = Fedora.repository.sparql '
+pids = Rubydora.repository.sparql '
 SELECT ?pid FROM <#ri> WHERE {
   ?pid <info:fedora/fedora-system:def/view#disseminates> ?tds.
   ?tds  <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/PBCore>
@@ -89,7 +90,7 @@ SELECT ?pid FROM <#ri> WHERE {
 
   z = {}
     pids.map { |x| x['pid'].gsub('info:fedora/', '') }.each do |pid|
-      obj = Fedora::FedoraObject.find(pid)
+      obj = Rubydora.repository.find(pid)
       doc = Nokogiri::XML(obj.datastream('PBCore').source) rescue nil
       next unless doc
 
@@ -151,8 +152,8 @@ SELECT ?pid FROM <#ri> WHERE {
         end
       end
 
-      Fedora::Datastream.new('PBCore', { :controlGroup => 'M' }, doc.to_s, 'text/xml').add(obj.client) if update_needed
-
+      obj['PBCore'].content = doc.to_s if updated_needed
+      obj['PBCore'].save if update_needed
     end
 
   end

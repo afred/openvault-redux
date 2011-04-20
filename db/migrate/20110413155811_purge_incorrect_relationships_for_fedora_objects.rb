@@ -9,7 +9,7 @@ class PurgeIncorrectRelationshipsForFedoraObjects < ActiveRecord::Migration
     '
 
     rels.each do |r|
-      Rubydora.repository.purge_relationship(:subject => r['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isThumbnailOf', :object => r['object'], :isLiteral => false, :datatype => nil)
+      Rubydora.repository.soap.purgeRelationship(:pid => r['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isThumbnailOf', :object => r['object'], :isLiteral => false, :datatype => nil) 
     end
   end
 
