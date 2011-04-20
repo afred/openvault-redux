@@ -53,7 +53,8 @@ module Openvault::DigitalObjects::Wgbh
 
        doc['tags_s'].flatten!.uniq
        doc['comments_t'] = surrogate.comments.map { |x| x.comment }
-       doc['comments_ids_s'] = surrogate.comments.map { |x| x.id }
+       doc['comments_ids_i'] = surrogate.comments.map { |x| x.id }
+       doc['comments_user_ids_i'] = surrogate.comments.map { |x| x.user_id }.compact
        surrogate.tags
      end
    end
