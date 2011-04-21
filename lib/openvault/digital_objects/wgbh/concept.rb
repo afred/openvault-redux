@@ -9,6 +9,8 @@ module Openvault::DigitalObjects::Wgbh
        doc['media_dsid_s'] = doc['disseminates_s']
        doc['media_dsid_s'].uniq!
 
+       doc['merlot_s'] = doc['dc_subject_s'].map { |x| x.split(/\s*--\s*/).inject([]) { |sum, item| sum << [sum.last, item].join("/")} }.flatten.uniq.map { |x| "#{x.count("/")}#{x}" }
+
        doc['dc_type_s'] ||= []
 
        format = []

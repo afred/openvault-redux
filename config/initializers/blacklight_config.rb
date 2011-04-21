@@ -73,23 +73,25 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
-      "format",
-      "timestamp_query",
+                     "merlot_s",
       "dc_type_s",
       "media_dsid_s",
       "dc_date_year_i",
       "person_cv",
       "place_cv",
       "event_cv",
-      "objModels_s",
       "keywords_cv",
       "rel_isMemberOfCollection_s",
       "pbcore_pbcoreTitle_series_s",
       "pbcore_pbcoreTitle_program_s",
       "tags_s",
-      "has_comments_query"
+      "has_comments_query",
+      "format",
+      "timestamp_query",
+      "objModels_s",
     ]),
     :labels => {
+      "merlot_s" => "Category",
       "format" => "display partial",
       "timestamp_query" => "date indexed",
       "dc_type_s" => "Format",
@@ -154,6 +156,9 @@ Blacklight.configure(:shared) do |config|
     },
     :pivot => {
       "pbcore_pbcoreTitle_series_s" => ["pbcore_pbcoreTitle_series_s", "pbcore_pbcoreTitle_program_s"]
+    },
+    :hierarchy => {
+      "merlot_s" => true
     }
   }
 
