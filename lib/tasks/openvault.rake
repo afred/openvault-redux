@@ -16,16 +16,38 @@ namespace :openvault do
 }
                                       FILTER (?object = <info:fedora/wgbh:openvault>) }"
 
-      objs =  Rubydora.repository.find_by_sparql(sparql) 
+      pids =  Rubydora.repository.sparql(sparql) 
 
-    pbar = ProgressBar.new("indexing", objs.length)
+    pbar = ProgressBar.new("indexing", pids.length)
 
-   solrdocs = objs.map { |x| pbar.inc; x.to_solr rescue nil }
-
-    Blacklight.solr.add solrdocs.compact
+    Blacklight.solr.delete_by_query('*:*')
     Blacklight.solr.commit
+    solrdocs = pids.each_slice(100) do |d| 
+      Blacklight.solr.add d.map { |x| pbar.inc; Rubydora.repository.find(x['pid']).to_solr rescue nil }.compact
+      Blacklight.solr.commit
+    end 
+    Blacklight.solr.optimize
 
     pbar.finish
+  end
 
+  desc "Ingest Artesia Asset Properties"
+  task :ingest => :environment do
+
+    ### Load the file
+    file = ENV['file']
+    cmodel = 'artesia:assetProperties'
+    pid = "wgbh/#{File.basename(file, File.extname(file))}"
+    obj = Rubydora::DigitalObject.create(pid)
+
+    obj.models << "info:fedora/#{cmodel}"
+    obj = obj.save
+
+    ds = obj['File']
+    ds.file = open(file)
+    ds.mimeType = 'text/xml'
+    ds.save
+
+    obj.process!
   end
 end
