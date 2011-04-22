@@ -82,16 +82,14 @@ class CorrectTyposInFedoraObjects < ActiveRecord::Migration
       'Joe White, Sonny' => 'Joe White, Sunny',
       'La Billios, Ann' => 'LaBillios, Ann'
     }
-pids = Rubydora.repository.sparql '
+objs = Rubydora.repository.find_by_sparql '
 SELECT ?pid FROM <#ri> WHERE {
   ?pid <info:fedora/fedora-system:def/view#disseminates> ?tds.
   ?tds  <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/PBCore>
 }' 
 
-  z = {}
-    pids.map { |x| x['pid'].gsub('info:fedora/', '') }.each do |pid|
-      obj = Rubydora.repository.find(pid)
-      doc = Nokogiri::XML(obj.datastream('PBCore').source) rescue nil
+    objs.each do |obj|
+      doc = Nokogiri::XML(obj.datastream['PBCore'].content) rescue nil
       next unless doc
 
       update_needed = false
@@ -111,27 +109,31 @@ SELECT ?pid FROM <#ri> WHERE {
           # Vietnamese names
           next if node.text =~ /[Đâỳễàầôạăê]/ or node.text =~ /Nguyen/ or node.text =~ /Ngo/
 
-          # words without title-casing, except de/di/da/le/la/van/etc 
-          next if node.text =~ /\s[^A-Zdlv][a-z]/ or node.text =~ /\s[a-z]{3}/  or node.text =~ /\sin\s/ or node.text =~ /\sand\s/ or node.ntext =~ /\sof\s/ or node.text =~ /American/ or node.text =~ /United/
+          unless  node.parent.xpath("pbcore:#{n}Role", xmlns).first.text == "Other"
 
-          # Acronyms
-          next if node.text =~ /[A-Z]{2}/ and not node.text =~ /LLoyd/
+          # words without title-casing, except de/di/da/le/la/van/etc 
+          next if node.text =~ /\s[a-ce-km-uy-z][a-z]/ or node.text =~ /\s[a-z]{3}/  or node.text =~ /\sin\s/ or node.text =~ /\sand\s/ or node.text =~ /\sof\s/ or node.text =~ /American/ or node.text =~ /United/
 
           # other descriptors
-          next if node.text =~ /\)$/ and not  node.parent.xpath("pbcore:#{n}Role", xmlns).first == "Other"  
+          next if node.text =~ /\)$/ 
+
+          end
+
+          # Acronyms
+          next if node.text =~ /[A-Z]{2}[^a-z]/
+
+
           # nickname
           next if node.text =~ /"$/
 
           name = node.text.dup
 
-          if node.parent.xpath("pbcore:#{n}Role", xmlns).first == "Other"
+          if node.parent.xpath("pbcore:#{n}Role", xmlns).first.text == "Other"
             name, role = name.scan(/([^\(]+) \(([^\)]+)\)/).first
             name.strip!
             role.strip!
             node.parent.xpath("pbcore:#{n}Role", xmlns).first.inner_html = role.titlecase
           end
-
-
 
           first, last = name.scan(/(\S+(?: [A-Z]\.)?) (.+)/).first rescue [nil, nil]
 
@@ -143,8 +145,6 @@ SELECT ?pid FROM <#ri> WHERE {
 
           next unless new_name
 
-          z[node.text] = new_name
-
           node.inner_html = new_name
           node.parent.remove if new_name == "Technical Production"
           update_needed = true
@@ -152,9 +152,18 @@ SELECT ?pid FROM <#ri> WHERE {
         end
       end
 
-      obj['PBCore'].content = doc.to_s if updated_needed
-      obj['PBCore'].save if update_needed
+      obj.datastream['PBCore'].content = doc.to_s if update_needed
+      obj.datastream['PBCore'].save if update_needed
     end
+
+    Rubydora.repository.find_by_sparql('
+SELECT ?pid FROM <#ri> WHERE {
+  ?pid <http://purl.org/dc/elements/1.1/subject> ?subject .
+  FILTER(regex(str(?subject), "Area Studies"))
+}').each do |obj|
+      obj.datastream['DC'].content = obj.datastream['DC'].content.gsub('Area Studies', 'Area studies')
+      obj.datastream['DC'].save
+end
 
   end
 
