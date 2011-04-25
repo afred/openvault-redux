@@ -37,17 +37,18 @@ namespace :openvault do
     ### Load the file
     file = ENV['file']
     cmodel = 'artesia:assetProperties'
-    pid = "wgbh/#{File.basename(file, File.extname(file))}"
+    pid = "wgbh:#{File.basename(file, File.extname(file))}"
+    Rubydora.repository.find(pid).delete rescue nil
     obj = Rubydora::DigitalObject.create(pid)
 
     obj.models << "info:fedora/#{cmodel}"
-    obj = obj.save
+    obj.save
 
     ds = obj['File']
     ds.file = open(file)
     ds.mimeType = 'text/xml'
     ds.save
 
-    obj.process!
+    Rubydora.repository.find(obj.pid).process!
   end
 end
