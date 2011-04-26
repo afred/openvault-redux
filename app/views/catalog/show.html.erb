@@ -1,6 +1,6 @@
 <% @page_title = "#{document_show_html_title} - #{application_name}" %>
 <% extra_head_content << render_link_rel_alternates %>
-<% sidebar_items << (render(:partial => 'blacklight_mlt/mlt', :collection => get_more_like_this.sort_by { |x| x.get 'title_s' } )) %>
+<% sidebar_items << (render(:partial => 'blacklight_mlt/mlt', :collection => get_more_like_this.sort_by { |x| x.get 'title_s' }, :as => :document )) %>
 
 <%# this should be in a partial -%>
 <div id="document" class="<%= render_document_class %>">

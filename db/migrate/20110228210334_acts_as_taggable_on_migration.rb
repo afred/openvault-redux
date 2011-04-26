@@ -6,7 +6,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
     
     create_table :taggings do |t|
       t.column :tag_id, :integer
-      t.column :taggable_id, :integer
+      t.column :taggable_id, :string
       t.column :tagger_id, :integer
       t.column :tagger_type, :string
       

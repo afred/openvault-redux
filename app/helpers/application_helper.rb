@@ -1,4 +1,3 @@
-require_dependency 'vendor/plugins/blacklight/app/helpers/application_helper.rb'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def application_name
@@ -31,7 +30,7 @@ module ApplicationHelper
 
   def link_to_document(doc, opts={:label=>Blacklight.config[:index][:show_link].to_sym, :counter => nil, :results_view => true})
     label = render_document_index_label doc, opts
-    return link_to(label, catalog_path(doc[:id]))
+    return link_to(label.html_safe, catalog_path(doc[:id]))
   end
 
   def datastream_url datastream, options = {}

@@ -1,13 +1,10 @@
-require_dependency( 'vendor/plugins/blacklight/app/controllers/application_controller.rb')
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  # Adds a few additional behaviors into the application controller 
+   include Blacklight::Controller
+  # Please be sure to impelement current_user and user_session. Blacklight depends on 
+  # these methods in order to perform user specific actions. 
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  protect_from_forgery
   def default_html_head
 
     stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
@@ -15,9 +12,12 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
 
     javascript_includes << ['jquery.min.js']
-    javascript_includes << ['jquery-ui-1.8.1.custom.min.js',  'application', { :plugin=>:blacklight } ]
+    javascript_includes << ['jquery-ui-1.8.1.custom.min.js',  'blacklight', { :plugin=>:blacklight } ]
     javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "jquery.hotkeys.js", "application"]
 
-  end
+  end   
 
+  def choose_layout
+    'application' unless request.xml_http_request? || ! params[:no_layout].blank?
+  end     
 end

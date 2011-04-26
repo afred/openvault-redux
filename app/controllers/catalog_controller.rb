@@ -1,8 +1,9 @@
-require_dependency( 'vendor/plugins/blacklight/app/controllers/catalog_controller.rb')
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
 class CatalogController < ApplicationController
+  include Blacklight::SolrHelper
+  include Blacklight::Catalog
   include Openvault::SolrHelper::DefaultSort
   include Openvault::SolrHelper::BoostMedia
   include Openvault::SolrHelper::Restrictions
@@ -17,45 +18,23 @@ class CatalogController < ApplicationController
   end
 
   def index
+    delete_or_assign_search_session_params
 
-    @search_context = 'result' if @template.has_search_parameters?
+    @search_context = 'result' if view_context.has_search_parameters?
+    extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => "RSS for results")
+    extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => "Atom for results")
+    extra_head_content << view_context.auto_discovery_link_tag(:unapi, unapi_url, {:type => 'application/xml',  :rel => 'unapi-server', :title => 'unAPI' })
 
-    extra_head_content << '<link rel="alternate" type="application/rss+xml" title="RSS for results" href="'+ url_for(params.merge("format" => "rss")) + '">'
-    extra_head_content << '<link rel="alternate" type="application/atom+xml" title="Atom for results" href="'+ url_for(params.merge("format" => "atom")) + '">'
-    
     (@response, @document_list) = get_search_results
     @filters = params[:f] || []
+    search_session[:total] = @response.total unless @response.nil?
+
     respond_to do |format|
       format.html { save_current_search_params }
       format.rss  { render :layout => false }
       format.atom { render :layout => false }
       format.json { render :json => @document_list }
     end
-  end
-
-  # get single document from the solr index
-  def show
-    @response, @document = get_solr_response_for_doc_id    
-    respond_to do |format|
-      format.html {setup_next_and_previous_documents}
-      
-      # Add all dynamically added (such as by document extensions)
-      # export formats.
-      @document.export_formats.each_key do | format_name |
-        # It's important that the argument to send be a symbol;
-        # if it's a string, it makes Rails unhappy for unclear reasons. 
-        format.send(format_name.to_sym) do
-          redirect_to @document.send("export_as_#{format_name.to_s}_with_redirect") and return if @document.respond_to?("export_as_#{format_name.to_s}_with_redirect") 
-          render :text => @document.export_as(format_name)
-        end  
-      end
-      
-    end
-  end
-
-  # displays values and pagination links for a single facet field
-  def facet
-    @pagination = get_facet_pagination(params[:id], params)
   end
 
   def embed

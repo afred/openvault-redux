@@ -1,7 +1,9 @@
 class ActsAsRateableMigration < ActiveRecord::Migration
   def self.up
     create_table "ratings" do |t|
-      t.references "rateable",       :polymorphic => true, :nil => false
+      #t.references "rateable",       :polymorphic => true, :nil => false
+      t.string "rateable_id"
+      t.string "rateable_type"
       t.float      "average_rating"
       t.integer    "ratings_count"
       t.timestamps
