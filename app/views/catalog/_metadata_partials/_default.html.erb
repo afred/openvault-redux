@@ -8,7 +8,7 @@ source_credits = ''
 
 <% instantiations = pbcore.instantiation %>
 <% unless instantiations.blank? %>
-<div class="media">
+<div class="instantiation">
 <h3 class="toggler">Media</h3>
 <% instantiations.each do |inst| %>
 <div>
@@ -69,6 +69,7 @@ source_credits = ''
 
 <% coverage = pbcore.coverage %>
 
+    <hr />
 <% unless coverage['Temporal'].blank? %>
 <div class="date">   
 <div><strong>Date Covered</strong>

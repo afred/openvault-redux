@@ -12,7 +12,7 @@
     <div class="label">Tags (<%= document.tags.length %>)</div>
     <div class="value"><%= document.tags.join(", ") %></div>
   </div>
-  <%= link_to "Add Tag", :class => 'new_tag' %>
+  <%= link_to "Add Tag", catalog_path(:catalog_id => document.id), :class => "new_tag" %>
   <div id="new_tag" style="overflow: visible">
     <%= form_for :document, :url => { :action => "tag" }, :html => { :method => :post } do |f| %>
     <%= text_field_tag :tags %>
