@@ -3,7 +3,7 @@ module MediaHelper
     require 'open-uri'
     xslt = Nokogiri::XSLT(open(xslt).read)
     xml = Nokogiri::XML(open(xml).read)
-    xslt.transform(xml)
+    xslt.transform(xml).to_s.html_safe
   end
   def render_tei_transcript source, options = {}
     render_xml_with_xslt(source, "public/xslt/tei2timedtranscript.xsl")
