@@ -1,0 +1,4 @@
+<div class="records-of-interest">
+<h2>Records of Interest</h2>
+<%= render(:partial => 'blacklight_mlt/mlt', :collection => get_more_like_this.sort_by { |x| x.get 'title_s' }, :as => :document ) %>
+</div>
