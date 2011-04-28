@@ -10,6 +10,15 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::FacetDomsearch
 
   before_filter :handle_search_start_over, :only => :index
+  after_filter :invalidate_cache, :only => :tag
+
+  caches_action :show, :if => proc { |c|
+    current_user.nil?
+  }
+
+  def invalidate_cache
+    expire_action :action => :show, :id => params[:id]
+  end
 
   def handle_search_start_over
     if params[:search_context] == "all"
