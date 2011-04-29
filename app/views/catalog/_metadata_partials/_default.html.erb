@@ -33,9 +33,10 @@ source_credits = ''
 </div>
 <% end %>
 <div class="source">
+  <% unless  pbcore.titles.reject { |type, value| value == document.get(:title_display) }.empty? and pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.empty? %>
   <h3 class="toggler">Source</h3>
   <div>
-    <% pbcore.titles.each do |type, value| %>
+    <% pbcore.titles.reject { |type, value| value == document.get(:title_display) }.each do |type, value| %>
       <div><strong><%= type %></strong> <%= value %></div>
     <% end %>
 
@@ -48,9 +49,11 @@ source_credits = ''
       <%= source_credits %>
     </div>
   </div>
+  <% end %>
 </div>   
 
 <div class="description">
+<% unless pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.empty? %>
   <h3 class="toggler">Description</h3>
   <div>
     <div>
@@ -61,6 +64,7 @@ source_credits = ''
     
 
 </div>
+<% end %>
 </div>
 
 
