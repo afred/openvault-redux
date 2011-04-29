@@ -58,7 +58,7 @@ source_credits = ''
   <div>
     <div>
       <% pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.each do |type, value| %>
-        <div><strong><%= type %></strong> <%= value.gsub('</resource_link>', '</a>').gsub('<resource_link res="', '<a class="resource_link" href="/catalog/org.wgbh.mla:') %></div>
+        <div><strong><%= type %></strong> <%= render_field_value(value).html_safe %></div>
       <% end %>
     </div>
     
