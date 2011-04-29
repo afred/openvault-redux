@@ -499,9 +499,9 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     .pbcore-metadata {
        @include column(18);
-       @include pull(0.5);
-       @include prepend(0.5);
-       @include append(1.5);
+       @include pull(1);
+       @include prepend(1);
+       @include append(1);
        background-color: #ddd;
 
     .instantiation, .source, .description, .date, .place, .people {
