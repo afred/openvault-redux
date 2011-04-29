@@ -40,4 +40,13 @@ module ApplicationHelper
   def render_facet_value(facet_solr_field, item, options={})
     (link_to_unless(options[:suppress_link], item.value.html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + " " + render_facet_count(item.hits)).html_safe
   end
+
+  def render_field_value value
+    value = [value] unless value.is_a? Array
+    value.compact.map { |v| v.gsub(/<resource_link res="([^"]+)">([^<]+)<\/resource_link>/) { |match| link_to $2, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
+  end
+
+  def render_document_show_field_label(*args)
+    super(*args).gsub(/:$/, '')
+  end
 end
