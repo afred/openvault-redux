@@ -284,7 +284,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 .search-results-header {
-    @include clearfix;
+    @include column(18);
     border-bottom: 1px solid #CCC;
 }
 
