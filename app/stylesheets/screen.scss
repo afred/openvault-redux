@@ -454,8 +454,12 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
         @include padding-trailer(0.5);
 
        .label {
-          @include column(3);
+          @include column(2.75);
+          @include append(0.25);
           @include margin-trailer(0.5);
+          @include padding-leader(0.1);
+          @include padding-trailer(0.1);
+          text-indent: 5px;
           background-color: #CCC;
           text-align: right;
           font-weight: bold;
@@ -472,6 +476,9 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
        .value {
          @include column(12, true);
+         a {
+            display: block;
+         }
        }
     }
 
@@ -507,17 +514,20 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
        @include pull(1);
        @include prepend(1);
        @include append(1);
+       @include padding-leader(1);
+       @include padding-trailer(2);
        background-color: #ddd;
 
     .instantiation, .source, .description, .date, .place, .people {
        @include column(6);
+       @include margin-trailer(1.5);
     }
 
     h3, strong {
        font-weight: bold;
     }
 
-    .source strong, .description strong {
+    .instantiation strong, .source strong, .description strong {
       font-weight: normal;
       
       &:after {
