@@ -25,7 +25,8 @@ $link-color: #0a9cd5;
 $action-color: #d76b11;
 $action-hover-color: lighten(#d76b11, 20%);
 
-$orange: #fdac36;
+$orange: #fb8b1e;
+$grey: #e1dbda;
 
 
 // Combine the partials into a single screen stylesheet.
@@ -128,39 +129,105 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   
 }
 
+.blacklight-catalog-index {
+  #search-bar {
+    @include margin-trailer(0);
+  }
+
+  #appliedParams {
+  @include column(18);
+  @include pull(1);
+  @include prepend(1);
+  @include append(1);
+     background-color: $grey;
+    @include padding-leader(1);
+    @include padding-trailer(1);
+    @include margin-trailer(1);
+  }
+
+}
+
 #sidebar {
-  @include column(5);
+  @include column(5.5);
   @include pull($blueprint-grid-columns);
   @include margin-leader(5.5);
   h2 {
-    @include padding-leader(2);
-    font-size: $base-font-size;
+    @include padding-leader(0.5);
+    @include padding-trailer(0.5);
+    padding-left: 10px;
+    font-size: 1em;
+    font-weight: bold;
     color: white;
+    text-transform: uppercase;
+
+  }
+}
+
+
+.blacklight-catalog-show #sidebar {
+  h2 {
     background-color: #3292cc;
   }
 }
 
 .facet_limit {
-   padding: 10px;
+
+   border-bottom: 1px solid darken($grey, 20%);
+
+   h3 {
+     @include padding-leader(0.5);
+     @include padding-trailer(0.5);
+      text-transform: uppercase;
+      color: black;
+      font-weight: bold;
+      font-size: 0.9em;
+      @include prepend(0.5);
+      @include append(0.5);
+   }
+
+   ul {
+      background-color: white;
+      @include prepend(0.5);
+      @include append(0.5);
+     @include padding-leader(0.25);
+     @include padding-trailer(1.5);
+
+     ul {
+     @include padding-trailer(1);
+
+     }
+   }
+
+   li {
+     @include padding-trailer(0.2);
+   }
+
+
+
 }
 
 .blacklight-catalog-index {
     
   #sidebar {
-    background-color: lighten($orange, 20%);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+    background-color: $grey;
+    h2 {
+      background-color: $orange;
+    }
+
+    @include padding-trailer(6);
+
   }
 
   .document {
-    @include pull(1);
-    @include prepend(1);
-    @include append(1);
-    @include column(18);
+      @include column(18);
     border-bottom: 1px solid #CCC;
     @include margin-leader(0.5);
     @include margin-trailer(0.5);
     @include padding-leader(0.5);
     @include padding-trailer(0.5);
+    min-height: 100px;
+    position: relative;
   }
 
   .documentFunctions {
@@ -169,22 +236,28 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
   .index_title {
      @include column(15);
-     @include push(3);
+     @include push(3.5);
      margin-bottom: 0;
   }
 
   .thumbnail {
-     @include column(3);
-     @include pull(15.5, true);
+     position: absolute;
+     top: 0;
+     left: 0;
+     @include margin-leader(0.5);
   }
 
   .defList_container {
-     @include column(15);
-     @include push(0.5);
+     @include column(14.5);
+     @include push(3.5);
   .label {
      font-weight: bold;
-     display: run-in;
+     display: inline;
      @include append(0.25);
+  }
+
+  .value {
+      display: inline;
   }
   }
 
@@ -210,59 +283,77 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
 }
 
+.search-results-header {
+    @include clearfix;
+    border-bottom: 1px solid #CCC;
+}
+
    .pageEntriesInfo {
-      @include column(6);
-      @include prepend(4);
+      @include column(5.5);
+      @include prepend(5);
+   }
+
+   #startOverLink {
+      display: none;
    }
 
    #sortAndPerPage {
       @include column(4);
-      @include pull(10);
+      @include pull(10.5);
    }
+
+   .per_page {
+      display: none;
+   } 
 
    .pagination {
       @include clearfix;
 
-      .prev_page {
+      h2 {
+         display: none;
+      }
+
+      .previous_page {
          @include column(2);
       }
 
       .next_page {
          @include column(2);
-         @include push(0);
+         @include push(4);
       }
 
       .page_links {
          @include column(4);
-         @include pull(0);
+         @include pull(2);
       }
   }
 
 
-#appliedParams {
-   margin-bottom: 2em;
-}
-
 .appliedFilter {
+  @include append(0.5);  
   .filterName {
-
-  }
-
-  .filterName:after {
-     content: ":";
+    text-transform: uppercase;
+    font-weight: bold;
   }
 
   .filterValue, .btnRemove {
     padding: 2px;
     display: inline-block;
-    background-color: #ccc;
+    background-color: #f7f7f7;
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 2px);
   }
+  .filterValue {
+     padding-left: 5px;
+  }
+
 
   .btnRemove {
      text-indent: -9999px;
      width: 10px;
      margin-left: -3px;
+     padding-left: 3px;
      position: relative;
+     color: $quiet-color;
   }
 
   .btnRemove:after {
@@ -311,7 +402,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     hr {
       @include column(20);
-      @include pull(1);
+      @include pull(0.5);
       margin-bottom: 0;
     }
 
@@ -399,11 +490,18 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
        height: 240px;
     }
 
+    .primary-datastream.datastream-transcript {
+      @extend .secondary-datastream-container;
+      @include column(14);
+      @include prepend(4);
+      height: 480px;
+    }
+
     .pbcore-metadata {
        @include column(18);
-       @include pull(1);
-       @include prepend(1);
-       @include append(1);
+       @include pull(0.5);
+       @include prepend(0.5);
+       @include append(1.5);
        background-color: #ddd;
 
     .instantiation, .source, .description, .date, .place, .people {
@@ -419,4 +517,34 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     }
 
     }
+}
+
+.transcript {
+    
+  h3 {
+   font-weight: bold;
+   @include margin-leader(1.5);
+   @include margin-trailer(1.5);
+  }
+ 
+  strong {
+    font-weight: bold;
+    @include column(2);
+    clear: left;
+  }
+
+  .para {
+      @include prepend(2);
+    @include margin-leader(1);
+  }
+
+  .incident {
+     font-style: italic;
+     color: $quiet-color;
+  }
+
+  .tei-metadata {
+     display: none;
+  }
+
 }
