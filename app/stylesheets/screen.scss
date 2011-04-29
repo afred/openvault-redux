@@ -41,6 +41,8 @@ html {
 body {
   @include background(image-url("foo.png"),
                       linear-gradient(top, #bbd6e7, #0369a9));
+                      @include background-size(100% 600px);
+                      background-repeat: no-repeat;
   
 }
 
@@ -185,6 +187,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       @include append(0.5);
    }
 
+
    ul {
       background-color: white;
       @include prepend(0.5);
@@ -215,7 +218,8 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       background-color: $orange;
     }
 
-    @include padding-trailer(6);
+    @include padding-trailer(1);
+    min-height: 600px;
 
   }
 
