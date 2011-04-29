@@ -43,6 +43,7 @@ body {
                       linear-gradient(top, #bbd6e7, #0369a9));
                       @include background-size(100% 600px);
                       background-repeat: no-repeat;
+                      min-height: 600px;
   
 }
 
@@ -406,7 +407,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     hr {
       @include column(20);
-      @include pull(0.5);
+      @include pull(1);
       margin-bottom: 0;
     }
 
@@ -510,6 +511,18 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     .instantiation, .source, .description, .date, .place, .people {
        @include column(6);
+    }
+
+    h3, strong {
+       font-weight: bold;
+    }
+
+    .source strong, .description strong {
+      font-weight: normal;
+      
+      &:after {
+         content: ": ";
+      }
     }
 
     .date {
