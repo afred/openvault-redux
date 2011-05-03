@@ -1,0 +1,7 @@
+<div id="new_tag" style="overflow: visible">
+  <%= form_for :document, :url => catalog_tags_path(:catalog_id => @document.id), :html => { :method => :post } do |f| %>
+    <%= text_field_tag :tags %>
+    <%= f.submit "Add Tag" %>
+  <% end %>
+</div>
+<%= @tags.join ", " %>

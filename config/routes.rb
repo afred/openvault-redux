@@ -8,6 +8,7 @@ Openvault::Application.routes.draw do
 
   resources :catalog, :only => [:index, :show, :update], :constraints => { :id => /([A-Za-z0-9]|:|-|\.)+([A-Za-z0-9]|:|-){4}/ } do
     resources :comments
+    resource :tags
   end
 
   # The priority is based upon order of creation:
