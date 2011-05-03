@@ -44,7 +44,21 @@ module Openvault::DigitalObjects::Wgbh
        prefix = prefix.slice(-6, 6) if prefix.length > 10 
 
        doc['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s 
+
+       collection_prefix_map = { 'info:fedora/org.wgbh.mla:vietnam' => 'vietnam',
+                                 'info:fedora/org.wgbh.mla:sbro' => 'sbro',
+                                 'info:fedora/org.wgbh.mla:ntw' => 'ntw',
+                                 'info:fedora/org.wgbh.mla:tocn' => 'tocn',
+                                 'info:fedora/org.wgbh.mla:pledge' => 'radio',
+                                 'info:fedora/org.wgbh.mla:wpna' => 'wpna',
+                                 'info:fedora/umb:collection-id-11' => 'sully',
+                                 'info:fedora/org.wgbh.mla:27afb5495dec3586bbcb00e19f6c2841745a248d' => 'march'
+       }
+
+       collection_prefix_s = doc['ri_isMemberOfCollection_s'].map { |x| collection_prefix_map[x] }.compact.first
+
        doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s']}" unless doc['slug_s'].blank? 
+       doc['id'] = "#{collection_prefix_s}-#{doc['id']}" if collection_prefix_s
      end
 
      def openvault_user_generated_content_for_solr(doc = {})
