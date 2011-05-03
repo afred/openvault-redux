@@ -3,5 +3,5 @@
   <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview)).html_safe) %>
 </div>
 <%= link_to_document document %>
-<%= render_document_show_field_value :document => document, :field => 'dc_description_t' %>
+<%= truncate(render_document_show_field_value(:document => document, :field => 'dc_description_t'), :length => 400, :separator => '. ').html_safe %>
 </div>
