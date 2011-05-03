@@ -85,7 +85,8 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
      height: 58px;
   }
 
-  .site_title {
+  .site_title a {
+      display: block;
      @include replace-text-with-dimensions("openvault.png");
   }
 
