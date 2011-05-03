@@ -218,6 +218,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   h2 {
     background-color: #8a8e90;
     @include margin-trailer(1);
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
   }
 }
 
@@ -235,6 +236,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
    }
 
    .twiddle {
+      cursor: pointer;
        background-image: url(/images/arrow_closed.png);
        background-repeat: no-repeat;
        background-position: 5px 48%;
