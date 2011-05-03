@@ -10,7 +10,7 @@
 @import "compass/utilities/text/replacement";
 @import "compass/typography/vertical_rhythm";
 
-$base-font-size: 9.5px;
+$base-font-size: 11px;
 $base-line-height: 14.25px;
 
 $blueprint-grid-columns: 26;
@@ -21,12 +21,14 @@ $blueprint-grid-columns: 26;
 
 @import "blueprint/colors";
 $link-color: #0a9cd5;
+$dark-link-color: #006699;
 
-$action-color: #d76b11;
+$action-color: #cc6600;
 $action-hover-color: lighten(#d76b11, 20%);
 
-$orange: #fb8b1e;
-$grey: #e1dbda;
+$orange: #ff9e25;
+$grey: #e8e3e3;
+
 
 
 // Combine the partials into a single screen stylesheet.
@@ -35,16 +37,15 @@ $grey: #e1dbda;
 //@import "partials/two_col";
 
 html {
-   background-color: #0369a9;
+   background-color: #558fba;
+   background-image: image-url("background-footer.jpg");
+   background-repeat: no-repeat;
+   background-position: 0 100%;
 }
 
 body {
-  @include background(image-url("foo.png"),
-                      linear-gradient(top, #bbd6e7, #0369a9));
-                      @include background-size(100% 600px);
-                      background-repeat: no-repeat;
-                      min-height: 600px;
-  
+    background-image: image-url("background-header.jpg");
+    background-repeat: no-repeat;
 }
 
 ul, li {
@@ -64,23 +65,40 @@ a:hover, a:active {
 a.action, .tools a, .new_tag, .new_annotation, .sync {
   font-weight: bold;
   @include link-colors($action-color, $action-hover-color, $link-active-color, $link-visited-color, $link-focus-color); 
+  text-transform: uppercase;
+  font-size: 10px;
 }
 
 .container {
     @include container;
     @include blueprint-typography-body;
+    font-size: 11px;
 }
 
 #hd {
   @include column(26);
+  @include margin-leader(1);
+  position: relative;
 
   .site_title_container {
      @include column(5);
+     height: 58px;
+  }
+
+  .site_title {
+     @include replace-text-with-dimensions("openvault.png");
+  }
+
+  .subtitle {
+     @include replace-text-with-dimensions("wgbh_mla.png");
+     @include margin-leader(2);
   }
 
   .user_util_links {
-     @include column(6, true);
-     @include push(15);
+      position: absolute;
+      right: 0;
+      top: 38px;
+      text-align: right;
   }
 }
 
@@ -116,6 +134,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   #search {
     @include column(9);
 
+
     h2 {
       @include hide-text();
       height: 0; margin: 0; padding: 0;
@@ -124,15 +143,43 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     hr {
        display: none;
     }
+
+    .q_field {
+      position: relative;
+      @include margin-trailer(0.5);
+      width: 170px;
+      height: 2em;
+
+      .q {
+        width: 100%;
+        font-size: 12px;
+        color: #666;
+        @include padding-leader(0.25);
+        @include padding-trailer(0.25);
+      }
+
+    .submit {
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
+    }
   }
 
   #browse {
     @include column(9, true);
+    h2 {
+      font-size: 12px;
+      color: #fff;
+    }
   }
   
 }
 
 .blacklight-catalog-index {
+    #content {
+  @include padding-trailer(2);
+  }
   #search-bar {
     @include margin-trailer(0);
   }
@@ -155,10 +202,9 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   @include pull($blueprint-grid-columns);
   @include margin-leader(5.5);
   h2 {
-    @include padding-leader(0.5);
-    @include padding-trailer(0.5);
-    padding-left: 10px;
-    font-size: 1em;
+    @include padding-leader(1);
+    @include padding-trailer(0.7);
+    padding-left: 15px;
     font-weight: bold;
     color: white;
     text-transform: uppercase;
@@ -169,23 +215,34 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
 .blacklight-catalog-show #sidebar {
   h2 {
-    background-color: #3292cc;
+    background-color: #8a8e90;
+    @include margin-trailer(1);
   }
 }
 
 .facet_limit {
 
-   border-bottom: 1px solid darken($grey, 20%);
+   border-bottom: 1px solid #888;
 
    h3 {
      @include padding-leader(0.5);
      @include padding-trailer(0.5);
       text-transform: uppercase;
-      color: black;
       font-weight: bold;
-      font-size: 0.9em;
       @include prepend(0.5);
       @include append(0.5);
+   }
+
+   .twiddle {
+       background-image: url(/images/arrow_closed.png);
+       background-repeat: no-repeat;
+       background-position: 5px 48%;
+       padding-left: 15px;
+   }
+
+   .twiddle-open {
+     background-image: url(/images/arrow_open.png);
+     background-position: 3px 48%;
    }
 
 
@@ -243,11 +300,17 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
      @include column(15);
      @include push(3.5);
      margin-bottom: 0;
+     font-size: 12px;
+
+     a {
+       color: $dark-link-color;
+       font-weight: bold;
+     }
   }
 
   .thumbnail {
      position: absolute;
-     top: 0;
+     top: 0.5em;
      left: 0;
      @include margin-leader(0.5);
   }
@@ -268,7 +331,6 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
   .blacklight-fulltext_t {
      @include margin-trailer(0.5);
-     color: $quiet-color;
     .label {
        display: none;
     }
@@ -305,6 +367,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
    #sortAndPerPage {
       @include column(4);
       @include pull(10.5);
+
+      .sort {
+         margin-top: -0.3em;
+      }
    }
 
    .per_page {
@@ -318,19 +384,18 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
          display: none;
       }
 
+      .page_links {
+         text-align: right;
+      }
+
       .previous_page {
-         @include column(2);
+        margin-right: 1em;
       }
 
       .next_page {
-         @include column(2);
-         @include push(4);
+         margin-left: 1em;
       }
 
-      .page_links {
-         @include column(4);
-         @include pull(2);
-      }
   }
 
 
@@ -339,6 +404,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   .filterName {
     text-transform: uppercase;
     font-weight: bold;
+    margin-right: 5px;
   }
 
   .filterValue, .btnRemove {
@@ -370,6 +436,8 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
      width: 100%;
      height: 100%;
   }
+
+
   }
 
 #documents + .pagination {
@@ -377,7 +445,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
    @include prepend(8);
 }
 
-.records-of-interest {
+.related-content {
 
   .mlt {
      @include margin-trailer(1);
@@ -422,7 +490,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     h1 {
       font-weight: bold;
-      font-size: 2em;
+      font-size: 20px;
     }
 
     div.tools {
@@ -468,6 +536,11 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
        .value {
           @include column(15,  true);
+       }
+
+       & > div {
+           @include clearfix;
+           margin-bottom: 1em;
        }
     }
 
@@ -524,11 +597,15 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     }
 
     h3, strong {
+        @include margin-leader(1);
        font-weight: bold;
+       display: block;
     }
 
     .instantiation strong, .source strong, .description strong {
       font-weight: normal;
+      display: inline;
+      @include margin-leader(0);
       
       &:after {
          content: ": ";
