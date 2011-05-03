@@ -42,11 +42,12 @@ source_credits = ''
 
     <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
       <div><strong><%= type %></strong> <%= value %></div>
-      <% source_credits << "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>" if value =~ /ABC/ %>
-      <% source_credits << "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>" if value =~ /CBS/ %>
     <% end %>
     <div class="source-credits">
-      <%= source_credits %>
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <%= "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>".html_safe if value =~ /ABC/ %>
+      <%= "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>".html_safe if value =~ /CBS/ %>
+    <% end %>
     </div>
   </div>
   <% end %>

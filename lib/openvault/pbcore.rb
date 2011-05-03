@@ -21,21 +21,21 @@ module Openvault::Pbcore
 
     def titles 
       @pbcore.xpath('//pbcore:pbcoreTitle', xmlns).map do |e|
-        [e.xpath('pbcore:titleType', xmlns).first.content, e.xpath('pbcore:title', xmlns).first.content]
+        [e.xpath('pbcore:titleType', xmlns).first.content.html_safe, e.xpath('pbcore:title', xmlns).first.content.html_safe]
       end
     end
 
     def descriptions
       @pbcore.xpath('//pbcore:pbcoreDescription', 'pbcore' => PBCORE_NS).map do |e|
-        [e.xpath('pbcore:descriptionType', xmlns).first.content, e.xpath('pbcore:description', xmlns).first.content]
+        [e.xpath('pbcore:descriptionType', xmlns).first.content.html_safe, e.xpath('pbcore:description', xmlns).first.content.html_safe]
       end
     end
 
     def publishers
        @pbcore.xpath('//pbcore:pbcorePublisher', 'pbcore' => PBCORE_NS).map do |e|
 	  role = e.xpath('pbcore:publisherRole', xmlns).first
-	  role = role.content unless role.nil?
-         [role || 'Publisher', e.xpath('pbcore:publisher', xmlns).first.content]
+	  role = role.content.html_safe unless role.nil?
+         [role || 'Publisher', e.xpath('pbcore:publisher', xmlns).first.content.html_safe]
        end
     end
 
@@ -46,7 +46,7 @@ module Openvault::Pbcore
       end 
 
       @pbcore.xpath(m,  'pbcore' => PBCORE_NS).map do |e|
-        {:subjectAuthorityUsed => e.xpath('pbcore:subjectAuthorityUsed', xmlns).first.content, :subject => e.xpath('pbcore:subject', xmlns).first.content}
+        {:subjectAuthorityUsed => e.xpath('pbcore:subjectAuthorityUsed', xmlns).first.content.html_safe, :subject => e.xpath('pbcore:subject', xmlns).first.content.html_safe}
       end.group_by{|e| e[:subjectAuthorityUsed] }
     end
 
@@ -54,14 +54,14 @@ module Openvault::Pbcore
       m = '//pbcore:pbcoreContributor'
 
       @pbcore.xpath(m,  'pbcore' => PBCORE_NS).map do |e|
-        {:contributorRole => e.xpath('pbcore:contributorRole', xmlns).first.content, :contributor => e.xpath('pbcore:contributor', xmlns).first.content}
+        {:contributorRole => e.xpath('pbcore:contributorRole', xmlns).first.content.html_safe, :contributor => e.xpath('pbcore:contributor', xmlns).first.content.html_safe}
       end.group_by{|e| e[:contributorRole] }
     end
     def creators 
       m = '//pbcore:pbcoreCreator'
 
       @pbcore.xpath(m,  'pbcore' => PBCORE_NS).map do |e|
-        {:creatorRole => e.xpath('pbcore:creatorRole', xmlns).first.content, :creator => e.xpath('pbcore:creator', xmlns).first.content}
+        {:creatorRole => e.xpath('pbcore:creatorRole', xmlns).first.content.html_safe, :creator => e.xpath('pbcore:creator', xmlns).first.content.html_safe}
       end.group_by{|e| e[:creatorRole] }
     end
 
@@ -70,7 +70,7 @@ module Openvault::Pbcore
 	h = {:to_xml => i }; 
 	i.children.map do |e| 
 	  h[e.name] = [] if h[e.name].nil?
-	  h[e.name] << e.content
+	  h[e.name] << e.content.html_safe
 	end
         h
       end
@@ -78,7 +78,7 @@ module Openvault::Pbcore
 
   def coverage
     @pbcore.xpath('//pbcore:pbcoreCoverage', 'pbcore' => PBCORE_NS).map do |e|
-      {:coverageType => e.xpath('pbcore:coverageType', xmlns).first.content, :coverage => e.xpath('pbcore:coverage', xmlns).first.content }
+      {:coverageType => e.xpath('pbcore:coverageType', xmlns).first.content.html_safe, :coverage => e.xpath('pbcore:coverage', xmlns).first.content.html_safe }
     end.group_by {|e| e[:coverageType] }
   end
   end
