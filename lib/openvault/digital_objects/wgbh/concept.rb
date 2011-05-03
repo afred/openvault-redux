@@ -40,6 +40,13 @@ module Openvault::DigitalObjects::Wgbh
 
        doc['pbcore_pbcoreTitle_program_s'] = (doc['pbcore_pbcoreTitle_series_s'] + " / " + doc['pbcore_pbcoreTitle_program_s'] rescue doc['pbcore_pbcoreTitle_program_s']) if doc['pbcore_pbcoreTitle_series_s'] and  doc['pbcore_pbcoreTitle_program_s'] 
 
+       doc['ri_collection_ancestors_s'] = Rubydora.repository.sparql("SELECT ?collection ?collection2 ?collection3 ?collection4 FROM <#ri> WHERE {
+       <#{uri}> <fedora-rels-ext:isMemberOfCollection> ?collection .
+OPTIONAL {  ?collection <fedora-rels-ext:isMemberOfCollection> ?collection2 . }
+OPTIONAL {  ?collection2 <fedora-rels-ext:isMemberOfCollection> ?collection3 . }
+OPTIONAL {  ?collection3 <fedora-rels-ext:isMemberOfCollection> ?collection4 . }
+       }").map(&:fields).flatten.uniq.reject { |x| x == "null" } 
+
        prefix = doc['pid_s'].split(':').last
        prefix = prefix.slice(-6, 6) if prefix.length > 10 
 
@@ -55,7 +62,7 @@ module Openvault::DigitalObjects::Wgbh
                                  'info:fedora/org.wgbh.mla:27afb5495dec3586bbcb00e19f6c2841745a248d' => 'march'
        }
 
-       collection_prefix_s = doc['ri_isMemberOfCollection_s'].map { |x| collection_prefix_map[x] }.compact.first
+       collection_prefix_s = doc['ri_collection_ancestors_s'].map { |x| collection_prefix_map[x] }.compact.first
 
        doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s']}" unless doc['slug_s'].blank? 
        doc['id'] = "#{collection_prefix_s}-#{doc['id']}" if collection_prefix_s
