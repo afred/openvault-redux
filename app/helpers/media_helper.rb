@@ -39,7 +39,7 @@ module MediaHelper
 </script>
 EOF
 
-    html
+    html.html_safe
   end
   def render_video_player sources, options = {}
     stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
