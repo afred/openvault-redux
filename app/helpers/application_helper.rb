@@ -43,10 +43,18 @@ module ApplicationHelper
 
   def render_field_value value
     value = [value] unless value.is_a? Array
-    value.compact.map { |v| v.gsub(/<resource_link res="([^"]+)">([^<]+)<\/resource_link>/) { |match| link_to $2, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
+    value.compact.map { |v| v.gsub("&lt;", "<").gsub("&gt;", ">").gsub("&quot;", '"').gsub(/<resource_link res="([^"]+)">(.+)<\/resource_link>/) { |match| link_to $2, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
   end
 
   def render_document_show_field_label(*args)
     super(*args).gsub(/:$/, '')
+  end
+
+  def render_index_doc_actions(*args)
+    nil
+  end
+
+  def render_show_doc_actions(*args)
+    nil
   end
 end
