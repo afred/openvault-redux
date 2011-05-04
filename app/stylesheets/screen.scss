@@ -121,6 +121,27 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
   border: 1px solid #CCC;
 }
+    .q_field {
+      position: relative;
+      @include margin-trailer(0.5);
+      width: 170px;
+      height: 2em;
+
+      .q {
+        width: 150px;
+        padding-right: 20px;
+        font-size: 12px;
+        color: #666;
+        @include padding-leader(0.25);
+        @include padding-trailer(0.25);
+      }
+
+    .submit {
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
+    }
 
 #search-bar {
   @include column(18);
@@ -145,26 +166,6 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
        display: none;
     }
 
-    .q_field {
-      position: relative;
-      @include margin-trailer(0.5);
-      width: 170px;
-      height: 2em;
-
-      .q {
-        width: 100%;
-        font-size: 12px;
-        color: #666;
-        @include padding-leader(0.25);
-        @include padding-trailer(0.25);
-      }
-
-    .submit {
-        position: absolute;
-        top: 8px;
-        right: 0;
-    }
-    }
   }
 
   #browse {
@@ -571,15 +572,40 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
        @include column(8);
     }
 
+    .primary-datastream-container {
+       @extend .primary-datastream;
+    }
+
     .secondary-datastream-container {
        @include column(9, true);
        @include prepend(1);
+
+   }
+
+    .primary-datastream-container, .secondary-datastream-container {
+       h2 {
+           @include column(4);
+         text-transform: uppercase;
+         font-weight: bold;
+       }
+
+       .datastream-actions {
+          @include column(5, true);
+       }
+   }
+
+    .secondary-datastream {   
+        @include column(9, true);
        overflow-y: scroll;
        height: 240px;
+
+       .highlight {
+         background-color: #ffff00;
+       }
     }
 
     .primary-datastream.datastream-transcript {
-      @extend .secondary-datastream-container;
+      @extend .secondary-datastream;
       @include column(14);
       @include prepend(4);
       height: 480px;
@@ -643,6 +669,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   .para {
       @include prepend(2);
     @include margin-leader(1);
+  }
+
+  .current {
+     color: darken($orange, 30%);
   }
 
   .incident {

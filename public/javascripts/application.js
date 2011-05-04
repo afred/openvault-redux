@@ -127,3 +127,34 @@ $(function() {
   }
 
 }(jQuery));
+
+
+$(function() {
+  var last_search = null;
+  var i = 0;
+  var max = 0;
+   $('.datastream-action-search').bind('submit', function() {
+     current_search = $('input:text', this).val();
+
+     if(current_search != last_search) {
+       $('.secondary-datastream').unhighlight().highlight(current_search);
+
+       $('.tei-metadata .highlight').each(function() {
+          $('.secondary-datastream .tei-name-' + $(this).parent().attr('id')).addClass('highlight');
+          $(this).removeClass('highlight');
+       });
+
+       max = $('.secondary-datastream .highlight').length
+
+       last_search = current_search;
+       i = 0;
+     }
+
+     $('.secondary-datastream').scrollTo($('.secondary-datastream .highlight').eq(i));
+     i++;
+     if(i > max) {
+       i = 0;
+     }
+     return false;
+   });
+});
