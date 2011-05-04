@@ -28,6 +28,40 @@
 
 
 $(function() {
+
+    var media_selector = 'video, audio';
+    var player = null;
+
+    $(media_selector).each(function() {
+      jw = jwplayer($(this).attr('id')).setup({
+        'flashplayer': '/swfs/player.swf',
+     //   provider: 'http',
+     //   'http.startparam':'start', 
+         skin: '/swfs/glow.zip',
+         events: {
+           onTime: function() {
+              $(this).trigger('timeupdate'); // HTML5 event
+           }
+         }
+      });
+
+      if(player == null) {
+        player = jw;
+      }
+    });
+
+         var start = 0;
+         try {
+          start = /t=(\\d+)/.exec(location.hash).pop();
+         }
+         catch(err) {
+          start = 0;
+         }
+          if(start > 0) {
+            player.seek(start);
+          }
+
+
     function timestamp_to_s(timestamp) {
       var s = 0;
               if(typeof timestamp != 'string' || timestamp.indexOf(':') == -1) { return timestamp; }
@@ -48,8 +82,7 @@ $(function() {
         }
   }
 
-   media_selector = '.primary-datastream video, .primary-datastream audio';
-   if($('.blacklight-catalog-show').length > 0 && $(media_selector).length > 0) {
+   if($('.datastream-video,.datastream-audio').length > 0 && $('.datastream-transcript').length > 0) {
      //select all timecode-enabled elements
      $('*[data-timecode_begin]').attr('data-timecode', true);
      $('*[data-timecode_end]').attr('data-timecode', true);
@@ -77,13 +110,13 @@ $(function() {
      });
 
      //sync the media with the transcript
-     $(media_selector).sync(smil_elements);
+     $(player).sync(smil_elements, { 'time': function() { return this.getPosition() }});
      smil_elements.bind('sync-on', function() { $(this).addClass('current'); });
      smil_elements.bind('sync-off', function() { $(this).removeClass('current'); });
 
      //sync the transcript with the media
      smil_elements.each(function() {
-       $('<a class="sync">[sync]</a>').prependTo($(this)).bind('click', function() { $(media_selector)[0].currentTime = $(this).parent().data('begin_seconds'); }) ;
+       $('<a class="sync">[sync]</a>').prependTo($(this)).bind('click', function() { player.seek($(this).parent().data('begin_seconds')); }) ;
      });
    }
     });
@@ -98,7 +131,8 @@ $(function() {
       'off' : function() { $(this).trigger('sync-off'); },
       'time' : function() { return this.currentTime },
       'poll' : false,
-      'pollingInterval' : 1000
+      'pollingInterval' : 1000,
+      'event': 'timeupdate'
     }
 
     $.extend( settings, options );
@@ -107,7 +141,7 @@ $(function() {
       setInterval(function() { $(media).trigger('timeupdate'); }, settings['pollInterval']);
     } 
 
-    this.bind('timeupdate', function() {
+    this.bind(settings['event'], function() {
       t = jQuery.proxy(settings['time'], this)();
       target.each(function() {
        if($(this).data(settings['begin']) <= t && t <= $(this).data(settings['end'])) {

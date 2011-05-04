@@ -15,58 +15,21 @@ module MediaHelper
     options.symbolize_keys!
     options[:width] ||= 320
     options[:src] = source
+    options[:id] ||= source.split('/').last.parameterize 
+
     html = ''
 
     html += image_tag options[:poster], :width => options[:width] if options[:poster]
     html += tag("audio", options)
 
-    extra_head_content << <<EOF
-<script type="text/javascript">
-  $(function() {
-      $('audio').one('canplay', function() {
-         var start = 0;
-         try {
-          start = /t=(\\d+)/.exec(location.hash).pop();
-         }
-         catch(err) {
-          start = #{params[:t] || 0};
-         }
-          if(start > 0) {
-            this.currentTime = start;
-          }
-      });
-      });
-</script>
-EOF
 
     html.html_safe
   end
   def render_video_player sources, options = {}
-    stylesheet_links << ["/mediaelement/build/mediaelementplayer.css"]
-    javascript_includes << ["/mediaelement/build/mediaelement-and-player.min.js"]
-    extra_head_content << <<EOF
-<script type="text/javascript">
-  $(function() {
-      $('video').mediaelementplayer();
-      $('video').one('canplay', function() {
-         var start = 0;
-         try {
-          start = /t=(\\d+)/.exec(location.hash).pop();
-         }
-         catch(err) {
-          start = #{params[:t] || 0};
-         }
-          if(start > 0) {
-            this.currentTime = start;
-          }
-      });
-      });
-</script>
-EOF
-
     options.symbolize_keys!
   
     options[:poster] = path_to_image(options[:poster]) if options[:poster]
+    options[:id] ||= ((sources.first if sources.is_a?(Array)) || sources ).split('/').last.parameterize 
   
     if size = options.delete(:size)
       options[:width], options[:height] = size.split("x") if size =~ /^\d+x\d+$/
