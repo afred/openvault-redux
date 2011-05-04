@@ -53,7 +53,7 @@ $(function() {
     var player = null;
 
     $(media_selector).each(function() {
-      jw = jwplayer($(this).attr('id')).setup({
+      options =  {
         'flashplayer': '/swfs/player.swf',
      //   provider: 'http',
      //   'http.startparam':'start', 
@@ -63,7 +63,13 @@ $(function() {
               $(this).trigger('timeupdate'); // HTML5 event
            }
          }
-      });
+      }
+
+      if($(this).prev('img').length > 0 && $(this).is('audio')) {
+        options['height'] = '28';
+        options['controlbar'] = 'bottom';
+      }
+      jw = jwplayer($(this).attr('id')).setup(options);
 
       if(player == null) {
         player = jw;
@@ -72,14 +78,11 @@ $(function() {
 
          var start = 0;
          try {
-          start = /t=(\\d+)/.exec(location.hash).pop();
+          start = /t=(\d+)/.exec(location.hash).pop();
+            player.play().seek(start);
          }
          catch(err) {
-          start = 0;
          }
-          if(start > 0) {
-            player.seek(start);
-          }
 
 
     function timestamp_to_s(timestamp) {
