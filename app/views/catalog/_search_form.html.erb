@@ -1,12 +1,12 @@
 <div id="search-bar">
 <div id="search" class="search">
-  <% form_tag catalog_index_path, :method => :get do %>
+  <%= form_tag catalog_index_path, :method => :get do %>
     <h2 class="search"><%= label_tag(:q, "Search Archive") %></h2>
     <div class="q_field">
       <%= text_field_tag :q, params[:q], :class => "q", :placeholder => "Search Archive" %>
     
     <%= hidden_field_tag :search_field, 'all_fields' %>
-    <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]) %>        
+    <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page, :id]) %>        
     
     <%= image_submit_tag("magnifying-glass.gif", :alt => "Submit", :class => 'submit') %>
   </div>
@@ -23,5 +23,18 @@
 
 <div id="browse">
   <h2 class="search">Browse Archive</h2>
+  <% cache(:controller => 'catalog', :action => 'browse', :action_suffix => "categories") do %>
+    <%= form_tag catalog_index_path, :method => :get, :class => 'categories' do %>
+    <%= select 'f', 'merlot_s', top_level_categories.items.map { |x| x.value.gsub('1/', '') }, { :include_blank => true }, :name => 'f[merlot_s][]' %>
+      <%= submit_tag %>
+    <% end %>
+  <% end %>
+
+  <% cache(:controller => 'catalog', :action => 'browse', :action_suffix => "categories") do %>
+    <%= form_tag catalog_index_path, :method => :get, :class => 'collections' do %>
+    <%= select "id", nil, collections_list.map { |x| [x.get('title_display'), x.get('id')] }, :include_blank => true %>
+      <%= submit_tag %>
+    <% end %>
+  <% end %>
 </div>
 </div>

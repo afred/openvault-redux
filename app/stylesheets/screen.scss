@@ -154,7 +154,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   background-color: $orange;
 
   #search {
-    @include column(9);
+    @include column(6);
 
 
     h2 {
@@ -169,11 +169,24 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   }
 
   #browse {
-    @include column(9, true);
+    @include column(12, true);
     h2 {
       font-size: 12px;
+      font-weight: bold;
+      @include padding-leader(0.2);
       color: #fff;
+      @include column(2.5);
     }
+
+    .categories, .collections {
+       @include column(4.5, true);
+
+       select {
+          width: 90%;
+       }
+
+    }
+
   }
   
 }

@@ -10,11 +10,17 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::FacetDomsearch
 
   before_filter :handle_search_start_over, :only => :index
+  before_filter :redirect_show_requests, :only => :index
+
   after_filter :invalidate_cache, :only => :tag
 
   caches_action :show, :if => proc { |c|
     current_user.nil?
   }
+
+  def redirect_show_requests
+    redirect_to catalog_url(params[:id]) if params[:id]
+  end
 
   def invalidate_cache
     expire_action :action => :show, :id => params[:id]
