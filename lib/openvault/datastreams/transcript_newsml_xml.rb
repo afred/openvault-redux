@@ -2,6 +2,8 @@ module Openvault::Datastreams
    module TranscriptNewsmlXml
      def to_solr solr_doc
        super(solr_doc)
+
+       begin
        newsml = Nokogiri::XML(self.content)
        doc = []
        xmlns = { 'newsml' => 'http://iptc.org/std/nar/2006-10-01/' }
@@ -12,6 +14,9 @@ module Openvault::Datastreams
          key.gsub!('__', '_')
          solr_doc[key] ||= []
          solr_doc[key] <<  value.strip
+       end
+
+       rescue
        end
      end
    end
