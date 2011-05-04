@@ -404,6 +404,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
 
 .appliedFilter {
+  &.query {
+     display: none;
+  }
+
   @include append(0.5);  
   .filterName {
     text-transform: uppercase;
