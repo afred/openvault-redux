@@ -26,6 +26,26 @@
          });
         });
 
+	    /* Behavior that makes facet limit headings in sidebar expand/contract
+	       their contents. This is kind of fragile code targeted specifically
+	       at how we currently render facet HTML, which is why I put it in a function
+	       on Blacklight instead of in a jquery plugin. Perhaps in the future this
+	       could/should be expanded to a general purpose jquery plugin -- or
+	       we should just use one of the existing ones for expand/contract? */
+     Blacklight.facet_expand_contract = function() {
+       $(this).next("ul, div").each(function(){
+           var f_content = $(this);
+           $(f_content).prev('h3').addClass('twiddle twiddle-open');
+
+           // attach the toggle behavior to the h3 tag
+           $('h3', f_content.parent()).click(function(){
+               // toggle the content
+               $(this).toggleClass('twiddle-open');
+               $(f_content).slideToggle();
+           });
+       });
+   };
+
 
 $(function() {
 
