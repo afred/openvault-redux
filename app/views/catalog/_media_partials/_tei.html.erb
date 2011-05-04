@@ -1,3 +1,12 @@
-<div class="datastream primary-datastream datastream-transcript datastream-transcript-tei-xml">
+<div class="secondary-datastream-container">
+  <h2>Transcript</h2>
+  <div class="datastream-actions">
+    <form action="#" method="GET" class="q_field datastream-action-search">
+      <%= text_field_tag :q, nil, :class => "q", :placeholder => "Search Transcript" %>
+    <%= image_submit_tag("magnifying-glass.gif", :alt => "Search Transcript", :class => 'submit') %>
+  </form>
+</div>
+<div class="datastream secondary-datastream datastream-transcript datastream-transcript-tei-xml">
   <%= render_tei_transcript(datastream_url(document.fedora_object.datastream["Transcript.tei.xml"], :private => true)) %>
+</div>
 </div>
