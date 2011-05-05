@@ -53,15 +53,14 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => (facet_fields = [
                      "merlot_s",
-      "dc_type_s",
-      "media_dsid_s",
-      "dc_date_year_i",
+      "keywords_cv",
       "person_cv",
       "place_cv",
+      "dc_date_year_i",
       "event_cv",
-      "keywords_cv",
+      "media_dsid_s",
+      "dc_type_s",
       "pbcore_pbcoreTitle_series_s",
-      "pbcore_pbcoreTitle_program_s",
       "tags_s",
       "has_comments_query",
       "ri_collection_ancestors_s",
@@ -80,10 +79,9 @@ Blacklight.configure(:shared) do |config|
       "place_cv" => "Place",
       "event_cv" => "Event",
       "objModels_s" => "Model",
-      "keywords_cv" => "Keywords",
+      "keywords_cv" => "Topic",
       "ri_collection_ancestors_s" => "Is Member Of Collection",
       "pbcore_pbcoreTitle_series_s" => "Series title",
-      "pbcore_pbcoreTitle_program_s" => "Program title",
       "tags_s" => "Tags",
       "has_comments_query" => "Comments"
     },
@@ -133,9 +131,9 @@ Blacklight.configure(:shared) do |config|
          'has no comments' => '-comments_t:[* TO *]',
          }
     },
-    :pivot => {
-      "pbcore_pbcoreTitle_series_s" => ["pbcore_pbcoreTitle_series_s", "pbcore_pbcoreTitle_program_s"]
-    },
+    #:pivot => {
+    #  "pbcore_pbcoreTitle_series_s" => ["pbcore_pbcoreTitle_series_s", "pbcore_pbcoreTitle_program_s"]
+   # },
     :hierarchy => {
       "merlot_s" => true
     }
