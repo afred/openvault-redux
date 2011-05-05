@@ -14,11 +14,11 @@
     $(function() {
        $('.blacklight-comments a').ajaxyDialog();
        $('.new_tag,.new_annotation').ajaxyDialog();
-       $('.user_util_links a').ajaxyDialog({
+      /* $('.user_util_links a').ajaxyDialog({
         width: $(window).width() / 2,
         chainAjaxySelector: ".folderTools a, .search_history a"
          });
-
+        */
        $('a.comments').ajaxyDialog({
         width: $(window).width() / 2,
         modal: false
