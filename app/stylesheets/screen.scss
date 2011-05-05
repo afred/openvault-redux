@@ -708,6 +708,11 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
 }
 
+.ui-widget {
+   font-size: $base-font-size;
+   line-height: $base-line-height; 
+}
+
 .ui-dialog {
    padding: 0;
    @include border-radius(0, 0);
