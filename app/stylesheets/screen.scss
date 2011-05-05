@@ -745,3 +745,7 @@ ul.facet_extended_list {
    width: auto;
    line-height: auto;
 }
+
+.blacklight-catalog_ugc-index {
+   @extend .blacklight-catalog-index;
+}

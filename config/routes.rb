@@ -5,6 +5,8 @@ Openvault::Application.routes.draw do
 
   resources :comments
 
+  match "catalog_ugc/facet/:id", :to => 'catalog_ugc#facet'
+  match 'user/comments', :to => 'catalog_ugc#index', :as => "my_page"
 
   resources :catalog, :only => [:index, :show, :update], :constraints => { :id => /([A-Za-z0-9]|:|-|\.)+([A-Za-z0-9]|:|-){4}/ } do
     resources :comments
