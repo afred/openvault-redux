@@ -52,5 +52,6 @@ gem "devise"
 gem "paperclip"
 gem "ruby-debug"
 gem "render_inheritable"
+gem "data_migrate"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
