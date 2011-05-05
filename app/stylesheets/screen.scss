@@ -44,15 +44,10 @@ html {
    background-position: 0 100%;
 }
 
-@media (max-device-height: 1500px) {
-  html {
-     background-image: none;
-  }
-}
-
 body {
     background-image: image-url("background-header.jpg");
     background-repeat: no-repeat;
+   height: 100%;
 }
 
 i {
