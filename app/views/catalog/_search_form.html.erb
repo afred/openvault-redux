@@ -23,14 +23,14 @@
 
 <div id="browse">
   <h2 class="search">Browse Archive</h2>
-  <% cache(:controller => 'catalog', :action => 'index', :action_suffix => "browse_categories") do %>
+  <% cache("catalog_browse_categories") do %>
     <%= form_tag catalog_index_path, :method => :get, :class => 'categories' do %>
       <%= select 'f', 'merlot_s', grouped_options_for_select({"Categories" => top_level_categories.items.map { |x| x.value.gsub('1/', '') } }), { :prompt => "Categories" }, :name => 'f[merlot_s][]' %>
       <%= submit_tag %>
     <% end %>
   <% end %>
 
-  <% cache(:controller => 'catalog', :action => 'index', :action_suffix => "browse_collections") do %>
+  <% cache("catalog_browse_collections") do %>
     <%= form_tag catalog_index_path, :method => :get, :class => 'collections' do %>
       <%= select "id", nil, grouped_options_for_select(collections_list.group_by { |x| x.get("dc_type_s") }.map { |key, values| [key.pluralize, values.map { |x| [x.get('title_display'), x.get('id')] }]}.sort_by { |x| x.first }), { :prompt => "Series and Collections" }  %>
       <%= submit_tag %>
