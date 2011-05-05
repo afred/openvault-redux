@@ -1,0 +1,7 @@
+<h2>Comments</h2>
+
+<ul>
+  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+</ul>
+
+<%= render :partial => 'form', :locals => { :comment => Comment.new(:commentable => @document) } %>

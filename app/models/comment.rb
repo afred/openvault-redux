@@ -13,4 +13,12 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
+  #after_save do 
+  #  self.commentable.save
+  #end
+
+  def surrogate
+    Surrogate.with_id(self.commentable_id)
+  end
+
 end

@@ -29,8 +29,8 @@ module ApplicationHelper
   end
 
   def link_to_document(doc, opts={:label=>Blacklight.config[:index][:show_link].to_sym, :counter => nil, :results_view => true})
-    label = render_document_index_label doc, opts
-    return link_to(label.html_safe, catalog_path(doc[:id]))
+    label = render_document_index_label(doc, opts)
+    link_to(label.html_safe, catalog_path(doc[:id]))
   end
 
   def datastream_url datastream, options = {}
@@ -56,5 +56,9 @@ module ApplicationHelper
 
   def render_show_doc_actions(*args)
     nil
+  end
+
+  def surrogate_url *args
+    catalog_url(*args)
   end
 end

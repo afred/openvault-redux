@@ -46,7 +46,8 @@ class TagsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @document.tag_list = (@document.tag_list + params[:tags].split(",").map(&:strip)).uniq
+    @document.tag_list << params[:tags].split(",").map(&:strip)
+    @document.save_tags
     @document.save
 
     respond_to do |format|

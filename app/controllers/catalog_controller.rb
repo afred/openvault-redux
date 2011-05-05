@@ -70,17 +70,6 @@ class CatalogController < ApplicationController
     end
   end
 
-  def tag
-    @response, @document = get_solr_response_for_doc_id
-    @document.tag_list = (@document.tag_list + params[:tags].split(",").map(&:strip)).uniq
-    @document.save
-
-    respond_to do |format|
-      format.html { redirect_to catalog_url(:id => @document.id) }
-      format.json { render :json => @document.tags }
-    end
-  end
-
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
   def invalid_solr_id_error
     response, documents = get_solr_response_for_field_values("pid_s",params[:id])

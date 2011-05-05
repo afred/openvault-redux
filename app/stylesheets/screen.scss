@@ -812,3 +812,21 @@ ul.facet_extended_list {
             display: block;
         }
 
+
+        .blacklight-comments {
+  .defList_container {
+      @include clearfix;
+     @include column(14.5);
+     @include push(3.5);
+  .label {
+     font-weight: bold;
+     display: inline;
+     @include append(0.25);
+  }
+
+  .value {
+      display: inline;
+  }
+  }
+
+        }

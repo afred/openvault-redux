@@ -17,6 +17,7 @@ class Surrogate  < ActiveRecord::Base
   def update
   end
 
+
   column :id, :string
   column :title, :string
 
