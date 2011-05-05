@@ -7,6 +7,7 @@
 
 @import "compass/css3/gradient";
 @import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
 @import "compass/utilities/text/replacement";
 @import "compass/typography/vertical_rhythm";
 
@@ -705,4 +706,29 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
      display: none;
   }
 
+}
+
+.ui-dialog {
+   padding: 0;
+   @include border-radius(0, 0);
+   border: 0;
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+
+}
+
+.ui-widget-header {
+   @include border-radius(0, 0);
+   background: $orange;
+   border: none;
+   color: #333;
+}
+
+.ui-widget-content {
+   a {
+     @extend a;
+   }
+}
+ul.facet_extended_list {
+    max-height: 500px;
+    overflow-y: scroll;
 }

@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   def default_html_head
 
+    stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
     stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
     stylesheet_links << ["compiled/print", { :media => 'print' }]
-    stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
 
     javascript_includes << ['jquery.min.js']
     javascript_includes << ['jquery-ui-1.8.1.custom.min.js',  'blacklight', { :plugin=>:blacklight } ]
