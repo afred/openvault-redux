@@ -48,7 +48,7 @@ module ApplicationHelper
   end
 
   def render_facet_value(facet_solr_field, item, options={})
-    (link_to_unless(options[:suppress_link], widont(item.value).html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + " " + render_facet_count(item.hits)).html_safe
+    (link_to_unless(options[:suppress_link], item.value.html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + "&nbsp;".html_safe + render_facet_count(item.hits)).html_safe
   end
 
   def render_field_value value
