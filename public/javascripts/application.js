@@ -70,6 +70,12 @@ $(function() {
 
 
 $(function() {
+  if( $('body').height() < 1000) {
+    $('html').css('backgroundPosition', '0 700px');
+  }
+});
+
+$(function() {
 
     var media_selector = 'video, audio';
     var player = null;
