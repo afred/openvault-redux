@@ -33,4 +33,146 @@ module Openvault::Solr::Document::Pbcore
 
     export_text.join("&amp;").html_safe
   end
+
+  def export_as_chicago_citation_txt
+    text = ''
+
+    title = setup_title_info
+    if !title.nil?
+      text += "&ldquo;" + mla_citation_title(title) + "&rdquo; "
+    end
+    text += ", "
+
+    text += setup_pub_date unless setup_pub_date.nil?
+    if text[-1,1] != "."
+      text += ", " unless text.nil? or text.blank?
+    end
+
+    text += setup_series_info + ", " unless setup_series_info.nil?
+
+    text += "WGBH Media Library &amp; Archives, "
+
+    text += "(accessed " + Date.current.strftime("%d %b %Y") + ")"
+
+
+    text.html_safe
+     
+  end
+
+  def export_as_mla_citation_txt
+    text = ''
+    # setup title
+    title = setup_title_info
+    if !title.nil?
+      text += "&ldquo;" + mla_citation_title(title) + "&rdquo; "
+ end
+    # Edition
+    edition_data = setup_edition
+    text += edition_data + " " unless edition_data.nil?
+
+    # Get Pub Date
+    text += setup_pub_date unless setup_pub_date.nil?
+    if text[-1,1] != "."
+      text += ". " unless text.nil? or text.blank?
+    end
+
+    # Publication
+    text += setup_series_info + ", " unless setup_series_info.nil?
+
+    text += "WGBH Media Library &amp; Archives, "
+
+    text += "Web. "
+
+    text += Date.current.strftime("%d %b %Y") + "."
+
+    text.html_safe
+    
+  end
+
+  def export_as_apa_citation_txt
+    text = ''
+
+    # setup title info
+    title = setup_title_info
+    text += title +" " unless title.nil?
+
+    # Get Pub Date
+    text += "(" + setup_pub_date + "). " unless setup_pub_date.nil?
+
+
+    # Edition
+    edition_data = setup_edition
+    text += edition_data + " " unless edition_data.nil?
+
+    # Publisher info
+    text += "Boston, MA: WGBH Media Library &amp; Archives. "
+
+    text += "Retrieved " + Date.current.strftime("%d %b %Y") + ""
+
+    text.html_safe
+  end
+
+  def setup_pub_date
+    date_value = self.get('dc_date_s') rescue ''
+    date_value
+  end
+  def setup_pub_info
+    text = self.get('dc_publisher_s')
+    text ||= 'WGBH Media Library &amp; Archives'
+    clean_end_punctuation(text.strip)
+  end
+
+  def setup_series_info
+    self.get('pbcore_pbcoreTitle_title_Full_s')
+  end
+
+  def mla_citation_title(text)
+    no_upcase = ["a","an","and","but","by","for","it","of","the","to","with"]
+    new_text = []
+    word_parts = text.split(" ")
+    word_parts.each do |w|
+      if !no_upcase.include? w
+        new_text.push(w.capitalize)
+      else
+        new_text.push(w)
+      end
+    end
+    new_text.join(" ")
+  end
+
+  def setup_title_info
+    text = self.get('title_display')
+
+    return nil if text.strip.blank?
+    clean_end_punctuation(text.strip) + "."
+
+  end
+
+  def clean_end_punctuation(text)
+    if [".",",",":",";","/"].include? text[-1,1]
+      return text[0,text.length-1]
+    end
+    text
+ end
+  def setup_edition
+      return nil
+  end
+
+  def get_author_list
+    author_list = []
+    author_list = [self.get('dc.publisher')] unless self.get('dc.publisher').nil?
+
+    author_list.uniq!
+    author_list = ['WGBH Educational Foundation'] if author_list.length == 0
+    author_list
+  end
+
+  def abbreviate_name(name)
+    name
+  end
+
+  def name_reverse(name)
+    name
+  end
+  
 end

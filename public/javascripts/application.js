@@ -13,6 +13,7 @@
 
     $(function() {
        $('#document .blacklight-comments a').ajaxyDialog();
+       $('.tools .cite a').ajaxyDialog();
        $('.new_tag,.new_annotation').ajaxyDialog();
       /* $('.user_util_links a').ajaxyDialog({
         width: $(window).width() / 2,

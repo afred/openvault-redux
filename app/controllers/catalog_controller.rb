@@ -70,6 +70,13 @@ class CatalogController < ApplicationController
     end
   end
 
+  def cite
+    @response, @document = get_solr_response_for_doc_id    
+    respond_to do |format|
+      format.html 
+    end
+  end
+
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
   def invalid_solr_id_error
     response, documents = get_solr_response_for_field_values("pid_s",params[:id])

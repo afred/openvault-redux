@@ -775,9 +775,11 @@ ul.facet_extended_list {
 }
 
 .at300bs {
+   display: inline-block;
+
    background: none;
-   height: auto;
-   width: auto;
+   height: 0px;
+   width: 0px;
    line-height: auto;
 }                                
 
