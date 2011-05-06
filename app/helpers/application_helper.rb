@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def datastream_url datastream, options = {}
-    "http://localhost:8180/fedora/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
+    "#{Rubydora.repository.client.url}/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
   end
 
   def render_facet_value(facet_solr_field, item, options={})
