@@ -50,6 +50,10 @@ body {
    height: 100%;
 }
 
+b {
+   font-weight: bold;
+}
+
 i {
   font-style: italic;
 }
@@ -728,6 +732,12 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
      display: none;
   }
 
+}
+
+.log p {
+   @include prepend(0);
+   @include append(0.5);
+   @include margin-leader(1);
 }
 
 .ui-widget {
