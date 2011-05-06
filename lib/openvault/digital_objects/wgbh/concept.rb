@@ -69,16 +69,17 @@ OPTIONAL {  ?collection3 <fedora-rels-ext:isMemberOfCollection> ?collection4 . }
      end
 
      def openvault_user_generated_content_for_solr(doc = {})
+       solr_document = SolrDocument.new(doc)
+
        doc['tags_s'] = []
-       doc['tags_s'] << surrogate.tags.map { |x| x.name }
-       doc['tags_s'] << surrogate.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}/#{x.tag.name}" }
-       doc['tags_s'] << surrogate.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}" }
+       doc['tags_s'] << solr_document.tags.map { |x| x.name }
+       doc['tags_s'] << solr_document.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}/#{x.tag.name}" }
+       doc['tags_s'] << solr_document.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}" }
 
        doc['tags_s'].flatten!.uniq
-       doc['comments_t'] = surrogate.comments.map { |x| x.comment }
-       doc['comments_ids_i'] = surrogate.comments.map { |x| x.id }
-       doc['comments_user_ids_i'] = surrogate.comments.map { |x| x.user_id }.compact
-       surrogate.tags
+       doc['comments_t'] = solr_document.comments.map { |x| x.comment }
+       doc['comments_ids_i'] = solr_document.comments.map { |x| x.id }
+       doc['comments_user_ids_i'] = solr_document.comments.map { |x| x.user_id }.compact
      end
    end
 end

@@ -20,9 +20,4 @@ class ApplicationController < ActionController::Base
   def choose_layout
     'application' unless request.xml_http_request? || ! params[:no_layout].blank?
   end     
-
-  def solr_document_url(*args)
-    catalog_url(*args)
-  end
-  alias_method :surrogate_url, :solr_document_url
 end

@@ -10,5 +10,3 @@ Rubydora::Ext::Solr.load
 require 'rubydora/ext/model_loader'
 Rubydora::Ext::ModelLoader.load :base_namespace => Openvault::DigitalObjects 
 Rubydora::Ext::ModelLoader.load :class => Rubydora::Datastream, :method => :dsid, :base_namespace => Openvault::Datastreams
-
-Rubydora::DigitalObject.use_extension(Openvault::DigitalObjects::Surrogate)

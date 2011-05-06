@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
   # GET /comments/1.xml
   def show
     @comment = Comment.find(params[:id])
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @comment }
@@ -55,7 +55,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment.commentable }
+        format.html { redirect_to(@comment) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
         format.html { render :action => "new" }
@@ -71,7 +71,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment.commentable }
+        format.html { redirect_to @comment }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -87,7 +87,7 @@ class CommentsController < ApplicationController
     @comment.destroy
     
     respond_to do |format|
-      format.html {  redirect_to @comment.commentable }
+      format.html {  redirect_to @comment }
       format.xml  { head :ok }
     end
   end
