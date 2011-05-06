@@ -258,6 +258,15 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       }
    }
 
+   h4 {
+     @include padding-leader(0.5);
+     font-weight: bold;
+      background-color: white;
+      @include prepend(0.5);
+      @include append(0.5);
+
+   }
+
    .twiddle {
       cursor: pointer;
        background-image: url(/images/arrow_closed.png);
@@ -815,7 +824,6 @@ ul.facet_extended_list {
 
         .blacklight-comments {
   .defList_container {
-      @include clearfix;
      @include column(14.5);
      @include push(3.5);
   .label {
