@@ -37,6 +37,16 @@ module ApplicationHelper
     "#{Rubydora.repository.client.url}/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
   end
 
+  def facet_field_names
+    names = super
+
+    unless current_user and current_user.has_role? :admin
+      names -= ["objModels_s", "ri_collection_ancestors_s", "format", "timestamp_query"]
+    end
+
+    names
+  end
+
   def render_facet_value(facet_solr_field, item, options={})
     (link_to_unless(options[:suppress_link], widont(item.value).html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + " " + render_facet_count(item.hits)).html_safe
   end

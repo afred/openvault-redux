@@ -70,20 +70,20 @@ Blacklight.configure(:shared) do |config|
     ]),
     :labels => {
       "merlot_s" => "Category",
-      "format" => "display partial",
-      "timestamp_query" => "date indexed",
       "dc_type_s" => "Format",
       "media_dsid_s" => "Media",
       "dc_date_year_i" => "Date",
       "person_cv" => "People",
       "place_cv" => "Place",
       "event_cv" => "Event",
-      "objModels_s" => "Model",
       "keywords_cv" => "Topic",
-      "ri_collection_ancestors_s" => "Is Member Of Collection",
       "pbcore_pbcoreTitle_series_s" => "Series title",
       "tags_s" => "Tags",
       "has_comments_query" => "Comments"
+      "objModels_s" => "Model",
+      "ri_collection_ancestors_s" => "Is Member Of Collection",
+      "format" => "display partial",
+      "timestamp_query" => "date indexed",
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.

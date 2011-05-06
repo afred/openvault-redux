@@ -29,16 +29,6 @@
 
 
 
-    Blacklight.do_facet_expand_contract_behavior = function() {
-      $( Blacklight.do_facet_expand_contract_behavior.selector ).each (
-          Blacklight.facet_expand_contract
-       );
-       $(Blacklight.do_facet_expand_contract_behavior.selector).slice(-3).each(function() {
-          $(this).prev('h3').removeClass('twiddle-open');
-          $(this).next('ul,div').hide();
-       }); 
-    }
-
 Blacklight.do_facet_expand_contract_behavior.selector = '#facets h3';
 
 	    /* Behavior that makes facet limit headings in sidebar expand/contract

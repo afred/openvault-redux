@@ -7,8 +7,12 @@ module Openvault::SolrHelper::Restrictions
 
     solr_parameters[:fq] ||= []
 
-    solr_parameters[:fq] << "{!raw f=objState_s}A"
-    solr_parameters[:fq] << "{!raw f=ri_isMemberOfCollection_s}info:fedora/wgbh:openvault"
-  end
+    unless current_user and current_user.has_role? :admin
+      solr_parameters[:fq] << "{!raw f=objState_s}A"
+    end
 
+    unless current_user and current_user.has_role? :admin
+      solr_parameters[:fq] << "{!raw f=ri_isMemberOfCollection_s}info:fedora/wgbh:openvault"
+    end
+  end
 end
