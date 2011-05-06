@@ -4,6 +4,17 @@ module ApplicationHelper
     "WGBH Open Vault"
   end
 
+  def render_search_context_options
+    case 
+      when params[:f]
+      render :partial => 'catalog/search_context' 
+
+      when (@document and @document.get(:objModels_s).include? "info:fedora/wgbh:COLLECTION")
+        render :partial => 'catalog/search_context_collection' 
+    end
+
+  end
+
   def render_document_partial(doc, action_name)
     format = self.send "document_#{action_name}_partial_name", doc if self.respond_to? "document_#{action_name}_partial_name"
     format ||= document_partial_name(doc)

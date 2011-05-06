@@ -1,0 +1,5 @@
+
+  <div class="search_context">
+  <%= radio_button_tag 'search_context', 'all', @search_context == 'all' || @search_context.nil? %><%= label_tag 'search_context_all', 'All Records' %>
+  <%= radio_button_tag 'search_context', 'result', @search_context == 'result' %><%= label_tag 'search_context_result', 'Within Results' %>
+  </div>

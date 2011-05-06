@@ -29,8 +29,15 @@ class CatalogController < ApplicationController
   end
 
   def handle_search_start_over
-    if params[:search_context] == "all"
-      redirect_to catalog_index_url params.slice(:q, :search_field)
+    case params[:search_context]
+      when "all"
+        redirect_to catalog_index_url(params.slice(:q, :search_field))
+      when "result"
+        nil
+      when nil
+        nil
+      else
+        redirect_to catalog_index_url(view_context.add_facet_params('ri_collection_ancestors_s', params[:search_context]).except(:search_context))
     end
   end
 

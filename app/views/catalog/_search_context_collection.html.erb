@@ -1,0 +1,4 @@
+<div class="search_context">
+  <%= radio_button_tag 'search_context', 'all', @search_context == 'all' || @search_context.nil? %><%= label_tag 'search_context_all', 'All Records' %>
+  <%= radio_button_tag 'search_context', @document.fedora_object.uri, false %><%= label_tag "search_context_#{@document.fedora_object.uri.parameterize}", 'Within Collection' %>
+</div>
