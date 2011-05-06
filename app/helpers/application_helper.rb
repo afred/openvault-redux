@@ -30,7 +30,7 @@ module ApplicationHelper
 
   def link_to_document(doc, opts={:label=>Blacklight.config[:index][:show_link].to_sym, :counter => nil, :results_view => true})
     label = render_document_index_label(doc, opts)
-    link_to(label.html_safe, catalog_path(doc[:id]))
+    link_to(widont(label).html_safe, catalog_path(doc[:id]))
   end
 
   def datastream_url datastream, options = {}
@@ -38,12 +38,12 @@ module ApplicationHelper
   end
 
   def render_facet_value(facet_solr_field, item, options={})
-    (link_to_unless(options[:suppress_link], item.value.html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + " " + render_facet_count(item.hits)).html_safe
+    (link_to_unless(options[:suppress_link], widont(item.value).html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + " " + render_facet_count(item.hits)).html_safe
   end
 
   def render_field_value value
     value = [value] unless value.is_a? Array
-    value.compact.map { |v| v.gsub("&lt;", "<").gsub("&gt;", ">").gsub("&quot;", '"').gsub(/<resource_link res="([^"]+)">(.+)<\/resource_link>/) { |match| link_to $2, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
+    value.compact.map { |v| v.gsub("&lt;", "<").gsub("&gt;", ">").gsub("&quot;", '"').gsub(/<resource_link res="([^"]+)">(.+)<\/resource_link>/) { |match| link_to widont($2).html_safe, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
   end
 
   def render_document_show_field_label(*args)
@@ -58,7 +58,13 @@ module ApplicationHelper
     nil
   end
 
-  def surrogate_url *args
-    catalog_url(*args)
+  # Widon't 2.1 (the update based on Matthew Mullenweg's regular expression)
+  # http://www.shauninman.com/archive/2007/01/03/widont_2_1_wordpress_plugin
+  #
+  # @param [String] text the text to apply Widon't to
+  # @return [String] a copy of the text with Widon't applied
+  def widont(text)
+    text.gsub(/([^\s])\s+([^\s]+)\s*$/, '\1&nbsp;\2')
   end
+  
 end
