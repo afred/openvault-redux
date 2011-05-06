@@ -689,6 +689,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       }
     }
 
+    .pbcore-description-block {
+       @include margin-trailer(1);
+    }
+
     .date {
        clear: left;
     }
