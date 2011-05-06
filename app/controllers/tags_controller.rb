@@ -47,7 +47,6 @@ class TagsController < ApplicationController
     @document = @documents.first
 
     @document.tag_list << params[:tags].split(",").map(&:strip)
-    @document.save_tags
     @document.save
 
     respond_to do |format|

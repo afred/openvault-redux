@@ -80,6 +80,8 @@ class SolrDocument
   end
 
   def save
-    Blacklight.solr.add fedora_object.to_solr, :add_attributes => { :commitWithin => 10 } rescue nil
+    _run_save_callbacks do
+      Blacklight.solr.add fedora_object.to_solr, :add_attributes => { :commitWithin => 10 } rescue nil
+    end
   end      
 end
