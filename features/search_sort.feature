@@ -1,21 +1,15 @@
-@search
-Feature: Search
-    In order to efficiently discover documents
-    As a user
-    I want to sort found documents
+@search_sort
+Feature: Search Sort
+  In order to sort searches
+  As a user
+  I want select a sort field and have the search results reordered by that field
 
-    Scenario: Default sort order
-        Given I have done a search with term "vietnam"
-        Then the "search" field should contain "vietnam"
-        And I should see "relevance"
-
-    Scenario: Changing sort order 
-        Given I have done a search with term "vietnam"
-        When I select "title" from "sort"
-        And I press "sort results" 
-        Then the "search" field should contain "vietnam"
-        And I should see "You searched for:"
-        And I should see "vietnam"
-        And I should see select list "select#sort" with "title" selected
-        And I should get ckey "95e868-17th-parallel-wrecked-landscape" before ckey "485-acquisition-radar-against-enemy-mortars-dong-tam"
-        And I should see "17th Parallel Wrecked Landscape" before "Acquisition radar (against enemy mortars); Dong Tam."
+  Scenario: Sort on facet results with no search terms
+    Given I am on the catalog page
+    When I follow "Arts"
+    Then I should see "Sort by"
+    When I select "title" from "sort"
+    And I press "sort results" 
+    Then I should see "Sort by"
+    And I should see select list "select#sort" with "title" selected
+    

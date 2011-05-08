@@ -1,310 +1,113 @@
-# Steps to check search results
-require File.expand_path(File.dirname(__FILE__) + '/../support/env')
-#require File.expand_path(File.dirname(__FILE__) + '/webrat_steps')
+#include Blacklight::SolrHelper
 
-include Blacklight::SolrHelper
-
-# search query can have escaped quotes anywhere
 When /^I fill in the search box with "(.*?)"$/ do |query|
   query.gsub!(/\\"/, '"')
   fill_in(:q, :with => query)
 end
 
-Then /^I should get results$/ do 
-  response.should have_selector("div.document")
-end
 
-Then /^I should not get results$/ do 
-  response.should_not have_selector("div.document")
-end
+Then /^I should get (at least|at most|exactly) (\d+) results?$/i do |comparator, comparison_num|
+  number_of_records = get_number_of_results_from_page(page)
 
-Then /^I (should not|should) see a "(.*)" xml element$/ do |bool,elem|
-  if bool == "should not"
-    response.should_not have_selector(elem)
-  else
-    response.should have_selector(elem)
-  end
-end
-
-Then /^I should get (at least|at most) (\d+) results?$/i do |comparator, comparison_num|
-  number_of_records = get_number_of_results(response)
   case comparator
     when "at least"
       number_of_records.should >= comparison_num.to_i
     when "at most"
       number_of_records.should <= comparison_num.to_i
+    when "exactly"  
+      number_of_records.should == comparison_num.to_i
   end
 end
 
-Then /^I should get (at least|at most) (\d+) total results?$/i do |comparator, comparison_num|
-  response.body =~ /(\d+) results?/
+
+Then /^I should have (the same number of|fewer|more) results (?:than|as) a(?:n?) search for "(.*)"$/i do |comparator, query|
+  query.gsub!(/\\"/, '"')
+  number_of_records = get_number_of_results_from_page(page)
+
   case comparator
-    when "at least"
-      $1.to_i.should >= comparison_num.to_i
-    when "at most"
-      $1.to_i.should <= comparison_num.to_i
+    when "the same number of"
+      get_number_of_results_for_query(query).should == number_of_records
+   when "fewer"
+      get_number_of_results_for_query(query).should > number_of_records
+    when "fewer"
+      get_number_of_results_for_query(query).should < number_of_records
   end
 end
 
-Then /^I should get ckey "([^"]+)" in the results$/i do |ckey|
-  response.should have_tag("a[href*=?]", /view\/#{ckey}/)
+Then /^I should get id "([^\"]+)" in the results$/i do |id|
+  page.should have_xpath("//a[contains(@href, #{id})]")
 end
 
-Then /^I should not get ckey "([^"]+)" in the results$/i do |ckey|
-  response.should_not have_tag("a[href*=?]", /^.*#{ckey}.*$/)
+Then /^I should not get id "([^\"]+)" in the results$/i do |id|
+  page.should_not have_xpath("//a[contains(@href, #{id})]")
 end
 
-Then /^I should get ckey "([^"]+)" in the first (\d+) results?$/i do |ckey, max_num|
-  pos = get_position_in_result_page(response, ckey) 
+Then /^I should get id "([^\"]+)" in the first (\d+) results?$/i do |id, max_num|
+  pos = get_position_in_result_page(page, id)
   pos.should_not == -1
   pos.should < max_num.to_i
 end
 
-Then /^I should not get ckey "([^"]+)" in the first (\d+) results?$/i do |ckey, max_num|
-  pos = get_position_in_result_page(response, ckey) 
-  if pos != -1
-    pos.should >= max_num.to_i
+Then /^I should not get id "([^\"]+)" in the first (\d+) results?$/i do |id, max_num|
+  pos = get_position_in_result_page(page, id)
+  pos.should_not == -1
+
+  if pos > 0
+    pos.should >= max_num.to_i 
   else
-    # for error messages if needed
-    pos.should == -1
+    pos.should == -1 if pos == -1 
   end
 end
 
-Then /^I should get facet "(.*)" before facet "(.*)"$/ do |facet1,facet2|
-  pos1 = get_facet_item_position(response,facet1)
-  pos2 = get_facet_item_position(response,facet2)
+Then /^I should get id "([^\"]+)" before id "([^\"]+)"$/i do |id1, id2|
+  pos1 = get_position_in_result_page(page, id1)
+  pos2 = get_position_in_result_page(page, id2)
   pos1.should_not == -1
   pos2.should_not == -1
+
   pos1.should < pos2
 end
 
-Then /^the facet "(.*)" should display$/ do |facet|
-  get_facet_item_position(response,facet).should_not == -1
-end
+Then /^I should get id "([^\"]+)" and id "([^\"]+)" no more than (\d+) positions? from each other$/i do |id1, id2, limit|
 
-Then /^the facet "(.*)" should not display$/ do |facet|
-  get_facet_item_position(response,facet).should == -1
-end
-
-Then /^I should get ckey "([^\"]+)" before ckey "([^\"]+)"$/ do |ckey1, ckey2|
-  pos1 = get_position_in_result_page(response, ckey1) 
-  pos2 = get_position_in_result_page(response, ckey2)
+  pos1 = get_position_in_result_page(page, id1)
+  pos2 = get_position_in_result_page(page, id2)
   pos1.should_not == -1
   pos2.should_not == -1
-  pos1.should < pos2
+
+  (pos1 - pos2).abs.should <= limit.to_i
 end
 
-Then /^I should get (the same number of|fewer|more) results (?:than|as) a(?:n?) (.*)search for "(.+?)"?$/i do |comparator, type, query|
-  case type
-    when "author ", "Author "
-      search_field = "Author"
-    when "title ", "Title "
-      search_field = "Title"
-    when "subject ", "Subject "
-      search_field = "Subject terms"
-    else
-      search_field = "Everything"
-  end  
-  response.body =~ /(\d+) results?/
-  if $1.nil?
-    i = get_number_of_results(response)
-  else
-    i = $1.to_i
-  end
-  case comparator
-    when "the same number of"
-      get_num_results_for_query(query, search_field).should == i
-    when "fewer"
-      get_num_results_for_query(query, search_field).should > i
-    when "more"
-      get_num_results_for_query(query, search_field).should < i
-  end
-end
-
-Then /^I should get at least (\d+) of these ckeys in the first (\d+) results: "((?:(?:\d+)(?:, )?)+)"$/i do |how_many, limit, ckey_string|
-  count = 0;
-  ckeys = ckey_string.split(/, ?/)
-  ckeys.each do |ckey|
-    pos = get_position_in_result_page(response, ckey)
-    if pos != -1 && pos < limit.to_i
-      count = count + 1
-    end
-  end
-  count.should >= how_many.to_i
-end
-
-Then /^I should get ckey "([^"]+)" and ckey "([^"]+)" within (\d+) positions? of each other$/i do |ckey1, ckey2, how_far|
-  pos1 = get_position_in_result_page(response, ckey1) 
-  pos2 = get_position_in_result_page(response, ckey2)
-  pos1.should_not == -1
-  pos2.should_not == -1
-  pos2.should <= pos1 + how_far.to_i
-end
-
-Then /^I should get result titles that contain "(.*)" as the first (\d+) results?$/i do |target, limit|
-  count = 0;
-  titles = response.body.scan(/class="index_title">.*<a.*href=.*\/view\/(?:\d+).*>(.*)<\/a>/)
-  titles.each do |title|
-    if title.to_s.match(/#{target}/i) != nil
-      count = count + 1
-    else break
-    end
-  end
-  count.should >= limit.to_i
-end
-
-Then /^I should not get result author "(.*)" in the first (\d+) results?$/i do |target, limit|
-  count = 0;
-  authors = response.body.scan(/<dt>Author\/Creator:<\/dt><dd>(.*)<\/dd>/)
-  authors.each do |author|
-    if author.to_s.match(/#{target}/i) != nil
-      break
-    else
-      count = count + 1
-    end
-  end
-  if limit.to_i > authors.length
-    limit = authors.length
-  end
-  count.should >= limit.to_i
-end
-
-Then /^I should see "(.*)" before "(.*)"$/i do |first, second|
-  first_ix = response.body.index(first)
-  first_ix.should_not be_nil
-  second_ix = response.body.index(second, first_ix)
-  second_ix.should_not be_nil
-  first_ix.should < second_ix
-end
-
-Then /I should see "(.*)" (at least|at most|exactly) (.*) times?$/i do |target, comparator, expected_num|
-  actual_num = response.body.split(target).length - 1
-  case comparator
-    when "at least"
-      actual_num.should >= expected_num.to_i
-    when "at most"
-      actual_num.should <= expected_num.to_i
-    when "exactly"
-      actual_num.should == expected_num.to_i
-  end
-end
-
-Then /I should see a "(.*)" element with "(.*)" = "(.*)" (at least|at most|exactly) (.*) times?$/i do |target, type, selector,comparator, expected_num|
-  actual_num = response.body.scan(/<#{target} #{type}="#{selector}">/).length
-  case comparator
-    when "at least"
-      actual_num.should >= expected_num.to_i
-    when "at most"
-      actual_num.should <= expected_num.to_i
-    when "exactly"
-      actual_num.should == expected_num.to_i
-  end
-end
-
-Then /^I should see tag with class "(.*)" for value "(.*)"$/i do |css_class, value|
-  response.should have_selector(".#{css_class}" , :content => value)
-end
-
-Then /^I should see a "([^\"]*)" element with "(.*)" = "([^\"]*)" and with "(.*)" inside$/ do |elem,type,id,content|
-  if type == "id"
-    type = "#"
-  elsif type = "class"
-    type = "."
-  end
-  response.should have_selector("#{elem}#{type}#{id}",:content => content)
-end
-
-Then /^I should not see a "([^\"]*)" element with "(.*)" = "([^\"]*)" and with "(.*)" inside$/ do |elem,type,id,content|
-  if type == "id"
-    type = "#"
-  elsif type = "class"
-    type = "."
-  end
-  response.should_not have_selector("#{elem}#{type}#{id}",:content => content)
-end
-
-Then /^I should see a link element with "(.*)" inside the href and "(.*)" as the link text$/ do |href,content|
-  response.body.scan(/<a.*href=".*#{href}.*".*>#{content}<\/a>/).length.should > 0
-end
-
-Then /^I should see a "([^\"]*)" element with "(.*)" "([^\"]*)"$/ do |elem,type,imgid|
-  if type == "id"
-    type = "#"
-  elsif type = "class"
-    type = "."
-  end
-  response.should have_selector("#{elem}#{type}#{imgid}")
-end
-
-Then /^I should not see a "([^\"]*)" element with "(.*)" "([^\"]*)"$/ do |elem,type,imgid|
-  if type == "id"
-    type = "#"
-  elsif type = "class"
-    type = "."
-  end
-  response.should_not have_selector("#{elem}#{type}#{imgid}")
+Then /^I should get at least (\d+) of these ids in the first (\d+) results: "([^\"]+)"$/i do |how_many, limit, id_string|
+  id_string.split(/,/).select do |id|
+    pos = get_position_in_result_page(page, id)
+    pos != -1 and pos < limit.to_i
+  end.length.should >= how_many.to_i 
 end
 
 Then /^I (should not|should) see an? "([^\"]*)" element with an? "([^\"]*)" attribute of "([^\"]*)"$/ do |bool,elem,attribute,value|
   if bool == "should not"
-    response.should_not have_selector("#{elem}[#{attribute}=#{value}]")
+    page.should_not have_selector("#{elem}[#{attribute}=#{value}]")
   else
-    response.should have_selector("#{elem}[#{attribute}=#{value}]")
+    page.should have_selector("#{elem}[#{attribute}=#{value}]")
   end
 end
 
-Then /^I should get callnumber "(.*)" before callnumber "(.*)"$/ do |callnum1, callnum2|
-  pos1 = get_callnum_position_in_show_view(response, callnum1) 
-  pos2 = get_callnum_position_in_show_view(response, callnum2)
-  pos1.should_not == -1
-  pos2.should_not == -1
-  pos1.should < pos2
-end
-
-# The below methods are private
-def get_position_in_result_page(response, ckey)
-  doc_link_ckeys = response.body.scan(/class="index_title".*<a.*href=.*\/catalog\/([^"]+)"[^\d].*>/)
-  doc_link_ckeys.each_with_index do |doc_link_ckey, num|
-    if doc_link_ckey.to_s.match(/^#{ckey}$/) != nil
-      return num
-    end
+def get_position_in_result_page(page, id)
+  i = -1
+  page.all(".index_title a").each_with_index do |link, idx|
+    i = (idx+1) if link['href'] =~ Regexp.new(Regexp.escape(id) + "$")
   end
-  -1 # ckey not found in page of results
+  i.to_i
 end
 
-def get_num_results_for_query(query, query_type="Everything") 
+def get_number_of_results_for_query(query)
   visit root_path
-  query.gsub!(/\\"/, '"')
   fill_in "q", :with => query
-  select query_type, :from => "search_field"
   click_button "search"
-  response.body =~ /(\d+) results?/
-  if $1.nil?
-    get_number_of_results(response)
-  else
-    $1.to_i
-  end
+  get_number_of_results_from_page(page)
 end
 
-def get_callnum_position_in_show_view(response, callnum)
-  callnumbers = response.body.scan(/<span id="avail_.+?".+?>(.*[^<]*)<span class="off_screen">/).map{|w|w.to_s.strip}
-  callnumbers.each_with_index do |callnumber, num|
-    if callnumber.to_s.match(/^#{callnum}$/) != nil
-      return num
-    end
-  end
-  -1 # ckey not found in page of results
-end
-def get_facet_item_position(response, facet_item)
-  doc_facets = response.body.scan(/<label for=".*">(.*)<\/label>/)
-  doc_facets.each_with_index do |doc_facet, num|
-    if doc_facet.to_s.match(/^#{facet_item}$/) != nil
-      return num
-    end
-  end
-  -1 # ckey not found in page of results
-end
-def get_number_of_results(response)
-  # really odd way of getting number of docs.  This retuns an array of ODD/EVEN when found in a document class.  This returns the total number of documents
-  response.body.scan(/<div class=\"document (odd|even)\">/).length
+def get_number_of_results_from_page(page)
+  page.find("meta[name=totalResults]")['content'].to_i rescue 0
 end
