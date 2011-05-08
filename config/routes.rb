@@ -8,6 +8,16 @@ Openvault::Application.routes.draw do
   match "catalog_ugc/facet/:id", :to => 'catalog_ugc#facet'
   match 'users/comments', :to => 'catalog_ugc#index', :as => "my_page"
 
+  # Catalog stuff.
+  match 'catalog/map', :as => "map_catalog"
+  match 'catalog/opensearch', :as => "opensearch_catalog"
+  match 'catalog/citation', :as => "citation_catalog"
+  match 'catalog/email', :as => "email_catalog"
+  match 'catalog/sms', :as => "sms_catalog"
+  match 'catalog/endnote', :as => "endnote_catalog"
+  match 'catalog/send_email_record', :as => "send_email_record_catalog"
+  match "catalog/facet/:id", :to => 'catalog#facet', :as => 'catalog_facet'
+  match 'catalog/unapi', :to => "catalog#unapi", :as => 'unapi'
   resources :catalog, :only => [:index, :show, :update], :constraints => { :id => /([A-Za-z0-9]|:|-|\.)+([A-Za-z0-9]|:|-){4}/ } do
     member do
       get 'cite'
@@ -15,7 +25,6 @@ Openvault::Application.routes.draw do
     resources :comments
     resource :tags
   end
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
