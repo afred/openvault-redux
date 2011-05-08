@@ -1,7 +1,9 @@
 <div id="appliedParams">
 
+<% if params[:f] %>
 	<h3 class="label">Filters applied:</h3>
   
   <%= render_constraints(localized_params) %>  
+<% end %>
 		
 </div>
