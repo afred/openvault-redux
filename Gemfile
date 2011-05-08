@@ -26,11 +26,18 @@ gem 'sqlite3'
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
-#
-gem "blacklight", :path => "/Volumes/Scratch/blacklight-rails3"
+
+group :development, :test do
+  gem "rspec"
+  gem "rspec-rails", "~>2.5.0"
+  gem "cucumber-rails"
+  gem "database_cleaner"
+  gem "capybara"
+  gem "webrat"
+  gem "aruba"
+end
+
+gem "blacklight", :path => "./blacklight"
 gem "compass"
 gem "nokogiri", "~>1.5.0.beta.3"
 gem "streamly"
