@@ -13,6 +13,12 @@ Then /^I should see the applied facet "([^\"]*)" with the value "([^\"]*)"$/ do 
   end
 end
 
+Then /^I should not see the applied facet "([^\"]*)" with the value "([^\"]*)"$/ do |filter, text|
+  all(".facet_limit").each do |node|
+    node.should_not have_selector("span.selected", :content => text)
+  end
+end
+
 Then /^I should see the facet "([^\"]*)" with the value "([^\"]*)"$/ do |filter, text|
   page.should have_selector(".facet_limit") do |node|
     node.should have_selector("h3", :content => filter)
