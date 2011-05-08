@@ -66,7 +66,7 @@ Blacklight.configure(:shared) do |config|
       "ri_collection_ancestors_s",
       "format",
       "timestamp_query",
-      "objModels_s",
+      "objModels_s"
     ]),
     :labels => {
       "merlot_s" => "Category",
@@ -79,7 +79,7 @@ Blacklight.configure(:shared) do |config|
       "keywords_cv" => "Topic",
       "pbcore_pbcoreTitle_series_s" => "Series title",
       "tags_s" => "Tags",
-      "has_comments_query" => "Comments"
+      "has_comments_query" => "Comments",
       "objModels_s" => "Model",
       "ri_collection_ancestors_s" => "Is Member Of Collection",
       "format" => "display partial",
@@ -237,6 +237,14 @@ Blacklight.configure(:shared) do |config|
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
   config[:spell_max] = 5
+
+  # Add documents to the list of object formats that are supported for all objects.
+  # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats 
+  # output; keys are format short-names that can be exported. Hash includes:
+  #    :content-type => mime-content-type
+  config[:unapi] = {
+    'oai_dc_xml' => { :content_type => 'text/xml' } 
+  }
 
   config[:mlt] = {
     :fields => ["title_t", "dc_description_t", "pbcore_pbcoreTitle_s"],
