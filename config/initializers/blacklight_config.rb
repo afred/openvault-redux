@@ -81,7 +81,7 @@ Blacklight.configure(:shared) do |config|
       "tags_s" => "Tags",
       "has_comments_query" => "Comments",
       "objModels_s" => "Model",
-      "ri_collection_ancestors_s" => "Is Member Of Collection",
+      "ri_collection_ancestors_s" => "Collection",
       "format" => "display partial",
       "timestamp_query" => "date indexed",
     },
@@ -136,6 +136,10 @@ Blacklight.configure(:shared) do |config|
    # },
     :hierarchy => {
       "merlot_s" => true
+    },
+
+    :filter => {
+      "ri_collection_ancestors_s" => Proc.new { |value| Blacklight.config[:collection_titles][value] || false }
     }
   }
 
