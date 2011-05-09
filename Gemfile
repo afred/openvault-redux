@@ -62,3 +62,4 @@ gem "render_inheritable"
 gem "data_migrate"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
+gem "rsolr-footnotes"
