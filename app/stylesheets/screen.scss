@@ -890,21 +890,39 @@ ul.facet_extended_list {
     .blacklight-collection {
       @include column(4);
       border: none;
-      padding-top: 100px;
+      padding-top: 90px;
       min-height: 2em;
+      height: 200px;
 
     .thumbnail {
+        top: 0;
+        margin: 0;
+        height: 90px;
     }
 
     .index_title {
        float: none;
        @include column(4);
        @include push(0);
+       margin: 0;
+       @include margin-leader(0.2);
     }
 
     .defList_container {
+        float: none;
+        width: auto;
+        margin: 0;
+        display: block;
+
+       div {
        display: none;
+      }
+
+    .blacklight-dc_description_t, .blacklight-dc_description_t .value {
+       display: block;
     }
+}
+
      }
 
     .blacklight-series {
