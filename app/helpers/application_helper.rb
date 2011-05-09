@@ -4,6 +4,12 @@ module ApplicationHelper
     "WGBH Open Vault"
   end
 
+  def extra_body_classes
+    extra = []
+    extra += ['blacklight-' + controller.class.superclass.controller_name, 'blacklight-' + [controller.class.superclass.controller_name, controller.action_name].join('-')] # if self.class.superclass == CatalogController
+    super + extra
+  end
+
   def render_search_context_options
     case 
       when params[:f]
@@ -41,6 +47,7 @@ module ApplicationHelper
 
   def link_to_document(doc, opts={:label=>Blacklight.config[:index][:show_link].to_sym, :counter => nil, :results_view => true})
     label = render_document_index_label(doc, opts)
+    return link_to(widont(label).html_safe, collection_path(doc[:id])) if doc[:format] == "collection"
     link_to(widont(label).html_safe, catalog_path(doc[:id]))
   end
 
@@ -86,6 +93,11 @@ module ApplicationHelper
   # @return [String] a copy of the text with Widon't applied
   def widont(text)
     text.gsub(/([^\s])\s+([^\s]+)\s*$/, '\1&nbsp;\2')
+  end
+
+  def render_wordpress_page_content slug
+    parsed_json = ActiveSupport::JSON.decode open("http://openvault.wgbh.org/blog/#{slug}/?json=1").read
+    parsed_json["page"]["content"].html_safe rescue nil
   end
   
 end

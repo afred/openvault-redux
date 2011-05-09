@@ -247,7 +247,6 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 .facet_limit {
-
    border-bottom: 1px solid #888;
 
    h3 {
@@ -806,10 +805,6 @@ ul.facet_extended_list {
    line-height: auto;
 }                                
 
-.blacklight-catalog_ugc-index {
-   @extend .blacklight-catalog-index;
-}
-
 .datastream-transcript .sausage-set {
    margin-top: 30px;
 }
@@ -877,3 +872,65 @@ ul.facet_extended_list {
   }
 
         }
+
+.blacklight-collections-index {
+
+    #appliedParams {
+       display: none;
+    }
+
+    .search-results-header {
+       display: none;
+    }
+
+    #sidebar {
+       display: none;
+    }
+
+    .blacklight-collection {
+      @include column(4);
+      border: none;
+      padding-top: 100px;
+      min-height: 2em;
+
+    .thumbnail {
+    }
+
+    .index_title {
+       float: none;
+       @include column(4);
+       @include push(0);
+    }
+
+    .defList_container {
+       display: none;
+    }
+     }
+
+    .blacklight-series {
+        clear: left;
+         display: block;
+         width: auto;
+         float: none;
+         min-height: 1em;
+         border: none;
+         margin: 0;
+         padding: 0;
+
+    .index_title {
+       @include push(0);
+       margin: 0;
+       float: none;
+    }
+
+      .thumbnail {
+         display: none;
+      }
+
+      .defList_container {
+         display: none;
+      }
+
+    }
+}
+

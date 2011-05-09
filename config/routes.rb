@@ -8,6 +8,9 @@ Openvault::Application.routes.draw do
   match "catalog_ugc/facet/:id", :to => 'catalog_ugc#facet'
   match 'users/comments', :to => 'catalog_ugc#index', :as => "my_page"
 
+  match "collections/facet/:id", :to => 'collections#facet'
+  resources :collections, :only => [:index, :show]
+
   # Catalog stuff.
   match 'catalog/map', :as => "map_catalog"
   match 'catalog/opensearch', :as => "opensearch_catalog"
