@@ -12,9 +12,15 @@
     Blacklight.do_more_facets_behavior.selector = "a.more_facets_link";
 
     $(function() {
-       $('#document .blacklight-comments a').ajaxyDialog();
-       $('.tools .cite a').ajaxyDialog();
-       $('.new_tag,.new_annotation').ajaxyDialog();
+       $('#document .blacklight-comments a').ajaxyDialog({
+         modal: false
+       });
+       $('.tools .cite a').ajaxyDialog( {
+         modal: false
+       });
+       $('.new_tag,.new_annotation').ajaxyDialog({
+         modal: false
+       });
       /* $('.user_util_links a').ajaxyDialog({
         width: $(window).width() / 2,
         chainAjaxySelector: ".folderTools a, .search_history a"
