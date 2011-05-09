@@ -69,6 +69,8 @@ $(function() {
   if( $('body').height() < 1000) {
     $('html').css('backgroundPosition', '0 700px');
   }
+
+  $('.facet_limit').not(':has(h3)').hide();
 });
 
 $(function() {
