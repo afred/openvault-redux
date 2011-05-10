@@ -37,4 +37,6 @@ module Wordpress
       page["content"]
     end
   end
+
+  class Page < Post; end
 end

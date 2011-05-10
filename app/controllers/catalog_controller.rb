@@ -66,7 +66,7 @@ class CatalogController < ApplicationController
     extra_head_content << view_context.auto_discovery_link_tag(:unapi, unapi_url, {:type => 'application/xml',  :rel => 'unapi-server', :title => 'unAPI' })
     @response, @document = get_solr_response_for_doc_id    
 
-    redirect_to(collection_url(@document)) and return if @document.get(:format) == 'collection'
+    redirect_to(collection_url(params[:id])) and return if @document.get(:format) == 'collection' and params[:controller] == 'catalog'
 
     respond_to do |format|
       format.html {setup_next_and_previous_documents}

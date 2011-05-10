@@ -96,7 +96,7 @@ module ApplicationHelper
   end
 
   def render_wordpress_page_content slug
-    Wordpress::Page(slug).content.html_safe rescue nil
+    Wordpress::Page(slug).content.html_safe # rescue nil
   end
   
 end
