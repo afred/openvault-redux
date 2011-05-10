@@ -96,8 +96,7 @@ module ApplicationHelper
   end
 
   def render_wordpress_page_content slug
-    parsed_json = ActiveSupport::JSON.decode open("http://openvault.wgbh.org/blog/#{slug}/?json=1").read
-    parsed_json["page"]["content"].html_safe rescue nil
+    Wordpress::Page(slug).content.html_safe rescue nil
   end
   
 end
