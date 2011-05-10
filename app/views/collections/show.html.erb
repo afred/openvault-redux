@@ -8,10 +8,16 @@
   
     <div class="document">
       <%= render_document_unapi_microformat @document %>
+      <% post = Wordpress::Post.find(@document[:id]) %>
 
-      <%= render_wordpress_page_content @document[:id] %>
+      <%= image_tag post.images('full')['url'] %>
+      <%= raw(post.content) %>
 
-      <%= render_document_partial @document, :metadata %>
+      <hr />
+      <%= raw(post.custom_fields['collection-links']) %>
+      <%= raw(post.custom_fields['related-links']) %>
+      <hr />
+      <%= raw(post.custom_fields['funders']) %>
     </div>
   </div>
 </div>
