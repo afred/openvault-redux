@@ -2,7 +2,7 @@ module Wordpress
   class Post
     def self.find id
       parsed_json = ActiveSupport::JSON.decode(open(self.endpoint_uri(id)).read)
-      raise "Missing Wordpress Post" unless parsed_json["status"] == "ok"
+      raise "Missing Wordpress Post #{ self.endpoint_uri(id)}" unless parsed_json["status"] == "ok"
       Post.new(parsed_json)
     end
 
