@@ -636,13 +636,21 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
     .primary-datastream-container, .secondary-datastream-container {
        h2 {
-           @include column(4);
+           @include column(2.5);
          text-transform: uppercase;
          font-weight: bold;
        }
 
        .datastream-actions {
-          @include column(5, true);
+          @include column(6.5, true);
+         .print {
+            @include column(2);
+         }
+
+         .q_field {
+            position: absolute;
+            right: 45px;
+          }
        }
    }
 
@@ -952,3 +960,37 @@ ul.facet_extended_list {
     }
 }
 
+.blacklight-catalog-print {
+  body, html {
+     background: #fff;
+  }
+
+  #hd {
+    .subtitle {
+      display: none;
+    }
+  } 
+
+  .container {
+    margin-left: 0;
+  }
+
+  #sidebar, #search-bar, .user_util_links, #ft {
+    display: none !important;
+  }
+
+  #main {
+    @include column($blueprint-grid-columns);
+    @include prepend(0);
+  }
+
+  #document {
+    .datastream-actions {
+       display: none !important;
+    }
+    .datastream-transcript {
+       height: auto;
+       overflow: visible;
+    }
+  }
+}

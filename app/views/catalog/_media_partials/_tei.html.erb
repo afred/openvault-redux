@@ -1,6 +1,7 @@
 <div class="secondary-datastream-container">
   <h2>Transcript</h2>
   <div class="datastream-actions">
+    <%= link_to "Print", print_catalog_path(:id => document.id), :class => "print action", :target => "_blank" %>
     <form action="#" method="GET" class="q_field datastream-action-search">
       <%= text_field_tag :q, nil, :class => "q", :placeholder => "Search Transcript" %>
     <%= image_submit_tag("magnifying-glass.gif", :alt => "Search Transcript", :class => 'submit') %>
