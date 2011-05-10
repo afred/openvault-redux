@@ -644,12 +644,13 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
        .datastream-actions {
           @include column(6.5, true);
          .print {
-            @include column(2);
+            @include column(1.9);
          }
 
          .q_field {
-            position: absolute;
-            right: 45px;
+            @include column(4.6, true);
+            width: 170px;
+
           }
        }
    }
