@@ -25,6 +25,7 @@ Openvault::Application.routes.draw do
     member do
       get 'cite'
       get 'print'
+      get 'image'
     end
     resources :comments
     resource :tags

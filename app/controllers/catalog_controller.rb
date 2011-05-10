@@ -129,4 +129,10 @@ class CatalogController < ApplicationController
     
   end
 
+  def image
+    @response, @document = get_solr_response_for_doc_id    
+    style = params[:style] || 'preview'
+    redirect_to @document.thumbnail.url(:style => style) and return
+  end
+
 end
