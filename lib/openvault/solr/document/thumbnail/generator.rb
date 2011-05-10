@@ -38,6 +38,7 @@ module Openvault::Solr::Document::Thumbnail
       tn = Paperclip::Thumbnail.new file, { :geometry => style }
 
       dst = tn.make
+      FileUtils.chmod 0644, dst.path
 
 
       FileUtils.mkdir_p dir_path
