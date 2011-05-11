@@ -1,0 +1,5 @@
+<div class="related-content">
+<h2>From this collection</h2>
+
+<%= render(:partial => 'blacklight_mlt/mlt', :collection => @controller.send(:get_solr_response_for_field_values, 'ri_collection_ancestors_s', @document.fedora_object.uri, :rows => 3, :sort => "random_#{rand(9999)} asc").last, :as => :document ) %>
+</div>
