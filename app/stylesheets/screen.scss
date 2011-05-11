@@ -122,6 +122,26 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   @include prepend(6);
 }
 
+#ft {
+    @include prepend(6);
+.menu {
+  margin: 0;
+}
+
+.menu ul, .menu li {
+   list-style: none;
+  display: inline-block;
+}
+
+.menu li {
+   margin-right: 2em;
+}
+a {
+  @include link-colors(#fff, #ccc, $link-active-color, $link-visited-color, $link-focus-color); 
+  }
+   
+}
+
 #content {
     @include column(18);
     @include prepend(1);
