@@ -7,17 +7,26 @@
   <div id="doc_<%= @document[:id] %>">
   
     <div class="document">
+    <%= render_document_heading %>
       <%= render_document_unapi_microformat @document %>
       <% post = Wordpress::Post.find(@document[:id]) %>
 
-      <%= image_tag post.images('full')['url'] %>
+      <%= image_tag post.images('full')['url'], :class => 'featured_image' %>
+      <div class="content">
       <%= raw(post.content) %>
+    </div>
 
       <hr />
+      <div class="collection-links">
       <%= raw(post.custom_fields['collection-links']) %>
+      </div>
+      <div class="related-links">
       <%= raw(post.custom_fields['related-links']) %>
+    </div>
       <hr />
+      <div class="funders">
       <%= raw(post.custom_fields['funders']) %>
+    </div>
     </div>
   </div>
 </div>

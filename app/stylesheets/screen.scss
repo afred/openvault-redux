@@ -127,6 +127,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include prepend(1);
     @include append(1);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+  @include padding-trailer(2);
    background-color: #FFF;
 
   border: 1px solid #CCC;
@@ -202,9 +203,6 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 .blacklight-catalog-index {
-    #content {
-  @include padding-trailer(2);
-  }
   #search-bar {
     @include margin-trailer(0);
   }
@@ -880,6 +878,44 @@ ul.facet_extended_list {
   }
   }
 
+        }
+               
+        .blacklight-collections-show {
+
+            #document {
+            .document_heading {
+               @include column(18, true);
+            }
+            hr { 
+               @include margin-leader(1);
+               @include margin-trailer(1);
+            }
+        }
+            .featured_image {
+               float: left;
+               margin-right: 1em;
+            }
+
+            .content {
+               h1 {
+                  display: none;
+               }
+            }
+
+
+
+            .collection-links {
+               @include column(4);
+            }
+
+            .related-links {
+               @include column(4, true);
+            }
+
+           .funders {
+               @include column(18, true);
+
+           }
         }
 
 .blacklight-collections-index {
