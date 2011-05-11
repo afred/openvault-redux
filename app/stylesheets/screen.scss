@@ -127,8 +127,8 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include prepend(1);
     @include append(1);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
-  @include padding-trailer(2);
    background-color: #FFF;
+  @include padding-trailer(2);
 
   border: 1px solid #CCC;
 }
@@ -203,6 +203,9 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 .blacklight-catalog-index {
+    #content {
+  @include padding-trailer(2);
+  }
   #search-bar {
     @include margin-trailer(0);
   }
@@ -236,11 +239,16 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 
-.blacklight-catalog-show #sidebar {
+.blacklight-catalog-show {
+    #sidebar {
   h2 {
     background-color: #8a8e90;
     @include margin-trailer(1);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+  }
+  }
+  #content {
+  @include padding-trailer(0);
   }
 }
 
@@ -882,6 +890,9 @@ ul.facet_extended_list {
                
         .blacklight-collections-show {
 
+    #content {
+  @include padding-trailer(2);
+  }
             #document {
             .document_heading {
                @include column(18, true);
