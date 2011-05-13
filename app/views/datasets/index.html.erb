@@ -18,15 +18,7 @@
   <dd><%= dataset.created_at %></dd>
 
   <dt>Submitted By</dt>
-  <dd><%= dataset.user.name %> (<%= dataset.user.email %>)</dd>
-
-  <% unless @organization and !current_user.has_role? :admin %>
-  <dt>Organization</dt>
-  <dd><%= link_to dataset.organization.name, dataset.organization %></dd>
-  <% end %>
-
-  <dt>Status</dt>
-  <dd><%= dataset.state %></dd>
+  <dd><%= dataset.user.to_s %> (<%= dataset.user.email %>)</dd>
 </dl>
 <% end %>
 
