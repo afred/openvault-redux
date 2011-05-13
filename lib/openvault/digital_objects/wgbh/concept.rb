@@ -16,13 +16,13 @@ module Openvault::DigitalObjects::Wgbh
        format = []
        format << 'video' if doc['media_dsid_s'].any? { |x| x =~ /video/i }
        format << 'audio' if doc['media_dsid_s'].any? { |x| x =~ /audio/i }
-       format << 'image' if doc['media_dsid_s'].any? { |x| x =~ /image/i }
        format << 'tei' if doc['media_dsid_s'].any? { |x| x =~ /tei/i }
        format << 'newsml' if doc['media_dsid_s'].any? { |x| x =~ /newsml/i }
 
        format = ['collection'] if doc['objModels_s'].any? { |x| x =~ /collection/i } or doc['dc_type_s'].any? { |x| x =~ /collection/i }
        format = ['subcollection'] if doc['objModels_s'].any? { |x| x =~ /subcollection/i } or doc['dc_type_s'].any? { |x| x =~ /subcollection/i }
        format = ['series'] if doc['objModels_s'].any? { |x| x =~ /series/i } or doc['dc_type_s'].any? { |x| x =~ /series/i }
+       format << 'image' if format.empty? and doc['media_dsid_s'].any? { |x| x =~ /image/i }
 
        doc['format'] = format.join("_")  
 

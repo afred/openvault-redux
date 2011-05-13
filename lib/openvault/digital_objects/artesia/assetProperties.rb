@@ -1,6 +1,11 @@
 module Openvault::DigitalObjects::Artesia
   module Assetproperties
      def self.extended(document)
+       document.solr_mapping_logic << :assetproperties_metadata_for_solr
+     end
+
+     def assetproperties_metadata_for_solr(doc = {})
+       doc['format'] = 'asset_properties'
      end
 
      def process!
@@ -82,7 +87,11 @@ module Openvault::DigitalObjects::Artesia
      def assetProperties dsid = 'File'
        file = datastream[dsid].content
        # processing?
-       @assetProperties ||= Nokogiri::XML(file)
+       @assetProperties ||= begin
+                              doc = Nokogiri::XML(file)
+                              doc.xpath('//@*').select { |x| x.name =~ /TYPE/ or x.name =~ /ROLE/ }.select { |x| x.value =~ /\d$/ }.each { |x| x.value = x.value.gsub(/\d$/, '') }
+                              doc
+                            end
      end
 
      def assetProperties_links dsid = 'File'

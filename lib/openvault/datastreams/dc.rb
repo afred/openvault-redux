@@ -20,8 +20,9 @@ module Openvault::Datastreams
         end
       end
 
-      doc["title_s"] = (xml.xpath('//dc:title/text()', xmlns).first || doc["pid_s"]).text
-      doc["slug_s"] = doc["title_s"].parameterize.to_s
+      doc["title_s"] ||= xml.xpath('//dc:title/text()', xmlns).first.text rescue nil
+      doc["title_s"] ||= doc["pid_s"]
+      doc["slug_s"] ||= doc["title_s"].parameterize.to_s rescue nil
      end
    end
 end
