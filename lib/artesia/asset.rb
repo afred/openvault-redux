@@ -10,11 +10,23 @@ module Artesia
         attr.value = attr.value.gsub(/\d+$/, '')
       end
       pid = "uoi-id:#{uois['UOI_ID']}"
-      obj = Fedora::FedoraObject.create(pid, { :label => uois['NAME'] })
-      Fedora::Datastream.new('UOIS', {}, uois.to_s, 'text/xml').add(obj.client)
-      Fedora::Datastream.new('File', {:controlGroup => 'R', :dsLabel => uois['NAME'], :dsLocation => "http://somewh
-ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
-      Fedora.repository.soap.addRelationship :pid => pid, :relationship => 'info:fedora/fedora-system:def/model#hasModel', :object => "info:fedora/artesia:asset", :isLiteral => false, :datatype => nil
+
+      obj = Rubydora.repository.create(pid, { :label => uois['NAME'] })
+      ds = obj.datastreams['UOIS']
+      ds.content = uois.to_s
+      ds.mimeType = 'text/xml'
+      ds.save
+
+      ds = obj.datastreams['File']
+      ds.controlGroup = 'R'
+      ds.dsLabel = uois['NAME']
+      ds.dsLocation =  "http://somewhere.in.artesia/#{uois['NAME']}" 
+      ds.save
+
+      obj.models << 'info:fedora/fedora-system:def/model#hasModel'
+
+      obj.save
+
       obj
     end
 
@@ -38,59 +50,79 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
     def publish!
       new_pid = self.pid.gsub('uoi-id', 'org.wgbh.mla')
 
-      obj = Fedora::FedoraObject.create(new_pid, { :label => '', :logMessage => ""})
-      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/model#hasModel', :object => "info:fedora/openvault:work", :isLiteral => false, :datatype => nil
-      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isDerivationOf', :object => "info:fedora/#{self.pid}", :isLiteral => false, :datatype => nil
-      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => "info:fedora/org.mla.openvault", :isLiteral => false, :datatype => nil
+      obj = Rubydora.repository.create(new_pid)
+
+      obj.models << "info:fedora/openvault:work"
+      obj.derivation_of << self
+      obj.memberOfCollection << "info:fedora/wgbh:openvault"
 
       cmodel = []
 
       # RELS
 
-      collection = Fedora.repository.sparql 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-          PREFIX dc: <http://purl.org/dc/elements/1.1/>
-          PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
-          SELECT ?pid 
+      collection = Rubydora.repository.find_by_sparql "
+          SELECT ?pid  FROM <#ri>
           WHERE {
               {
-                { ?pid <info:artesia/link_type#PARENT> <info:fedora/' + self.pid + '> } UNION
-              { <info:fedora/' + self.pid + '>  <info:artesia/link_type#CHILD> ?pid }
+                { ?pid <info:artesia/link_type#PARENT> <#{fqpid}> } UNION
+              { <#{fqpid}>  <info:artesia/link_type#CHILD> ?pid }
             }
-          }'
+          }"
 
-      collection.shift
-
-      collection.flatten.each do |p|
-        Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => p.gsub('uoi-id', 'org.wgbh.mla'), :isLiteral => false, :datatype => nil
+      collection.each do |p|
+        obj.memberOfCollection << p
       end
+
       # child/parent -> isMemberOfCollection
       # DC  -- identifier, title, description, type, source, date
       #
-      Fedora.repository.object_url({:pid => self.pid, :datastream => 'sdef:METADATA/DC'})
-      Fedora::Datastream.new('DC', {:dsLocation => Fedora.repository.object_url({:pid => self.pid, :datastream => 'sdef:METADATA/DC'}), :mimeType => 'text/xml'}).add(obj.client)
+      ds = obj.datastreams['DC']
+      ds.content = Rubydora.repository.dissemination :pid => self.pid, :sdef => 'sdef:METADATA', :method => 'DC'
+      ds.mimeType = 'text/xml'
+      ds.controlGroup = 'X'
+      ds.save
 
       # PBCore  -- from disseminator?
-      Fedora::Datastream.new('PBCore', {:dsLocation => Fedora.repository.object_url({:pid => self.pid, :datastream => 'sdef:METADATA/PBCore'}), :mimeType => 'text/xml'}).add(obj.client)
+      ds = obj.datastreams['PBCore']
+      ds.content = Rubydora.repository.dissemination :pid => self.pid, :sdef => 'sdef:METADATA', :method => 'PBCore'
+      ds.mimeType = 'text/xml'
+      ds.controlGroup = 'M'
+      ds.save
 
       if  dsLocation = Openvault::Media.filename_to_url(uois['NAME'])
-        Fedora::Datastream.new('File', {:controlGroup => 'R', :dsLocation => dsLocation}).add(obj.client)
+        ds = obj.datastreams['File']
+        ds.controlGroup = 'R'
+        ds.dsLocation = dsLocation
+        ds.save
       end
+
       # Media
       ['.mp4'=> 'video/mp4', '.mp3' => 'audio/mp3', '.flv' => 'audio/x-flv', '.jpg' => 'image/jpg'].each do |ext, mime|
         if dsLocation = Openvault::Media.filename_to_url( uois['NAME'].gsub(File.extname(uois['NAME']), ".#{ext}"))
           cmodel << mime.split('/').first
           dsid = mime.sub('/', '.').capitalize
-          Fedora::Datastream.new(dsid, {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client)
-          Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R', :dsLocation => dsLocation, :mimeType => mime}).add(obj.client) if ext == '.jpg'
+          ds = obj.datastreams[dsid]
+          ds.dsLocation = dsLocation
+          ds.mimeType = mime
+          ds.controlGroup = 'R'
+          ds.save
+
+          if ext == '.jpg'
+            ds = obj.datastreams['Thumbnail']
+            ds.dsLocation = dsLocation
+            ds.mimeType = mime
+            ds.controlGroup = 'R'
+            ds.save
+          end
         end
       end
       
       # contains/belongs_to -> isPartOf
       #
-      contains = Fedora.repository.sparql 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+      contains = Rubydora.repository.sparql 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
           PREFIX dc: <http://purl.org/dc/elements/1.1/>
           PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
-          SELECT ?pid ?label
+          SELECT ?pid ?label FROM <#ri>
           WHERE {
               {
                 { ?pid <info:artesia/link_type#BELONGTO> <info:fedora/' + self.pid + '> } UNION
@@ -101,23 +133,27 @@ ere.in.artesia/#{uois['NAME']}" }).add(obj.client)
             ?pid <info:fedora/fedora-system:def/model#label> ?label
           }'
 
-      contains.shift
-
-      contains.each do |p, label|
+      contains.each do |row|
         case label
           when /xml/
             cmodel << 'tei'
-            dsLocation = Openvault::Media.filename_to_url(label)
-            Fedora::Datastream.new('Transcript.tei.xml', {:controlGroup => 'R',:dsLocation => dsLocation, :mimeType => 'text/xml' }).add(obj.client)
+            dsLocation = Openvault::Media.filename_to_url(row['label'])
+            ds = obj.datastreams['Transcript.tei.xml']
+            ds.dsLocation = dsLocation
+            ds.mimeType = 'text/xml'
+            ds.controlGroup = 'R'
+            ds.save
           when /jpg/
-            dsLocation = Openvault::Media.filename_to_url(label)
-            Fedora::Datastream.new('Thumbnail', {:controlGroup => 'R',:dsLocation => dsLocation, :mimeType => 'image/jpg' }).add(obj.client)
+            dsLocation = Openvault::Media.filename_to_url(row['label'])
+            ds = obj.datastreams['Thumbnail']
+            ds.dsLocation = dsLocation
+            ds.mimeType = 'image/jpg'
+            ds.controlGroup = 'R'
+            ds.save
         end
       end
 
-      Fedora.repository.soap.addRelationship :pid => new_pid, :relationship => 'info:fedora/fedora-system:def/model#hasModel', :object => "info:fedora/openvault:#{cmodel.join('-').parameterize}", :isLiteral => false, :datatype => nil unless cmodel.empty?
-      
-      self.doc.xpath
+      obj.models << "info:fedora/openvault:#{cmodel.join('-').parameterize}" unless cmodel.empty?
     end
   end
 end

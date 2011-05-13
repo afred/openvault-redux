@@ -1,5 +1,6 @@
 module Openvault::Media
   def self.filename_to_url filename
+    filename = File.basename(filename)
     case filename
       when /\.mp4$/
         "http://openvault.wgbh.org/media/videos/#{filename}"

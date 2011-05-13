@@ -1,4 +1,8 @@
 <%= link_to 'Download', @dataset.attachment.url, :class => 'secondary-action  fancy-button-base light button-small'  if  @dataset.attachment.file? %>
+<%= link_to 'Ingest', ingest_dataset_path(@dataset), :method => :post, :class => 'secondary-action  fancy-button-base light button-small'  if  @dataset.attachment.file? %>
+<%= link_to 'Validate', validate_dataset_path(@dataset), :class => 'secondary-action  fancy-button-base light button-small'  if  @dataset.attachment.file? %>
+
+
 <h2><%= @dataset.name %>
 <%= link_to 'Edit', edit_dataset_path(@dataset), :class => 'primary-action fancy-button-base light button-small'  %>
 </h2>
@@ -17,7 +21,7 @@
   <dd><%= @dataset.created_at %></dd>
 
   <dt>Submitted By</dt>
-  <dd><%= @dataset.user.login %> (<%= @dataset.user.email %>)</dd>
+  <dd><%= @dataset.user.to_s %> (<%= @dataset.user.email %>)</dd>
 
   <dt>Status</dt>
   <dd><%= @dataset.status %></dd>

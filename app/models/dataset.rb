@@ -4,16 +4,24 @@ class Dataset < ActiveRecord::Base
   has_attached_file :attachment
 
   def process!
-    processor = nil
+    obj = Artesia::TeamsAssetFile.create(self)
 
-    case self.format
-      when 'Artesia'
-        processor = Artesia::Export.new(self)
-    end
-
-    processor.process!
+    obj.process!
 
     self.status = 'ingested'
     self.save
+  end
+  
+  def metadata
+    doc = Nokogiri::XML(open(attachment.path))
+    metadata = Hash[*doc.xpath('//TEAMS_ASSET_FILE[1]').children.find_all { |x| x.comment? }.first.text.scan(/ (\S+)="([^"]+)"/).flatten]
+  end
+
+  def name
+    metadata['name'] || title
+  end
+
+  def pid
+    "teams-asset-file:#{name.parameterize}"
   end
 end

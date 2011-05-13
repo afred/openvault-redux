@@ -19,10 +19,8 @@ class DatasetsController < ApplicationController
   # GET /datasets/1
   # GET /datasets/1.xml
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @dataset }
-    end
+    @dataset = Dataset.find(params[:id])
+    redirect_to catalog_url(:id => @dataset.pid) and return
   end
 
   # GET /datasets/new
@@ -48,6 +46,7 @@ class DatasetsController < ApplicationController
 
     respond_to do |format|
       if @dataset.save
+        @dataset.process!
         format.html { redirect_to(@dataset, :notice => 'Dataset was successfully created.') }
         format.xml  { render :xml => @dataset, :status => :created, :location => @dataset }
       else
@@ -81,9 +80,4 @@ class DatasetsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  def go
-    @dataset.process
-  end
-
 end

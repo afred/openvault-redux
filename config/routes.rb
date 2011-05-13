@@ -31,6 +31,8 @@ Openvault::Application.routes.draw do
     resource :tags
   end
 
+  resources :datasets 
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
