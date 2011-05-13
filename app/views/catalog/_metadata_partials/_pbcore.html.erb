@@ -1,0 +1,135 @@
+<%
+require 'lib/openvault/pbcore'
+pbcore = Openvault::Pbcore::Document.new(@document.get('pbcore_s') || @document.fedora_object.datastream["PBCore"].content)
+source_credits = '' 
+%>
+<div class="pbcore-metadata">
+
+
+<% instantiations = pbcore.instantiation %>
+<% unless instantiations.blank? %>
+<div class="instantiation">
+<h3 class="toggler">Media</h3>
+<% instantiations.each do |inst| %>
+<div>
+<%
+  inst_map = {'formatDuration' => 'Duration', 'formatStandard' => 'Standard', 'formatPhysical' => 'Physical format', 'formatGenerations' => 'Type'}
+ %> 
+
+<% inst[:to_xml].xpath('pbcore:pbcoreFormatID[pbcore:formatIdentifierSource="wgbh.org/mars/barcode/"]/pbcore:formatIdentifier', 'pbcore' => 'http://www.pbcore.org/PBCore/PBCoreNamespace.html').map { |e| e.content }.to_a.uniq.each do |e| %>
+<div><strong>Barcode</strong>
+<%= e %></div>
+<% end %>
+
+<% inst_map.each do |key, label| %>
+  <% inst[key].to_a.uniq.each do |e| %>
+    <div><strong><%= label %></strong> <%= e %></div> 
+  <% end %>
+<% end %>
+
+</div>
+<% end %>
+
+</div>
+<% end %>
+<div class="source">
+  <% unless  pbcore.titles.reject { |type, value| value == document.get(:title_display) }.empty? and pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.empty? %>
+  <h3 class="toggler">Source</h3>
+  <div>
+    <% pbcore.titles.reject { |type, value| value == document.get(:title_display) }.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+    <% end %>
+
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+    <% end %>
+    <div class="source-credits">
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <%= "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>".html_safe if value =~ /ABC/ %>
+      <%= "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>".html_safe if value =~ /CBS/ %>
+    <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>   
+
+<div class="description">
+<% unless pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.empty? %>
+  <h3 class="toggler">Description</h3>
+  <div>
+    <div>
+      <% pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.each do |type, value| %>
+        <div class="pbcore-description-block pbcore-description-<%= type.parameterize %>"><strong><%= type %></strong> <%= render_field_value(value).html_safe %></div>
+      <% end %>
+    </div>
+    
+
+</div>
+<% end %>
+</div>
+
+
+
+
+
+<% coverage = pbcore.coverage %>
+
+    <hr />
+<% unless coverage['Temporal'].blank? %>
+<div class="date">   
+<div><strong>Date Covered</strong>
+
+<ul>
+      <% coverage['Temporal'].uniq.each do |s| %>
+        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
+      <% end %>
+</ul>
+</div>
+</div>
+<% end %>
+        
+<% unless coverage['Spatial'].blank? %>
+<div class="place">   
+<div><strong>Place Covered</strong>
+
+<ul>
+      <% coverage['Spatial'].uniq.each do |s| %>
+        <%= content_tag(:li, link_to(s[:coverage], catalog_index_path({:q => s[:coverage] }))) %>
+      <% end %>
+</ul>
+</div>
+</div>
+<% end %>
+<div class="people">
+<% contributors = pbcore.contributors %>
+<% creators = pbcore.creators %>
+<% unless contributors.blank? and creators.blank? %>
+<div>
+<% creators.each do |k, v| %>
+<% k = 'People' if k.blank? %>
+<div><strong><%= k %></strong>
+<ul>
+<% v.each do |e| %>
+<%= content_tag(:li, link_to(e[:creator], catalog_index_path({:q => e[:creator]}))) %>
+<% end %>
+</ul>
+</div>
+<%      
+end
+%>
+<% contributors.each do |k, v| %>
+<% k = 'People' if k.blank? %>
+<div><strong><%= k %></strong>
+<ul>
+<% v.each do |e| %>
+<%= content_tag(:li, link_to(e[:contributor], catalog_index_path({:q => e[:contributor]}))) %>
+<% end %>
+</ul>
+</div>
+<%      
+end
+%>
+</div>
+<% end %>
+         </div>
+</div>
