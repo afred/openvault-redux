@@ -53,13 +53,15 @@ gem "acts_as_commentable", :git => 'https://github.com/jackdempsey/acts_as_comme
 gem "acts_as_rateable"
 gem "progressbar"
 gem "parslet"
-gem "rubydora"
+gem "rubydora", :path => '/Volumes/Scratch/rubydora'
 gem "soap4r"
 gem "devise"
 gem "paperclip"
 gem "ruby-debug"
 gem "render_inheritable"
 gem "data_migrate"
+gem "dynamic_form"
+ gem "activeadmin"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
 gem "rsolr-footnotes"
