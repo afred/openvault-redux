@@ -2,6 +2,7 @@ module Openvault::Datastreams
    module Dc
      def to_solr doc = {}
       super(doc)
+      return if digital_object.datastreams.keys.include? "DublinCore"
       xml = Nokogiri::XML(content)
       xmlns = {'dc' =>"http://purl.org/dc/elements/1.1/", 'dcterms' =>"http://purl.org/dc/terms/", 'fedora-rels-ext' =>"info:fedora/fedora-system:def/relations-external#", 'oai_dc' =>"http://www.openarchives.org/OAI/2.0/oai_dc/", 'rdf' =>"http://www.w3.org/1999/02/22-rdf-syntax-ns#", 'xsi' =>"http://www.w3.org/2001/XMLSchema-instance"}
 
