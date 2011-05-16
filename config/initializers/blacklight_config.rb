@@ -251,7 +251,8 @@ Blacklight.configure(:shared) do |config|
   }
 
   config[:mlt] = {
-    :fields => ["title_t", "dc_description_t", "pbcore_pbcoreTitle_s"],
+    :fields => "title_t, dc_description_ts, pbcore_pbcoreTitle_ts, ri_collection_ancestors_s",
+    :qf => "title_ts^1000 ri_collection_ancestors_s^50",
     :count => 3
   }
 
