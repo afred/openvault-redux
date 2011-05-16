@@ -1,4 +1,6 @@
 Openvault::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
   devise_for :users
 
   match 'catalog/:id/tag', :to => 'catalog#tag', :as => 'tag_catalog'

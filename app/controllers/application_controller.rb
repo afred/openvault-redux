@@ -20,4 +20,9 @@ class ApplicationController < ActionController::Base
   def choose_layout
     'application' unless request.xml_http_request? || ! params[:no_layout].blank?
   end     
+
+  def authenticate_admin_user! *args
+    authenticate_user!(*args)
+    raise "Unauthorized" unless current_user && current_user.has_role?(:admin)
+  end
 end
