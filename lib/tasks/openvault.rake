@@ -22,11 +22,22 @@ namespace :openvault do
 
     Blacklight.solr.delete_by_query('*:*')
     Blacklight.solr.commit
-    solrdocs = pids.each_slice(100) do |d| 
-      Blacklight.solr.add d.map { |x| pbar.inc; Rubydora.repository.find(x['pid']).to_solr rescue nil }.compact
-      Blacklight.solr.commit
-    end 
-    Blacklight.solr.optimize
+
+    arr = []
+
+    solrdocs = pids.each do |x| 
+      arr <<  Rubydora.repository.find(x['pid']).to_solr rescue nil
+      pbar.inc
+
+      if arr.length > 100 
+        Blacklight.solr.add arr.compact
+        arr = []
+      end
+    end
+
+    Blacklight.solr.commit
+    Blacklight.solr.optimize 
+
 
     pbar.finish
   end
