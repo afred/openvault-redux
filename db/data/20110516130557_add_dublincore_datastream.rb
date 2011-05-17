@@ -18,6 +18,6 @@ class AddDublincoreDatastream < ActiveRecord::Migration
   end
 
   def self.down
-    raise IrreversibleMigration
+  #  raise IrreversibleMigration
   end
 end

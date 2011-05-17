@@ -1,14 +1,5 @@
 class CorrectTyposInFedoraObjects < ActiveRecord::Migration
   def self.up
-
-    # org.wgbh.mla:Vietnam -> org.wgbh.mla:vietnam
-    pids = Rubydora.repository.sparql 'SELECT ?pid FROM <#ri> WHERE { ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/org.wgbh.mla:Vietnam>}'
-    pids.each do |x|
-      Rubydora.repository.soap.purgeRelationship(:pid => x['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:Vietnam', :isLiteral => false, :datatype => nil)
-      Rubydora.repository.soap.purgeRelationship(:pid => x['pid'], :relationship => 'info:fedora/fedora-system:def/relations-external#isMemberOfCollection', :object => 'info:fedora/org.wgbh.mla:vietnam', :isLiteral => false, :datatype => nil)
-    
-    end
-
     xmlns = { 'pbcore' => 'http://www.pbcore.org/PBCore/PBCoreNamespace.html' }
     syn = {
       'Boston Art Ensemble' => 'Boston Art Ensemble',
@@ -128,7 +119,7 @@ SELECT ?pid FROM <#ri> WHERE {
 
           name = node.text.dup
 
-          if node.parent.xpath("pbcore:#{n}Role", xmlns).first.text == "Other"
+          if node.parent.xpath("pbcore:#{n}Role", xmlns).first.text == "Other" and name =~ /\(/
             name, role = name.scan(/([^\(]+) \(([^\)]+)\)/).first
             name.strip!
             role.strip!
