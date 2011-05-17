@@ -61,7 +61,8 @@ gem "ruby-debug"
 gem "render_inheritable"
 gem "data_migrate"
 gem "dynamic_form"
- gem "activeadmin"
+gem "activeadmin"
+gem "retryable"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
 gem "rsolr-footnotes"
