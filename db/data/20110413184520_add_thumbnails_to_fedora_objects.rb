@@ -34,7 +34,14 @@ SELECT ?pid ?tds FROM <#ri> WHERE {{
      ?tn <info:fedora/fedora-system:def/view#disseminates> ?tds.
     { #{ thumbnail_disseminations_sparql } }
   }
-  }  
+  } 
+
+  OPTIONAL {
+    ?pid <info:fedora/fedora-system:def/view#disseminates> ?existing_thumbnail_ds .
+    ?existing_thumbnail_ds <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Thumbnail>
+  }
+
+  FILTER(!bound(?existing_thumbnail_ds)) .
 }"
 
  pids_to_tnds.map { |x| [x['pid'].gsub('info:fedora/', ''), x['tds'].gsub('info:fedora/', '') ] }.each do |k, v|
@@ -49,12 +56,19 @@ SELECT ?pid ?tds FROM <#ri> WHERE {{
    ds = obj.datastream['Thumbnail']
    ds.controlGroup = 'M'
    ds.mimeType = 'image/jpg'
-   ds.dsLocation = "http://localhost:8180/fedora/get/#{v}"
+   ds.dsLocation = "http://local.fedora.server/fedora/get/#{v}"
    ds.save 
  end
 
 objs =  Rubydora.repository.find_by_sparql 'SELECT ?pid FROM <#ri> WHERE {
-  ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/umb:collection-id-11>
+  ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/umb:collection-id-11> .
+
+  OPTIONAL {
+    ?pid <info:fedora/fedora-system:def/view#disseminates> ?existing_thumbnail_ds .
+    ?existing_thumbnail_ds <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Thumbnail>
+  }
+
+  FILTER(!bound(?existing_thumbnail_ds)) .
 }'
 
 objs.each do |obj|
@@ -70,12 +84,12 @@ pids_to_collection = Rubydora.repository.sparql '
 SELECT ?pid ?collection FROM <#ri> WHERE {
     ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> ?collection .
     ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/wgbh:openvault>.
-   OPTIONAL {  { ?pid <info:fedora/fedora-system:def/view#disseminates> ?tn .
-     ?tn <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Thumbnail>
-  } UNION {
-    ?pid <info:fedora/fedora-system:def/relations-external#hasThumbnail> ?tn .
-  } }.
-  FILTER(!bound(?tn)) .
+  OPTIONAL {
+    ?pid <info:fedora/fedora-system:def/view#disseminates> ?existing_thumbnail_ds .
+    ?existing_thumbnail_ds <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Thumbnail>
+  }
+
+  FILTER(!bound(?existing_thumbnail_ds)) .
   FILTER(!regex(str(?collection), "openvault"))
 }'
 
