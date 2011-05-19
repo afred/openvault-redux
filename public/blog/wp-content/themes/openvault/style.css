@@ -1,0 +1,280 @@
+/*
+Theme Name: Open Vault
+Theme URI: http://openvault.wgbh.org/blog
+Author: Chris Beer <chris_beer@wgbh.org>
+Version: 0.1
+Template: twentyeleven
+*/
+
+@import url("../twentyeleven/style.css");
+
+html {
+  margin-top: 0 !important;
+  background-color: #558fba;
+  background-image: url("/images/background-footer.jpg");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+}
+
+body {
+  background-color: #558fba;
+  background-image: url("/images/background-header.jpg");
+  background-repeat: no-repeat;
+  height: 100%;
+  font-weight: normal;
+}
+.one-column #page {
+  max-width: 1030px;
+}
+
+#page {
+  width: 1030px;
+  margin: 0 auto;
+  overflow: hidden;
+  line-height: 1.5;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  color: #333;
+  font-size: 11px;
+  background-color: transparent;
+}
+
+#site-title {
+display: block;
+text-indent: -119988px;
+overflow: hidden;
+text-align: left;
+background-image: url('/images/openvault.png?1304697733');
+background-repeat: no-repeat;
+background-position: 50% 50%;
+width: 306px;
+height: 39px;
+}
+
+#site-description {
+text-indent: -119988px;
+overflow: hidden;
+text-align: left;
+background-image: url('/images/wgbh_mla.png?1304697733');
+background-repeat: no-repeat;
+background-position: 50% 50%;
+width: 185px;
+height: 36px;
+margin-top: 1.591em;
+}
+
+#site-title {
+  position: absolute;
+left: 0;
+}
+
+#site-description {
+  position: absolute;
+left: 0;
+top: 60px;
+}
+
+#search-bar {
+  margin-top: 65px;
+}
+
+#branding, #main, #colophon {
+  padding: 0;
+}
+
+#primary {
+  width: 790px;
+  padding-left: 230px;
+  margin-right: 10px;
+}
+
+#secondary, #site-generator, #searchform {
+  display: none;
+}
+
+.one-column #content {
+
+  width: 710px;
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+
+#content {
+  background-color: #fff;
+  width: 710px;
+  margin-right: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  -moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+-o-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+padding-bottom: 2.591em;
+background-color: white;
+border: 1px solid #CCC;
+}
+
+.entry-header .comments-link {
+  display: none;
+}
+
+#supplementary {
+  border: none;
+  padding: 0;
+  margin: 0;
+  padding-top: 1em;
+}
+
+#colophon {
+  width: 790px;
+  padding-left: 230px;
+  margin-right: 10px;
+}
+
+#colophon .widget-area {
+  background-color: #fff;
+  width: 710px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-right: 10px;
+  -moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+-o-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+background-color: white;
+border: 1px solid #CCC;
+  background-color: white;
+}
+
+#colophon .widget_nav_menu {
+  margin: 0;
+}
+
+#colophon .widget_nav_menu ul, #colophon .widget_nav_menu li {
+   list-style: none;
+  display: inline-block;
+}
+
+/* line 157, ../../../app/stylesheets/screen.scss */
+#search-bar {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 710px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 1.295em;
+  padding-bottom: 1.295em;
+  margin-bottom: 1.295em;
+  -moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+  background-color: #ff9e25;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #search-bar {
+  overflow-x: hidden;
+}
+/* line 167, ../../../app/stylesheets/screen.scss */
+#search-bar #search {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 230px;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #search-bar #search {
+  overflow-x: hidden;
+}
+/* line 171, ../../../app/stylesheets/screen.scss */
+#search-bar #search h2 {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+/* line 176, ../../../app/stylesheets/screen.scss */
+#search-bar #search hr {
+  display: none;
+}
+/* line 182, ../../../app/stylesheets/screen.scss */
+#search-bar #browse {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 470px;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #search-bar #browse {
+  overflow-x: hidden;
+}                               
+/* line 184, ../../../app/stylesheets/screen.scss */
+#search-bar #browse h2 {
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 0.259em;
+  color: #fff;
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 90px;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #search-bar #browse h2 {
+  overflow-x: hidden;
+}
+/* line 192, ../../../app/stylesheets/screen.scss */
+#search-bar #browse .categories, #search-bar #browse .collections {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 170px;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #search-bar #browse .categories, * html #search-bar #browse .collections {
+  overflow-x: hidden;
+}
+/* line 195, ../../../app/stylesheets/screen.scss */
+#search-bar #browse .categories select, #search-bar #browse .collections select {
+  width: 90%;
+}
+
+/* line 206, ../../../app/stylesheets/screen.scss */
+.blacklight-catalog-index #content {
+  padding-bottom: 2.591em;
+}
+/* line 209, ../../../app/stylesheets/screen.scss */
+.blacklight-catalog-index #search-bar {
+  margin-bottom: 0em;
+}                                                 
+
+/* line 135, ../../../app/stylesheets/screen.scss */
+.q_field {
+  position: relative;
+  margin-bottom: 0.648em;
+  width: 170px;
+  height: 2em;
+}
+/* line 141, ../../../app/stylesheets/screen.scss */
+.q_field .q {
+  width: 150px;
+  padding-right: 20px;
+  font-size: 12px;
+  color: #666;
+  padding-top: 0.324em;
+  padding-bottom: 0.324em;
+}
+/* line 150, ../../../app/stylesheets/screen.scss */
+.q_field .submit {
+  position: absolute;
+  top: 8px;
+  right: 0;
+}     
+#search-bar {
+  width: 710px;
+  margin-left: 230px;
+  margin-right: 10px;
+}

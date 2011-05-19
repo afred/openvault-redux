@@ -17,4 +17,5 @@ rerun.txt
 solr_marc/solrmarc.log
 *.log
 tmp/
+public/blog
 
