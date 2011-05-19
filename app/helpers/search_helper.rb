@@ -7,7 +7,7 @@ module SearchHelper
   end
 
   def collections_list
-    response = Blacklight.solr.find :rows => 100, :fq => ['dc_type_s:(Series OR Collection)'], 'fl' => 'id,title_display,dc_type_s', 'sort' => 'title_sort asc' 
+    response = Blacklight.solr.find :rows => 100, :fq => ['dc_type_s:(Series OR Collection)'], 'fl' => 'id,title_display,dc_type_s,pid_s,dc_description_t', 'sort' => 'title_sort asc' 
     response.docs.map { |x| SolrDocument.new(x) }
   end
 end

@@ -2,7 +2,7 @@ Openvault::Application.routes.draw do
   ActiveAdmin.routes(self)
   Blacklight.add_routes(self, :except => [:catalog])
 
-  root :to => 'catalog#index'
+  root :to => 'catalog#home'
 
   devise_for :users
 

@@ -100,7 +100,7 @@ module ApplicationHelper
   end
 
   def render_google_analytics_code
-    render :partial => 'layouts/google_analytics', :locals => { :tracker_id => GOOGLE_ANALYTICS_TRACKER_ID } if GOOGLE_ANALYTICS_TRACKER_ID
+    render :partial => 'layouts/google_analytics', :locals => { :tracker_id => GOOGLE_ANALYTICS_TRACKER_ID } if defined?(GOOGLE_ANALYTICS_TRACKER_ID)
   end
   
   

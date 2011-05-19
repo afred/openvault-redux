@@ -1,0 +1,26 @@
+<% @document_list.each do |document| %>
+<div  class="thumbnail">
+  <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :thumbnail)).html_safe) %>
+</div>
+<% end %>
+</div>
+</div>
+
+<div id="collections">
+  <h2>Explore the collections</h2>
+  <%  collections_list.select { |x| x.get("dc_type_s") == "Collection" }.each do |c| %>
+    <%= link_to_document c, :label => image_tag(c.thumbnail.url).html_safe %>
+     <%= link_to_document c %>
+     <%= c.get('dc_description_t') %>
+  <% end %>
+</div>
+
+<div id="blog">
+  <h2>From the blog</h2>
+  <%= Wordpress.get_recent_posts(:count => 3) %>
+</div>
+
+
+
+<div>
+  <div>

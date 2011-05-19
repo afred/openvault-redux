@@ -82,6 +82,11 @@ class CatalogController < ApplicationController
     end
   end
 
+  def home
+    (@response, @document_list) = get_search_results({}, :rows => 60, :fl => 'id,pid_s,title_display')
+
+  end
+
   def print
     @response, @document = get_solr_response_for_doc_id    
     respond_to do |format|
@@ -123,8 +128,9 @@ class CatalogController < ApplicationController
     if RAILS_ENV == "development"
       render # will give us the stack trace
     else
-      flash[:notice] = "Sorry, you have requested a record that doesn't exist."
-      redirect_to root_path, :status => 404
+    #  flash[:notice] = "Sorry, you have requested a record that doesn't exist."
+    #  redirect_to root_path, :status => 404
+      render
     end
     
   end

@@ -1062,3 +1062,49 @@ ul.facet_extended_list {
     }
   }
 }
+
+.blacklight-catalog-home {
+
+
+    #main {
+    @include column($blueprint-grid-columns);
+    @include prepend(0);
+       background-color: #fff;
+       padding: 10px;
+    }
+
+    #content {
+       width: 100%;
+       padding: 0;
+       margin: 0;
+       border: none;
+    @include single-box-shadow(rgba(0,0,0,0), 0px, 1px, 5px);
+    @include margin-trailer(2);
+    }
+
+  #search-bar {
+      margin-left: 220px;
+  }
+
+  #collections {
+      @include column(9);
+      background-color: #fff;
+  }
+
+  #blog {
+      @include prepend(1);
+     @include column(16,true);
+      background-color: #fff;
+  }
+
+
+
+    .sidebar {
+       display: none;
+    }
+   .thumbnail {
+      float: left;
+      width: 67px;
+      height: 50px;
+   }
+}
