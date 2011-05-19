@@ -1087,14 +1087,72 @@ ul.facet_extended_list {
   }
 
   #collections {
-      @include column(9);
+      position: relative;
+      @include column(10);
       background-color: #fff;
+      img {
+          width: 100%;
+      }
+     h3 {
+       font-weight: bold;
+     }
+
+     .document {
+        width: 390px;
+        display: none;
+
+    }
+        .document:first-of-type {
+           display: block;
+        }
+
+        .pagination {
+            position: absolute;
+            right: 0;
+
+          a {
+            text-indent: -9999px;
+            display: inline-block;
+            width: 0.7em;
+            height: 1em;
+            margin-right: 0.3em;
+            background-color: red;
+          }
+
+          a.active {
+            background-color: green;
+          }
+        }
   }
 
   #blog {
-      @include prepend(1);
-     @include column(16,true);
+      @include push(1);
+     @include column(15,true);
       background-color: #fff;
+  .post {
+     @include prepend(0.5);
+     @include append(0.5);
+     @include margin-leader(0.5);
+
+     h3 {
+       font-weight: bold;
+     }
+
+     p {
+        @include margin-leader(0.25);
+        @include margin-trailer(0.5);
+     }
+     border-bottom: 1px solid #ccc;
+ }
+  }
+
+  #blog, #collections {
+  h2 {
+     background-color: blue;
+     width: 100%;
+     @include padding-leader(0.5);
+     @include padding-trailer(0.5);
+  }
   }
 
 

@@ -7,17 +7,74 @@
 </div>
 
 <div id="collections">
+  <div class="pagination">
+  </div>
   <h2>Explore the collections</h2>
+  
   <%  collections_list.select { |x| x.get("dc_type_s") == "Collection" }.each do |c| %>
+    <div class="document">
     <%= link_to_document c, :label => image_tag(c.thumbnail.url).html_safe %>
-     <%= link_to_document c %>
+    <h3><%= link_to_document c %></h3>
      <%= c.get('dc_description_t') %>
+   </div>
   <% end %>
 </div>
 
+<script type="text/javascript">
+  $(function() {
+      var collections_timer = null;
+
+      $('#collections .document').hide().first().show();
+      $('#collections .document').each(function(i) {
+        $('<a href="#collections">' + i + '</a>').bind('click', function() { 
+          $('#collections .document').hide().eq(i).show();
+          $('.active', '#collections').removeClass('active');
+          $(this).addClass('active');
+        startCollectionsTimer();
+          }).appendTo($('#collections .pagination'));
+      }); 
+      $('#collections .pagination a').first().addClass('active');
+
+      startCollectionsTimer = function() {
+          window.clearTimeout(collections_timer);
+      collections_timer = window.setTimeout(function() { 
+        var next = $('.active', '#collections .pagination').next();
+        if(next.length == 0) {
+          next = $('a', '#collections .pagination').first(); 
+        }
+        console.log(next);
+        next.click();
+
+        
+      }, 10000)
+    };
+
+      $('#collections').bind('mouseenter', function() {
+          console.log('cancelled');
+          window.clearTimeout(collections_timer);
+          });
+
+      $('#collections').bind('mouseleave', function() {
+        startCollectionsTimer();
+      });
+
+      startCollectionsTimer();
+
+
+
+      });  
+</script>
+
 <div id="blog">
   <h2>From the blog</h2>
-  <%= Wordpress.get_recent_posts(:count => 3) %>
+  <% Wordpress.get_recent_posts(:count => 3).each do |post| %>
+    <div class="post">
+    <h3><%= link_to post.title.html_safe, post.url %></h3>
+    <div><%= post.excerpt.html_safe %></div>
+    <%= post.date %>
+    <%= post.author_name %>
+  </div>
+    <% end %>
 </div>
 
 

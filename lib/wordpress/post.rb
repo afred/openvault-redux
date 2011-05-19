@@ -21,6 +21,18 @@ module Wordpress
       self.post["title"]
     end
 
+    def url
+      self.post["url"]
+    end
+
+    def date
+      self.post["date"]
+    end
+
+    def author_name
+      self.post["author"]["name"]
+    end
+
     def custom_fields
       self.post["custom_fields"]
     end
@@ -36,6 +48,10 @@ module Wordpress
     def images type
       @images ||= self.attachments.reject{ |x| x["images"].nil? }.first.try(:[], 'images')
       @images[type]
+    end
+
+    def excerpt
+      self.post["excerpt"] || self.content
     end
 
     def content
