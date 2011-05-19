@@ -1,5 +1,2 @@
-module Wordpress
-  def self.endpoint
-    "http://localhost/blog"
-  end
-end
+require 'wordpress'
+Wordpress::Api.endpoint = "http://localhost/blog"
