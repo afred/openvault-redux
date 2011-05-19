@@ -42,6 +42,38 @@ namespace :openvault do
     pbar.finish
   end
 
+  desc "apache map"
+  task :rewrite => :environment do
+    require 'progressbar'
+    sparql = "SELECT ?dsid FROM <#ri> WHERE {
+    ?pid <info:fedora/fedora-system:def/view#disseminates> ?dsid .
+  {
+    ?dsid  <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Video.mp4>  .
+    } UNION {
+    ?dsid  <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Audio.mp3>  .
+  }
+}"    
+    dsids = Rubydora.repository.sparql(sparql)
+
+    pbar = ProgressBar.new("indexing", dsids.length)
+
+    mapping = dsids.map do |x|
+    begin
+      dsid = x['dsid'].gsub('info:fedora/', '')
+      headers = Streamly.head "http://localhost:8180/fedora/get/#{dsid}"
+      dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first.gsub('openvault.wgbh.org/media', 'openvault.wgbh.org:8080') 
+      pbar.inc
+      print [dsid, dsLocation].join("\t") + "\n"
+      [dsid, dsLocation]
+      rescue
+        nil
+      end
+    end.compact
+
+    print mapping.map { |x| x.join("\t") }.join("\n")
+  end
+  
+
   desc "Ingest Artesia Asset Properties"
   task :ingest => :environment do
 
