@@ -98,5 +98,10 @@ module ApplicationHelper
   def render_wordpress_page_content slug
     Wordpress::Page.find(slug).content.html_safe # rescue nil
   end
+
+  def render_google_analytics_code
+    render :partial => 'layouts/google_analytics', :locals => { :tracker_id => GOOGLE_ANALYTICS_TRACKER_ID }
+  end
+  
   
 end
