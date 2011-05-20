@@ -14,7 +14,12 @@
 $base-font-size: 11px;
 $base-line-height: 14.25px;
 
-$blueprint-grid-columns: 26;
+$blueprint-grid-columns: 27;
+$blueprint-grid-width: 29px;
+$blueprint-grid-margin: 9px;
+$sidebar-grid-columns: 6;
+$content-grid-columns: 21;
+$document-grid-columns: 19.5;
 
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
@@ -86,13 +91,13 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 #hd {
-  @include column(26);
+  @include column($blueprint-grid-columns);
   @include margin-leader(1);
   position: relative;
 
   .site_title_container {
      @include column(5);
-     height: 58px;
+     height: 50px;
   }
 
   .site_title a {
@@ -102,28 +107,29 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
   .subtitle {
      @include replace-text-with-dimensions("wgbh_mla.png");
-     @include margin-leader(2);
+     @include margin-leader(1.5);
   }
 
   .user_util_links {
       position: absolute;
-      right: 0;
-      top: 38px;
+      right: 7px;
+      top: 25px;
+      font-size: 12.5px;
       text-align: right;
   }
 }
 
 #bd {
-   @include column(26);
+   @include column($blueprint-grid-columns);
 }
 
 #main {
-  @include column(20);
-  @include prepend(6);
+  @include column($content-grid-columns);
+  @include prepend($sidebar-grid-columns);
 }
 
 #ft {
-    @include prepend(6);
+    @include prepend($sidebar-grid-columns);
 .menu {
   margin: 0;
 }
@@ -143,9 +149,9 @@ a {
 }
 
 #content {
-    @include column(18);
+    @include column($document-grid-columns);
     @include prepend(1);
-    @include append(1);
+    @include append(0.5);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
    background-color: #FFF;
   @include padding-trailer(2);
@@ -154,7 +160,8 @@ a {
 }
     .q_field {
       position: relative;
-      @include margin-trailer(0.5);
+      @include margin-leader(0.25);
+      @include margin-trailer(0.25);
       width: 170px;
       height: 2em;
 
@@ -163,23 +170,23 @@ a {
         padding-right: 20px;
         font-size: 12px;
         color: #666;
-        @include padding-leader(0.25);
-        @include padding-trailer(0.25);
+        @include padding-leader(0.07);
+        @include padding-trailer(0.07);
       }
 
     .submit {
         position: absolute;
-        top: 8px;
+        top: 5px;
         right: 0;
     }
     }
 
 #search-bar {
-  @include column(18);
+  @include column($document-grid-columns);
   @include prepend(1);
-  @include append(1);
-  @include padding-leader(1);
-  @include padding-trailer(1);
+  @include append(0.5);
+  @include padding-leader(0.5);
+  @include padding-trailer(0.5);
   @include margin-trailer(1);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
   background-color: $orange;
@@ -200,17 +207,18 @@ a {
   }
 
   #browse {
-    @include column(12, true);
+    @include column(11, true);
+    @include prepend(2);
     h2 {
       font-size: 12px;
       font-weight: bold;
       @include padding-leader(0.2);
       color: #fff;
-      @include column(2.5);
+      @include column(3);
     }
 
     .categories, .collections {
-       @include column(4.5, true);
+       @include column(4, true);
 
        select {
           width: 90%;
@@ -231,13 +239,13 @@ a {
   }
 
   #appliedParams {
-  @include column(18);
+  @include column($document-grid-columns);
   @include pull(1);
   @include prepend(1);
   @include append(1);
      background-color: $grey;
     @include padding-leader(1);
-    @include padding-trailer(1);
+    @include padding-trailer(1.25);
     @include margin-trailer(1);
   }
 
@@ -246,7 +254,7 @@ a {
 #sidebar {
   @include column(5.5);
   @include pull($blueprint-grid-columns);
-  @include margin-leader(5.5);
+  @include margin-leader(4.15);
   h2 {
     @include padding-leader(1);
     @include padding-trailer(0.7);
@@ -350,7 +358,7 @@ a {
   }
 
   .document {
-      @include column(18);
+      @include column($document-grid-columns - 0.5);
     border-bottom: 1px solid #CCC;
     @include margin-leader(0.5);
     @include margin-trailer(0.5);
@@ -419,8 +427,10 @@ a {
 }
 
 .search-results-header {
-    @include column(18);
+    @include column($document-grid-columns - 0.5);
+    @include padding-trailer(1);
     border-bottom: 1px solid #CCC;
+
 }
 
    .pageEntriesInfo {
@@ -540,7 +550,7 @@ a {
 
 
 #ft {
-   @include column(26);
+   @include column($blueprint-grid-columns);
 
    .solrQuery {
        margin-top: 2em;
@@ -550,16 +560,16 @@ a {
 
 
 #document {
-      @include padding-leader(1.5);
+      @include padding-leader(2);
 
     hr {
-      @include column(20);
+      @include column($content-grid-columns);
       @include pull(1);
       margin-bottom: 0;
     }
 
     .document_heading {
-      @include column(13);
+      @include column(14);
       @include padding-trailer(0.5);
     }
 
@@ -573,7 +583,8 @@ a {
     }
 
     div.tools {
-      @include column(5, true);
+        @include prepend(1.5);
+      @include column(2.5, true);
       @include padding-leader(0.5);
     }
 
@@ -592,11 +603,11 @@ a {
     }
 
     .document {
-        @include column(18);
+        @include column(19);
     }
 
     .defList_container {
-        @include column(18);
+        @include column(19);
         @include padding-leader(0.5);
         @include padding-trailer(0.5);
 
@@ -607,14 +618,14 @@ a {
           @include padding-leader(0.1);
           @include padding-trailer(0.1);
           text-indent: 5px;
-          background-color: #CCC;
+          background-color: #ddd;
           text-align: right;
           font-weight: bold;
           clear: both;
        }
 
        .value {
-          @include column(15,  true);
+          @include column(12);
        }
 
        & > div {
@@ -624,10 +635,10 @@ a {
     }
 
     .blacklight-tags, .blacklight-comments {
-       @include column(15);
+       @include column(14);
 
        .value {
-         @include column(12, true);
+         @include column(8);
          a {
             display: block;
          }
@@ -635,13 +646,14 @@ a {
     }
 
       .new_tag, .new_annotation {
-         @include column(3, true);
+          @include prepend(1.5);
+         @include column(2.75, true);
      }
 
     .media {
        @include padding-leader(1);
        @include padding-trailer(1);
-        @include column(18, true);
+        @include column($document-grid-columns, true);
     }
     .primary-datastream {
        @include column(8);
@@ -652,11 +664,9 @@ a {
     }
 
     .secondary-datastream-container {
-       @include column(9, true);
-       @include prepend(1);
+       @include column(9.75, true);
+       @include prepend(1.75);
        position: relative;
-       margin-right: -20px;
-       padding-right: 20px;
 
    }
 
@@ -668,27 +678,37 @@ a {
        }
 
        .datastream-actions {
-          @include column(6.5, true);
+          @include column(7.25, true);
+          @include margin-trailer(0.5);
          .print {
-            @include column(1.9);
+            @include column(2.5);
+            text-align: right;
          }
 
          .sync {
             position: absolute;
-            left: 0;
+            left: 25px;
             top: 100px;
          }
 
          .q_field {
-            @include column(4.6, true);
-            width: 170px;
+            width: 138px;
+            padding-right: 25px;
+            float: right;
 
+            .q {
+                width: 100%;
+            }
+
+            .submit {
+               right: 5px;
+            }
           }
        }
    }
 
     .secondary-datastream {   
-        @include column(9, true);
+        width: 100%;
        overflow-y: scroll;
        height: 240px;
 
@@ -705,7 +725,7 @@ a {
     }
 
     .pbcore-metadata {
-       @include column(18);
+       @include column($document-grid-columns);
        @include pull(1);
        @include prepend(1);
        @include append(1);
@@ -727,7 +747,7 @@ a {
     .instantiation strong, .source strong, .description strong {
       font-weight: normal;
       display: inline;
-      @include margin-leader(0);
+      margin: 0;
       
       &:after {
          content: ": ";
@@ -921,7 +941,7 @@ ul.facet_extended_list {
   }
             #document {
             .document_heading {
-               @include column(18, true);
+               @include column($document-grid-columns, true);
             }
             hr { 
                @include margin-leader(1);
@@ -950,7 +970,7 @@ ul.facet_extended_list {
             }
 
            .funders {
-               @include column(18, true);
+               @include column($document-grid-columns, true);
 
            }
         }

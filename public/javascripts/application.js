@@ -231,14 +231,7 @@ $(function() {
   var i = 0;
   var max = 0;
 
-  $('.datastream-transcript').sausage({page: 'h3', content: function(i, $page) { return ''}, onClick: function(e, o) { $('.datastream-transcript').scrollTo($('h3', '.datastream-transcript').eq(o.i)); }});
- /* var set = $('.sausage');
-
-  set.each(function(index) {
-    next = set.eq(index + 1);
-    $(this).height(((next.position() || { top: $(this).parent().height()}).top - $(this).position().top) + "px");
-  });
-   */
+  //$('.datastream-transcript').sausage({page: 'h3', content: function(i, $page) { return ''}, onClick: function(e, o) { $('.datastream-transcript').scrollTo($('h3', '.datastream-transcript').eq(o.i)); }});
 
 
    $('.datastream-action-search').bind('submit', function() {
