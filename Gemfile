@@ -37,11 +37,12 @@ group :development, :test do
   gem "aruba"
 end
 
+gem "mysql2", "~> 0.2.0"
+
 gem "blacklight", :path => "./blacklight"
 gem "compass"
 gem "nokogiri", "~>1.5.0.beta.3"
 gem "streamly"
-gem "sqlite3"
 gem "fastercsv"
 gem "rest-client"
 gem "acl9"
@@ -53,7 +54,7 @@ gem "acts_as_commentable", :git => 'https://github.com/jackdempsey/acts_as_comme
 gem "acts_as_rateable"
 gem "progressbar"
 gem "parslet"
-gem "rubydora", :path => '/Volumes/Scratch/rubydora'
+gem "rubydora" 
 gem "soap4r"
 gem "devise"
 gem "paperclip"
