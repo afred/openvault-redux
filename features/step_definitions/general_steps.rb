@@ -47,3 +47,8 @@ Then /^I (should not|should) see an? "([^\"]*)" element with an? "([^\"]*)" attr
     page.should have_selector("#{elem}[#{attribute}=#{value}][#{attribute2}=#{value2}]")
   end
 end
+
+Then /^I debug/ do
+  breakpoint
+  0
+end

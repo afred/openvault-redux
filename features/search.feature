@@ -17,7 +17,7 @@ Feature: Search
     And I should see an rss discovery link
     And I should see an atom discovery link
     And I should see opensearch response metadata tags
-    And I should see "Filters applied:"
+    And I should not see "Filters applied:"
     And I should see "Displaying items 1 - 10 of"
 
   Scenario: Results Page Has Sorting Available
