@@ -161,12 +161,26 @@ $(function() {
      //sync the media with the transcript
      $(player).sync(smil_elements, { 'time': function() { return this.getPosition() }});
      smil_elements.bind('sync-on', function() { $(this).addClass('current'); });
-     smil_elements.bind('sync-off', function() { $(this).removeClass('current'); });
+     smil_elements.bind('sync-off', function() { 
+       $('.last').removeClass('last');
+       $(this).removeClass('current').addClass('last'); 
+     });
 
      //sync the transcript with the media
      smil_elements.each(function() {
        $('<a class="sync">[sync]</a>').prependTo($(this)).bind('click', function() { player.seek($(this).parent().data('begin_seconds')); }) ;
      });
+     if(smil_elements.length > 0) {
+       $('<a class="sync">[sync]</a>').prependTo($('.datastream-actions')).bind('click', function() {
+         if($('.current').length > 0) {
+     $('.secondary-datastream').scrollTo($('.current'));
+         } else {
+     $('.secondary-datastream').scrollTo($('.last'));
+
+         }
+    return false;
+  });
+     }
    }
     });
 
@@ -225,6 +239,8 @@ $(function() {
     $(this).height(((next.position() || { top: $(this).parent().height()}).top - $(this).position().top) + "px");
   });
    */
+
+
    $('.datastream-action-search').bind('submit', function() {
      current_search = $('input:text', this).val();
 

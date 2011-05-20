@@ -673,6 +673,12 @@ a {
             @include column(1.9);
          }
 
+         .sync {
+            position: absolute;
+            left: 0;
+            top: 100px;
+         }
+
          .q_field {
             @include column(4.6, true);
             width: 170px;
