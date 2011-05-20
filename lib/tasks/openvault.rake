@@ -71,6 +71,7 @@ namespace :openvault do
     end.compact
 
     print mapping.map { |x| x.join("\t") }.join("\n")
+    pbar.finish
   end
   
 
@@ -93,5 +94,23 @@ namespace :openvault do
     ds.save
 
     Rubydora.repository.find(obj.pid).process!
+  end
+
+  desc "Pre-render object thumbnails"
+  task :bake => :environment do
+    require 'progressbar'
+    sparql = "SELECT ?pid FROM <#ri> WHERE { ?pid <fedora-rels-ext:isMemberOfCollection> <info:fedora/wgbh:openvault> }"
+    pids = Rubydora.repository.sparql(sparql)
+    styles = [:preview, :thumbnail]
+    pbar = ProgressBar.new("indexing", pids.length)
+
+    pids = [pids.first]
+
+    pids.each do |p|
+      doc = SolrDocument.new :pid_s => p['pid'].gsub('info:fedora/', '')
+      styles.each { |s| doc.thumbnail.url :style => s }
+      pbar.inc
+    end
+    pbar.finish
   end
 end
