@@ -104,8 +104,6 @@ namespace :openvault do
     styles = [:preview, :thumbnail]
     pbar = ProgressBar.new("indexing", pids.length)
 
-    pids = [pids.first]
-
     pids.each do |p|
       doc = SolrDocument.new :pid_s => p['pid'].gsub('info:fedora/', '')
       styles.each { |s| doc.thumbnail.url :style => s }
