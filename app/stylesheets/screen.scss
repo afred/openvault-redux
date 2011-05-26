@@ -380,10 +380,10 @@ a {
      @include column($document-grid-columns - 3.5);
      @include push(0.5);
      float: right;
+     margin-bottom: 0;
   }
 
   .index_title {
-     margin-bottom: 0;
      font-size: 12px;
 
      a {
