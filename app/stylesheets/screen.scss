@@ -1166,10 +1166,27 @@ ul.facet_extended_list {
       @include push(0.5);
      @include column(15.5,true);
       background-color: #fff;
-  .post {
+
+      .post {
+          @include column(14.5);
      @include prepend(0.5);
      @include append(0.5);
      @include margin-leader(0.5);
+     @include margin-trailer(0.5);
+     border-bottom: 1px solid #ccc;
+      }
+
+      .post:last-of-type {
+        border-bottom: none;
+      }
+      .byline {
+         @include column(3);
+         .thumbnail img {
+             max-width: 100px;
+         }
+      }
+  .body {
+      @include column(11);
 
      h3 {
        font-weight: bold;
@@ -1179,7 +1196,6 @@ ul.facet_extended_list {
         @include margin-leader(0.25);
         @include margin-trailer(0.5);
      }
-     border-bottom: 1px solid #ccc;
  }
   }
 
@@ -1208,6 +1224,8 @@ ul.facet_extended_list {
     .sidebar {
        display: none;
     }
+
+    #main { 
    .thumbnail {
       float: left;
       width: 54px;
@@ -1219,5 +1237,6 @@ ul.facet_extended_list {
         width: 54px;
         height: 42px;
       }
+   }
    }
 }
