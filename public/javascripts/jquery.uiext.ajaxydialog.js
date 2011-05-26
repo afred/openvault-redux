@@ -8,7 +8,7 @@
                   extractTitleSelector: "h1, h2, h3, h4, h5",
                   chainAjaxySelector: "a:not([target]), form:not([target])",
                   closeDialogSelector: "a.dialog-close",
-                  dialogContainer: null,
+                  dialogContainer: null
               },
               
               _create: function() {
