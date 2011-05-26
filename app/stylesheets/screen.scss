@@ -366,8 +366,7 @@ a {
       @include column($document-grid-columns - 0.5);
     border-bottom: 1px solid #CCC;
     @include margin-leader(0.5);
-    @include margin-trailer(0.5);
-    @include padding-leader(0.5);
+    @include margin-trailer(0.25);
     @include padding-trailer(0.5);
     min-height: 100px;
     position: relative;
@@ -377,9 +376,13 @@ a {
      display: none;
   }
 
+  .documentHeader {
+     @include column($document-grid-columns - 3.5);
+     @include push(0.5);
+     float: right;
+  }
+
   .index_title {
-     @include column(15);
-     @include push(3.5);
      margin-bottom: 0;
      font-size: 12px;
 
@@ -390,15 +393,16 @@ a {
   }
 
   .thumbnail {
-     position: absolute;
+ /*    position: absolute;
      top: 0.5em;
-     left: 0;
-     @include margin-leader(0.5);
+     left: 0; */
+     @include column(3);
+     clear: left;
   }
 
   .defList_container {
      @include column(14.5);
-     @include push(3.5);
+     @include push(0.5);
   .label {
      font-weight: bold;
      display: inline;

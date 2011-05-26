@@ -13,7 +13,7 @@ module Openvault::Solr::Document::Thumbnail
 
     def config
       { :style => {
-          :preview => "160x90",
+          :preview => "120x",
           :thumbnail => "54x42"
         }
       }
@@ -23,7 +23,13 @@ module Openvault::Solr::Document::Thumbnail
       require 'open-uri'
       begin
       if options[:style] == :default
-        return @document.get('thumbnail_url_s') || (@document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Thumbnail"].url)
+        return @document.get('thumbnail_url_s') if @document.get('thumbnail_url_s')
+
+        if @document.fedora_object.datastreams.keys.include? 'Image.jpg'
+          return @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Image.jpg"].url
+        end
+
+        return @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Thumbnail"].url
       end
 
       return "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(dir_path, "#{options[:style]}.jpg")
