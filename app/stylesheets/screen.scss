@@ -244,7 +244,7 @@ a {
   }
 
   #appliedParams {
-  @include column($document-grid-columns);
+  @include column($document-grid-columns - 0.5, true);
   @include pull(1);
   @include prepend(1);
   @include append(1);
