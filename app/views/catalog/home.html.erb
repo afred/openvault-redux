@@ -7,13 +7,14 @@
 </div>
 
 <div id="collections">
+  <%= link_to 'See all >', collections_path, :class => 'see_all' %>
   <div class="pagination">
   </div>
   <h2>Explore the collections</h2>
   
   <%  collections_list.select { |x| x.get("dc_type_s") == "Collection" }.each do |c| %>
     <div class="document">
-    <%= link_to_document c, :label => image_tag(c.thumbnail.url).html_safe %>
+      <%= link_to_document c, :label => image_tag(c.thumbnail.url, :title => c.get(:title_display)).html_safe %>
     <h3><%= link_to_document c %></h3>
      <%= c.get('dc_description_t') %>
    </div>
@@ -66,6 +67,7 @@
 </script>
 
 <div id="blog">
+  <%= link_to 'See all >', blog_path, :class => 'see_all' %>
   <h2>From the blog</h2>
   <% Wordpress.get_recent_posts(:count => 3).each do |post| %>
     <div class="post">

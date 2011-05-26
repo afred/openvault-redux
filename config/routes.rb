@@ -7,6 +7,7 @@ Openvault::Application.routes.draw do
   devise_for :users
 
   match 'catalog/:id/tag', :to => 'catalog#tag', :as => 'tag_catalog'
+  match 'blog' => 'blog#index', :as => 'blog'
 
   resources :comments
 

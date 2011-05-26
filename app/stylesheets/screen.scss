@@ -32,6 +32,7 @@ $dark-link-color: #006699;
 $action-color: #cc6600;
 $action-hover-color: lighten(#d76b11, 20%);
 
+$blue: #11629e;
 $orange: #ff9e25;
 $grey: #e8e3e3;
 
@@ -129,7 +130,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 }
 
 #ft {
-    @include prepend($sidebar-grid-columns);
+    border-top: 1px solid #fff;
+    @include margin-leader(1.5);
+    @include padding-leader(0.5);
+    @include padding-trailer(0.5);
 .menu {
   margin: 0;
 }
@@ -1096,8 +1100,8 @@ ul.facet_extended_list {
     #main {
     @include column($blueprint-grid-columns);
     @include prepend(0);
-       background-color: #fff;
-       padding: 10px;
+       background-color: transparent;
+       padding: 0px;
     }
 
     #content {
@@ -1105,6 +1109,7 @@ ul.facet_extended_list {
        padding: 0;
        margin: 0;
        border: none;
+       background-color: transparent;
     @include single-box-shadow(rgba(0,0,0,0), 0px, 1px, 5px);
     @include margin-trailer(2);
     }
@@ -1115,17 +1120,21 @@ ul.facet_extended_list {
 
   #collections {
       position: relative;
-      @include column(10);
+      @include column(11);
       background-color: #fff;
       img {
           width: 100%;
+     @include margin-trailer(0.5);
       }
      h3 {
        font-weight: bold;
      }
 
      .document {
-        width: 390px;
+         @include column(10.5);
+         @include prepend(0.25);
+         @include append(0.25);
+         @include padding-trailer(0.5);
         display: none;
 
     }
@@ -1134,27 +1143,28 @@ ul.facet_extended_list {
         }
 
         .pagination {
-            position: absolute;
-            right: 0;
+            float: right;
+            margin-top: 11px;
+            @include append(0.5);
 
           a {
             text-indent: -9999px;
             display: inline-block;
-            width: 0.7em;
-            height: 1em;
-            margin-right: 0.3em;
-            background-color: red;
+            width: 11px;
+            height: 8px;
+            margin-right: 2px;
+            background-color: #5f8eb1;
           }
 
           a.active {
-            background-color: green;
+            background-color: #33ccff;
           }
         }
   }
 
   #blog {
-      @include push(1);
-     @include column(15,true);
+      @include push(0.5);
+     @include column(15.5,true);
       background-color: #fff;
   .post {
      @include prepend(0.5);
@@ -1175,10 +1185,21 @@ ul.facet_extended_list {
 
   #blog, #collections {
   h2 {
-     background-color: blue;
-     width: 100%;
+     background-color: $blue;
+     color: white;
+     font-weight: bold;
+     text-transform: uppercase;
+     width: auto;
      @include padding-leader(0.5);
      @include padding-trailer(0.5);
+     @include prepend(0.5);
+     @include margin-trailer(0.5);
+  }
+  .see_all {
+     float: right;
+     color: white;
+     line-height: 30px;
+     @include append(0.25);
   }
   }
 
@@ -1189,7 +1210,14 @@ ul.facet_extended_list {
     }
    .thumbnail {
       float: left;
-      width: 67px;
-      height: 50px;
+      width: 54px;
+      height: 42px;
+      margin-right: 1px;
+      margin-bottom: 1px;
+
+      img {
+        width: 54px;
+        height: 42px;
+      }
    }
 }

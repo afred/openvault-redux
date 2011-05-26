@@ -83,7 +83,7 @@ class CatalogController < ApplicationController
   end
 
   def home
-    (@response, @document_list) = get_search_results({:sort => "random"}, :fq => "{!raw f=media_dsid_s}Video.mp4", :rows => 60, :fl => 'id,pid_s,title_display')
+    (@response, @document_list) = get_search_results({:sort => "random"}, :fq => "{!raw f=media_dsid_s}Video.mp4", :rows => 90, :fl => 'id,pid_s,title_display')
 
   end
 
