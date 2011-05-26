@@ -340,6 +340,14 @@ a {
      @include padding-trailer(0.2);
    }
 
+   .range_limit {
+      background-color: white;
+      @include prepend(0.25);
+      @include append(0.25);
+     @include padding-leader(0.25);
+     @include padding-trailer(1.5);
+
+   }
 
 
 }
