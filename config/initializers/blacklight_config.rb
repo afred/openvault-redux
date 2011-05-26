@@ -107,12 +107,8 @@ Blacklight.configure(:shared) do |config|
       "keywords_cv" => 15,
       "tags_s" => 15
     },
-      :rangex => {
-       "dc_date_year_i" => {
-         :start => 1940,
-         :end => 2010,
-         :gap => 10
-       }
+    :range => {
+      "dc_date_year_i" => true
     },
     :tag => {
       "format" => {

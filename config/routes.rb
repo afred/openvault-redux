@@ -18,6 +18,7 @@ Openvault::Application.routes.draw do
   resources :collections, :only => [:index, :show]
 
   # Catalog stuff.
+  match 'catalog/range_limit', :as => "range_limit_catalog"
   match 'catalog/map', :as => "map_catalog"
   match 'catalog/opensearch', :as => "opensearch_catalog"
   match 'catalog/citation', :as => "citation_catalog"
