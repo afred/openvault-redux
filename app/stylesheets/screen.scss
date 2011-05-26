@@ -212,7 +212,7 @@ a {
 
   #browse {
     @include column(12.5, true);
-    @include prepend(0.5);
+    @include prepend(1);
     padding-top: 0.4em;
     h2 {
       font-size: 12px;
