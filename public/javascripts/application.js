@@ -21,7 +21,10 @@
        });
        $('.new_tag,.new_annotation').ajaxyDialog({
          modal: false,
-         dialogContainer: '#annotations_modal_dialog'
+         dialogContainer: '#annotations_modal_dialog',
+         load: function(event, dialog) {
+           $('.record_annotation_metadata', dialog).append($('.media_fragment_template .media_fragment').clone());
+         }
        });
       /* $('.user_util_links a').ajaxyDialog({
         width: $(window).width() / 2,

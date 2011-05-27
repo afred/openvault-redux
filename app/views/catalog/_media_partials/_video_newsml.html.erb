@@ -15,3 +15,7 @@
   <%= render_newsml_transcript(datastream_url(document.fedora_object.datastream["Transcript.newsml.xml"], :private => true)) %>
 </div>
 </div>
+<div class="media_fragment_template">
+  <%= render :partial => "comments/media_fragment" %>
+</div>
+

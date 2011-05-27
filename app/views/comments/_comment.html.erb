@@ -1,4 +1,4 @@
-<li class="comment comment_<%= comment.id %>">
+<%= content_tag :li, :class => "comment comment_#{comment.id}", :"data-timecode_begin" => comment.metadata[:begin], :"data-timecode_end" => comment.metadata[:end] do %>
 <strong><%= comment.title || nil %></strong>
 <div class="byline">
   <% if comment.user %>
@@ -18,4 +18,5 @@
 <%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %>
      </div>
    </li>
+ <% end %>
  <% end %>

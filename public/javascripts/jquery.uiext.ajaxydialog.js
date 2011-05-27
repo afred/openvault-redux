@@ -123,7 +123,7 @@
                       });
                     }
 
-                    this._trigger('load', null);
+                    this._trigger('load', null, dialog);
             
                     dialog.dialog("open");
                   }

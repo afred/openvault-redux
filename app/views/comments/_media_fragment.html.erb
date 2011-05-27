@@ -1,0 +1,14 @@
+  <div class="media_fragment">
+    <%= fields_for :comment  do |f| %>
+      <%= f.fields_for :metadata do |m| %>
+      <div>Enter the timecode:</div>
+      <div>
+      <%= m.label :begin %>
+      <%= m.text_field :begin %>
+      <%= m.label :end %>
+      <%= m.text_field :end %>
+    </div>
+     <% end %>
+    <% end %>
+
+  </div>

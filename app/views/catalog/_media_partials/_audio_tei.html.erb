@@ -15,3 +15,6 @@
   <%= render_tei_transcript(datastream_url(document.fedora_object.datastream["Transcript.tei.xml"], :private => true)) %>
 </div>
 </div>
+<div class="media_fragment_template">
+  <%= render :partial => "comments/media_fragment" %>
+</div>
