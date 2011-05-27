@@ -6,7 +6,8 @@
       $( Blacklight.do_more_facets_behavior.selector ).ajaxyDialog({
           width: $(window).width() / 2,  
           chainAjaxySelector: "a.next_page, a.prev_page, a.sort_change",        
-          open: function() { $('#domsearch', this).domsearch($('ul.facet_extended_list', this)) }
+          dialogContainer: "#reusableModalDialog"
+          //open: function() { $('#domsearch', this).domsearch($('ul.facet_extended_list', this)) }
       });
     };
     Blacklight.do_more_facets_behavior.selector = "a.more_facets_link";

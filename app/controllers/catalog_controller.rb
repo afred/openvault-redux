@@ -7,7 +7,7 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::DefaultSort
   include Openvault::SolrHelper::BoostMedia
   include Openvault::SolrHelper::Restrictions
-  include Openvault::SolrHelper::FacetDomsearch
+ # include Openvault::SolrHelper::FacetDomsearch
 
   render_inheritable
 
