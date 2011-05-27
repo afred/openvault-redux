@@ -252,6 +252,10 @@ $(function() {
        });
 
        max = $('.secondary-datastream .highlight').length
+     if(max == 0) {
+       alert('No results found');
+       return false;
+     }
 
        last_search = current_search;
        i = 0;
