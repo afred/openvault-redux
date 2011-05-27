@@ -1,7 +1,5 @@
-<h2>Comments</h2>
+<h2>Annotations (<%= @comments.length %>)</h2>
 
 <ul>
   <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
 </ul>
-
-<%= render :partial => 'form', :locals => { :comment => Comment.new(:commentable => @document) } %>

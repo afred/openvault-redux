@@ -1,4 +1,5 @@
 class Comment < ActiveRecord::Base
+  serialize :metadata
 
   include ActsAsCommentable::Comment
 
@@ -16,9 +17,5 @@ class Comment < ActiveRecord::Base
   #after_save do 
   #  self.commentable.save
   #end
-
-  def surrogate
-    Surrogate.with_id(self.commentable_id)
-  end
 
 end

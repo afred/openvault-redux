@@ -1,9 +1,13 @@
 <%= form_for(comment) do |f| %>
   <%= f.hidden_field :commentable_id %>
   <%= f.hidden_field :commentable_type %>
+  <%= f.hidden_field :public %>
+  <%= f.hidden_field :metadata %>
+  <div class="record_annotation_metadata">
+  </div>
 
-  <%= f.label :comment %>
+  <%= f.label :comment, "Body", :class => "ui-helper-hidden-accessible" %>
   <%= f.text_area :comment %>
 
-  <%= f.submit %>
+  <%= f.submit "Add" %>
 <% end %>

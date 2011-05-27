@@ -13,13 +13,15 @@
 
     $(function() {
        $('#document .blacklight-comments a').ajaxyDialog({
-         modal: false
+         modal: false,
+         dialogContainer: '#annotations_modal_dialog'
        });
        $('.tools .cite a').ajaxyDialog( {
          modal: false
        });
        $('.new_tag,.new_annotation').ajaxyDialog({
-         modal: false
+         modal: false,
+         dialogContainer: '#annotations_modal_dialog'
        });
       /* $('.user_util_links a').ajaxyDialog({
         width: $(window).width() / 2,
@@ -28,8 +30,8 @@
         */
        $('a.comments').ajaxyDialog({
         width: $(window).width() / 2,
-        modal: false
-
+        modal: false,
+         dialogContainer: '#annotations_modal_dialog'
          });
         });
 

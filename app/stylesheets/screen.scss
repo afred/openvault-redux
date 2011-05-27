@@ -702,6 +702,7 @@ a {
           text-indent: -9999px;
           display: inline-block;
           background-image: image-url("sync_to_vid.png");
+          cursor: pointer;
 
           &:hover {
             background-image: image-url("sync_to_vid_over.png");
@@ -858,15 +859,21 @@ a {
 
 .ui-widget-header {
    @include border-radius(0, 0);
-   background: $orange;
+   background: $blue;
    border: none;
-   color: #333;
+   color: white;
 }
 
 .ui-widget-content {
    a {
      @extend a;
    }
+}
+  .ui-dialog  .ui-dialog-content {
+    @include append(0.5);
+    @include prepend(0.5);
+    @include padding-leader(1);
+    @include padding-trailer(1);
 }
 ul.facet_extended_list {
     max-height: 500px;
@@ -886,7 +893,7 @@ ul.facet_extended_list {
 }
 
 #at15s_head {
-  background: $orange;
+  background: $blue;
   color: #333;
   padding: .5em 1em .3em;
   font-weight: bold;
@@ -1269,4 +1276,12 @@ ul.facet_extended_list {
       }
    }
    }
+}
+
+.comment {
+  @include margin-trailer(1);
+  .byline {
+     font-weight: bold;
+  }
+
 }

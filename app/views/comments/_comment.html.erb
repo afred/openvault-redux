@@ -1,1 +1,21 @@
-<li><strong><%= "#{ comment.user.login }:" rescue '' %></strong> <%= comment.comment %></li>
+<li class="comment comment_<%= comment.id %>">
+<strong><%= comment.title || nil %></strong>
+<div class="byline">
+  <% if comment.user %>
+    By <%= comment.user.to_s %> at
+  <% end %>
+<%= comment.created_at.strftime("%m/%d/%Y") %></div>
+<div class="comment"><%= comment.comment %></div>
+
+<% unless comment.metadata.blank?%>
+  <%= content_tag :div, comment.metadata.to_json, :class => 'comment_metadata' %>
+  <%= link_to "View", "##{comment.id}", :class => 'comment_view' %>
+<% end %>
+
+<% if current_user and comment.user == current_user %>
+<div>
+<%= link_to 'Edit', edit_comment_path(comment) %>
+<%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %>
+     </div>
+   </li>
+ <% end %>

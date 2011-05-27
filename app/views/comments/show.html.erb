@@ -1,24 +1,2 @@
-
-<div>
-<%= link_to 'Edit', edit_comment_path(@comment) %>
-<%= link_to 'Destroy', @comment, :confirm => 'Are you sure?', :method => :delete %>
-     </div>
-
-<div class="defList_container">
-  <div class="">
-    <div class="label"></div>
-    <div class="value"><%= @comment.commentable_id %></div>
-  </div>
-  <div class="">
-    <div class="label">Comment</div>
-    <div class="value"><%= @comment.comment %></div>
-  </div>
-  <div class="">
-    <div class="label">User</div>
-    <div class="value"><%= @comment.user %></div>
-  </div>
-  <div class="">
-    <div class="label">Created at</div>
-    <div class="value"><%= @comment.created_at %></div>
-  </div>
-</div>
+<h1>Annotation</h1>
+<%= render :partial => 'comments/comment', :locals => { :comment => @comment } %>
