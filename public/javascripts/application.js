@@ -94,7 +94,11 @@ $(function() {
            onTime: function() {
               $(this).trigger('timeupdate'); // HTML5 event
            }
+         },
+        'plugins': {
+           'gapro-2': {}
          }
+    
       }
 
       if($(this).prev('img').length > 0 && $(this).is('audio')) {
