@@ -39,25 +39,44 @@ body.bp {
 line-height: $base-line-height;
 }
 
+  body, html {
+     background: #fff;
+  }
+
+  #hd {
+    .subtitle {
+      display: none;
+    }
+  } 
+
+  .container {
+    margin-left: 0;
+  }
+
   #sidebar, #search-bar, .user_util_links, #ft {
     display: none !important;
   }
 
-.datastream-transcript {
-   max-width: 600px;
-  .tei-metadata {
-     display: none;
+  #main {
+    @include column($blueprint-grid-columns);
+    @include prepend(0);
   }
-}
 
+  #document {
     .datastream-actions {
        display: none !important;
     }
+    .secondary-datastream-container {
+        width: 70%;
+ }
+    .datastream-transcript {
+       height: auto;
+       overflow: visible;
+    }
+  }
+
 .transcript {
     
-div {
-   @include clearfix;
-}
   h3 {
    font-weight: bold;
    @include margin-leader(1.5);
@@ -65,18 +84,15 @@ div {
   }
  
   strong {
-    @include column(4);
     font-weight: bold;
+    display: block;
+    @include margin-leader(1);
+    clear: left;
   }
 
   .para {
-    float: right;
-    clear: right;
-    margin-right: 20%;
-    margin-left: 20%;
-   margin-top: -1em;
-   @include margin-trailer(1.5);
-  page-break-inside: avoid;
+    @include margin-trailer(1);
+    margin-right: 10px;
   }
 
   .current {

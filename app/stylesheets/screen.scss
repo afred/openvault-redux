@@ -821,6 +821,7 @@ a {
     font-weight: bold;
     display: block;
     @include margin-leader(1);
+    clear: left;
   }
 
   .para {
@@ -1165,9 +1166,15 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
   }
 
   #document {
+      .document_heading {
+         width: 100%;
+      }
     .datastream-actions {
        display: none !important;
     }
+    .secondary-datastream-container {
+     @include column(14);
+ }
     .datastream-transcript {
        height: auto;
        overflow: visible;
