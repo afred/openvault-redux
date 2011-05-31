@@ -1,0 +1,15 @@
+        <% extra_head_content << render_opensearch_response_metadata %>
+        <% extra_body_classes << 'no-results-found' %>
+
+	<%= render :partial => 'did_you_mean' %>
+
+	<%= render 'constraints', :localized_params=>params %>
+
+        <h2>No results found for your search</h2>
+<div id="documents" class="noresults">
+  <h3>Try modifying your search</h3>
+  <ul>
+  	<li>Use fewer keywords to start, then refine your search using the links on the left.</li>
+  </ul>
+</div>
+

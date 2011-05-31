@@ -368,6 +368,10 @@ a {
     @include padding-trailer(1);
     min-height: 600px;
 
+    &:empty {
+       display: none;
+    }
+
   }
 
   .document {

@@ -54,7 +54,10 @@ class CatalogController < ApplicationController
     search_session[:total] = @response.total unless @response.nil?
 
     respond_to do |format|
-      format.html { save_current_search_params }
+      format.html { 
+        render 'no_results_found' and return if @document_list.empty?
+        save_current_search_params 
+      }
       format.rss  { render :layout => false }
       format.atom { render :layout => false }
       format.json { render :json => @document_list }
