@@ -850,6 +850,10 @@ a {
    @include margin-leader(1);
 }
 
+.ui-widget-overlay {
+   background-image: none;
+}
+
 .ui-widget {
    font-size: $base-font-size;
    line-height: $base-line-height; 
