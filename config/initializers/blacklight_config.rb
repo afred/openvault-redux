@@ -99,13 +99,15 @@ Blacklight.configure(:shared) do |config|
     # sniffing requires solr requests to be made with "echoParams=all", for
     # app code to actually have it echo'd back to see it.     
     :limits => {
-      "format" => 15, 
-      "person_cv" => 15, 
-      "place_cv" => 15, 
-      "event_cv" => 15, 
-      "objModel_s" => 15, 
-      "keywords_cv" => 15,
-      "tags_s" => 15
+      "format" => 10, 
+      "person_cv" => 10, 
+      "place_cv" => 10, 
+      "event_cv" => 10, 
+      "objModel_s" => 10, 
+      "keywords_cv" => 10,
+      "tags_s" => 10,
+      "dc_type_s" => 10,
+      "pbcore_pbcoreTitle_series_s" => 10
     },
     :range => {
       "dc_date_year_i" => true
