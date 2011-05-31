@@ -14,7 +14,8 @@ module Openvault::Solr::Document::Thumbnail
     def config
       { :style => {
           :preview => "120x",
-          :thumbnail => "54x42"
+          :thumbnail => "54x42",
+          :feature => "380x"
         }
       }
     end
@@ -35,6 +36,7 @@ module Openvault::Solr::Document::Thumbnail
       return "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(dir_path, "#{options[:style]}.jpg")
 
       style = config[:style][options[:style]]
+      raise "#{options[:style]} is not in #{config[:style][:keys].join ","}" unless style
 
       file = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
 

@@ -14,7 +14,7 @@
   
   <%  collections_list.select { |x| x.get("dc_type_s") == "Collection" }.each do |c| %>
     <div class="document">
-      <%= link_to_document c, :label => image_tag(c.thumbnail.url, :alt => c.get(:title_display)).html_safe %>
+      <%= link_to_document c, :label => image_tag(c.thumbnail.url(:style => :feature), :alt => c.get(:title_display)).html_safe %>
     <h3><%= link_to_document c %></h3>
      <%= c.get('dc_description_t') %>
    </div>
