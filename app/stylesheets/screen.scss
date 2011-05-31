@@ -519,33 +519,31 @@ a {
   .filterValue {
      padding-left: 5px;
      padding-right: 5px;
+     position: relative;
   }
 
-
-  .btnRemove {
-     text-indent: -9999px;
-     width: 10px;
-     margin-left: -3px;
-     padding-left: 3px;
-     position: relative;
-     color: $quiet-color;
-     text-decoration: none;
+  .filterValue a {
+     color: inherit;
      &:hover {
-       background-color: darken(#f7f7f7, 15%);
+        text-decoration: none;
      }
   }
 
-  .btnRemove:after {
-      text-indent: 0;
-     content: "x";
-     position: absolute;
-     right: -4px;
-     top: 2px;
-     width: 100%;
-     height: 100%;
 
+  .remove {
+     cursor: pointer;
   }
 
+
+  .remove a:after {
+      text-indent: 0;
+     content: "x";
+     padding-left: 5px;
+  }
+
+  .remove:hover {
+       background-color: darken(#f7f7f7, 15%);
+  }
 
   }
 
