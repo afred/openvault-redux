@@ -44,13 +44,15 @@ line-height: $base-line-height;
   }
 
   #hd {
-    .subtitle {
-      display: none;
-    }
+      .site_title_container {
+        height: auto;
+        @include margin-trailer(1);
+        font-size: 16px;
+      }
   } 
 
   .container {
-    margin-left: 0;
+     font-size: 15px;
   }
 
   #sidebar, #search-bar, .user_util_links, #ft {
@@ -62,18 +64,41 @@ line-height: $base-line-height;
     @include prepend(0);
   }
 
+  .document_heading, .citation {
+     @include margin-trailer(1);
+  }
+
+  .label {
+     font-weight: bold;
+     @include margin-leader(1);
+  }
+
   #document {
+        width: 70%;
+      h1 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+      .document_heading {
+         width: 100%;
+      }
     .datastream-actions {
        display: none !important;
     }
     .secondary-datastream-container {
-        width: 70%;
+        h2 {
+           @include margin-leader(1.5);
+           @include margin-trailer(0);
+           font-weight: bold;
+           text-transform: uppercase;
+        }
  }
     .datastream-transcript {
        height: auto;
        overflow: visible;
     }
   }
+
 
 .transcript {
     

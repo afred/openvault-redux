@@ -1151,13 +1151,14 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
   }
 
   #hd {
-    .subtitle {
-      display: none;
-    }
+      .site_title_container {
+        height: auto;
+        @include margin-trailer(1);
+      }
   } 
 
   .container {
-    margin-left: 0;
+     font-size: 13px;
   }
 
   #sidebar, #search-bar, .user_util_links, #ft {
@@ -1169,7 +1170,13 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
     @include prepend(0);
   }
 
+  .label {
+     font-weight: bold;
+  }
+
   #document {
+     @include column(14);
+     @include prepend(0);
       .document_heading {
          width: 100%;
       }
@@ -1178,6 +1185,7 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
     }
     .secondary-datastream-container {
      @include column(14);
+     @include prepend(0);
  }
     .datastream-transcript {
        height: auto;
