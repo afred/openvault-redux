@@ -230,8 +230,8 @@ Blacklight.configure(:shared) do |config|
   # except in the relevancy case).
   # label is key, solr field is value
   config[:sort_fields] ||= []
-  config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['title', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['relevance', 'score desc, title_sort asc']
+  config[:sort_fields] << ['title', 'title_sort asc']
   config[:sort_fields] << ['year', 'dc_date_year_i desc, title_sort asc']
   
   # If there are more than this many search results, no spelling ("did you 
