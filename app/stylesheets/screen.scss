@@ -346,7 +346,9 @@ a {
       @include append(0.25);
      @include padding-leader(0.25);
      @include padding-trailer(1.5);
-
+     .distribution {
+        cursor: crosshair;
+     }
    }
 
 
