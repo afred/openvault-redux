@@ -1079,6 +1079,11 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
     #sidebar {
        display: none;
     }
+    .documentHeader, .thumbnail {
+       float: none;
+       display: block;
+       margin: 0;
+     }
 
     .blacklight-collection {
       @include column(4);
@@ -1088,9 +1093,20 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
       height: 200px;
 
     .thumbnail {
+        position: absolute;
         top: 0;
-        margin: 0;
         height: 90px;
+        img {
+           height: 90px;
+        }
+    }
+
+    .documentHeader {
+       @include column(4);
+       @include push(0);
+       float: none;
+       display: block;
+       margin: 0;
     }
 
     .index_title {
