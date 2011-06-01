@@ -46,7 +46,7 @@ module Openvault::DigitalObjects::Wgbh
        doc['title_display'] = doc['title_s']
        doc['title_sort'] = doc['title_s']
 
-       doc['pbcore_pbcoreTitle_program_s'] = (doc['pbcore_pbcoreTitle_series_s'] + " / " + doc['pbcore_pbcoreTitle_program_s'] rescue doc['pbcore_pbcoreTitle_program_s']) if doc['pbcore_pbcoreTitle_series_s'] and  doc['pbcore_pbcoreTitle_program_s'] 
+       doc['pbcore_pbcoreTitle_program_s'] = (doc['pbcore_pbcoreTitle_series_s'].first + " / " + doc['pbcore_pbcoreTitle_program_s'].first ) unless doc['pbcore_pbcoreTitle_series_s'].blank? or doc['pbcore_pbcoreTitle_program_s'].blank?
 
        doc['ri_collection_ancestors_s'] = Rubydora.repository.sparql("SELECT ?collection ?collection2 ?collection3 ?collection4 FROM <#ri> WHERE {
        <#{uri}> <fedora-rels-ext:isMemberOfCollection> ?collection .
