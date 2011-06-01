@@ -85,6 +85,7 @@ OPTIONAL {  ?collection3 <fedora-rels-ext:isMemberOfCollection> ?collection4 . }
        doc['tags_s'] << solr_document.taggings.select { |x| x.tagger_id }.map { |x| "_#{x.tagger_id}" }
 
        doc['tags_s'].flatten!.uniq
+       doc['comments_public_b'] = solr_documents.comments.where(:public => 1).length > 0
        doc['comments_t'] = solr_document.comments.map { |x| x.comment }
        doc['comments_ids_i'] = solr_document.comments.map { |x| x.id }
        doc['comments_user_ids_i'] = solr_document.comments.map { |x| x.user_id }.compact

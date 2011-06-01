@@ -125,8 +125,8 @@ Blacklight.configure(:shared) do |config|
          'this year' => 'timestamp:[NOW/YEAR TO *]'
       },
       "has_comments_query" => {
-         'has comments' => 'comments_t:[* TO *]',
-         'has no comments' => '-comments_t:[* TO *]',
+         'has comments' => 'comments_public_b:true',
+         'has no comments' => 'comments_public_b:false'
          }
     },
     #:pivot => {

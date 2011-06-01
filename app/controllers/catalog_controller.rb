@@ -144,4 +144,15 @@ class CatalogController < ApplicationController
     redirect_to @document.thumbnail.url(:style => style) and return
   end
 
+
+  def blacklight_query_config
+    config = super 
+
+    config['has_comments_query'] = {
+         'has comments' => "(comments_public_b:true OR comments_user_ids_i:#{current_user.id rescue 0})",
+         'has no comments' => "NOT(comments_public_b:true OR comments_user_ids_i:#{current_user.id rescue 0})"
+    }
+
+    config
+  end
 end
