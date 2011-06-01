@@ -16,6 +16,7 @@ module MediaHelper
     options[:width] ||= 320
     options[:src] = source
     options[:id] ||= source.split('/').last.parameterize 
+    options[:preload] ||= 'none'
 
     html = ''
 
@@ -28,8 +29,9 @@ module MediaHelper
   def render_video_player sources, options = {}
     options.symbolize_keys!
   
-    options[:poster] = path_to_image(options[:poster]) if options[:poster]
+    options[:poster] &&= path_to_image(options[:poster]) 
     options[:id] ||= ((sources.first if sources.is_a?(Array)) || sources ).split('/').last.parameterize 
+    options[:preload] ||= 'none'
   
     if size = options.delete(:size)
       options[:width], options[:height] = size.split("x") if size =~ /^\d+x\d+$/
