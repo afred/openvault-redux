@@ -45,8 +45,8 @@ module Openvault::Solr::Document::UserGeneratedContent
     # XXX this seems slightly dangerous as is, but seems to work well enough
     def find *args
       if args.first.is_a? String
-        # TODO this could presumably go fetch the record from Solr
-        return SolrDocument.new :id => args.first
+        solr_response = Blacklight.solr.find :qt => :document, :id => args.first
+        return SolrDocument.new(solr_response.docs.first, solr_response)
       end
       super(*args)
     end
