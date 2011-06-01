@@ -1087,6 +1087,7 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
        float: none;
        display: block;
        margin: 0;
+       height: auto;
      }
 
     .blacklight-collection {
@@ -1111,13 +1112,15 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
        float: none;
        display: block;
        margin: 0;
+       height: auto;
     }
 
     .index_title {
-       float: none;
        @include column(4);
        @include push(0);
+       float: none;
        margin: 0;
+       display: block;
        @include margin-leader(0.2);
     }
 
