@@ -1,16 +1,22 @@
 class CommentsController < ApplicationController
   include Blacklight::SolrHelper
+  load_and_authorize_resource
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+  
 
   # GET /comments
   # GET /comments.xml
   def index
     if params[:catalog_id]
-    @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
-    @document = @documents.first
-    @comments = @document.comments
+      @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
+      @document = @documents.first
     end
 
-    @comments ||= Comment.all
+    @comments = @comments.where(:commentable_id => @document.id, :commentable_type => @document.class.to_s) if @document
+    @comments = @comments.where(:user_id => params[:user_id]) if params[:user_id]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -21,7 +27,7 @@ class CommentsController < ApplicationController
   # GET /comments/1
   # GET /comments/1.xml
   def show
-    @comment = Comment.find(params[:id])
+   # @comment = Comment.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -45,7 +51,8 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
-    @comment = Comment.find(params[:id])
+  #  @comment = Comment.find(params[:id])
+
   end
 
   # POST /comments
@@ -67,7 +74,7 @@ class CommentsController < ApplicationController
   # PUT /comments/1
   # PUT /comments/1.xml
   def update
-    @comment = Comment.find(params[:id])
+  #  @comment = Comment.find(params[:id])
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
@@ -83,7 +90,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.xml
   def destroy
-    @comment = Comment.find(params[:id])
+  #  @comment = Comment.find(params[:id])
     @comment.destroy
     
     respond_to do |format|

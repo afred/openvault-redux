@@ -33,5 +33,4 @@ class SolrDocument
      Blacklight.solr.add fedora_object.to_solr, :add_attributes => { :commitWithin => 10 } rescue nil
   end
 
-
 end
