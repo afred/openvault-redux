@@ -12,14 +12,14 @@
     <div class="label">Tags (<%= document.tags.length %>)</div>
     <div class="value"><%= document.tags.join(", ") %></div>
   </div>
-  <%= link_to "Add Tag", new_catalog_tags_path(:catalog_id => document.id), :class => "new_tag" %>
+  <%= link_to "Add Tag", new_catalog_tags_path(:catalog_id => document.id), :class => "new_tag" if current_user %>
 
   <div class="blacklight-comments">
     <div class="label">Annotations</div>
     <div class="value">
       <%= link_to "my annotations" if current_user %>
-      <%= link_to "public annotation (#{ document.comments.length })", catalog_comments_path(:catalog_id => document.id) %>
+      <%= link_to "public annotations (#{ document.comments.length })", catalog_comments_path(:catalog_id => document.id) %>
     </div>
   </div>
-  <%= link_to "Add Annotation", new_catalog_comment_path(:catalog_id => document.id), :class => 'new_annotation' %>
+  <%= link_to "Add Annotation", new_catalog_comment_path(:catalog_id => document.id), :class => 'new_annotation' if current_user%>
   </div>
