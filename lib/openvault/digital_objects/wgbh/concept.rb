@@ -24,6 +24,14 @@ module Openvault::DigitalObjects::Wgbh
        format = ['series'] if doc['objModels_s'].any? { |x| x =~ /series/i } or doc['dc_type_s'].any? { |x| x =~ /series/i }
        format << 'image' if format.empty? and doc['media_dsid_s'].any? { |x| x =~ /image/i }
 
+       doc['media_s'] ||= []
+       doc['media_s'] << 'Video' if doc['media_dsid_s'].any? { |x| x =~ /video/i } 
+       doc['media_s'] << 'Audio' if doc['media_dsid_s'].any? { |x| x =~ /audio/i } 
+       doc['media_s'] << 'Transcript' if doc['media_dsid_s'].any? { |x| x =~ /tei/i } 
+       doc['media_s'] << 'Log' if doc['media_dsid_s'].any? { |x| x =~ /newsml/i } 
+       doc['media_s'] << 'Image' if doc['media_s'].empty? and doc['media_dsid_s'].any? { |x| x =~ /image/i } 
+
+
        doc['format'] = format.join("_")  
 
 

@@ -58,7 +58,7 @@ Blacklight.configure(:shared) do |config|
       "place_cv",
       "dc_date_year_i",
       "event_cv",
-      "media_dsid_s",
+      "media_s",
       "dc_type_s",
       "pbcore_pbcoreTitle_series_s",
       "tags_s",
@@ -71,7 +71,7 @@ Blacklight.configure(:shared) do |config|
     :labels => {
       "merlot_s" => "Category",
       "dc_type_s" => "Format",
-      "media_dsid_s" => "Media",
+      "media_s" => "Media",
       "dc_date_year_i" => "Date",
       "person_cv" => "People",
       "place_cv" => "Place",
@@ -154,7 +154,7 @@ Blacklight.configure(:shared) do |config|
       "fulltext_t",
       "dc_description_t",
       "dc_date_s",
-      "media_dsid_s",
+      "media_s",
       "pbcore_pbcoreTitle_program_s" 
     ],
     :labels => {
