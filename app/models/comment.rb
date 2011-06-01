@@ -14,8 +14,8 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
-  #after_save do 
-  #  self.commentable.save
-  #end
+  after_save do 
+    self.commentable.save
+  end
 
 end
