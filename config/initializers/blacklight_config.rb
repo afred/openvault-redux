@@ -161,7 +161,7 @@ Blacklight.configure(:shared) do |config|
       "fulltext_t" => "Text",
       "dc_description_t" => "Summary",
       "dc_date_s" => "Date Created",
-      "media_dsid_s" => "Media",
+      "media_s" => "Media",
       "pbcore_pbcoreTitle_program_s" => "Program"
     },
     :highlight => {
