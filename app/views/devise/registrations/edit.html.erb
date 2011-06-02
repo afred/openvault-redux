@@ -25,7 +25,7 @@
   <%= f.text_field :postal_code %></p> 
 
   <p><%= f.label :country %><br />
-  <%= f.text_field :first_name %></p> 
+    <%= f.country_select(:country) %></p>
 
 <p>
   <%= f.check_box :mla_updates,{},  true%>

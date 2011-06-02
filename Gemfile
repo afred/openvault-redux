@@ -67,6 +67,7 @@ gem "data_migrate"
 gem "dynamic_form"
 gem "activeadmin"
 gem "retryable"
+gem "carmen"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
 gem "rsolr-footnotes"
