@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
       @document = @documents.first
     end
 
+    @comments = @comments.where(:public => true) if params[:public]
     @comments = @comments.where(:commentable_id => @document.id, :commentable_type => @document.class.to_s) if @document
     @comments = @comments.where(:user_id => params[:user_id]) if params[:user_id]
 
