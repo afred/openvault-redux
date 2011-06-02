@@ -23,6 +23,11 @@ body {
   height: 100%;
   font-weight: normal;
 }
+
+textarea {
+ width: 258px;
+}
+
 .one-column #page {
   max-width: 1030px;
 }
