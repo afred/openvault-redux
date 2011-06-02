@@ -157,6 +157,7 @@ a {
     @include prepend(1);
     @include append(0.5);
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+    min-height: 450px;
    background-color: #FFF;
   @include padding-trailer(2);
 
@@ -577,6 +578,19 @@ a {
        margin-top: 2em;
       background-color: white;
    }
+}
+
+
+.blacklight-passwords, .blacklight-sessions, .blacklight-registrations {
+#content {
+   padding-top: 1em;
+}
+h2 {
+   font-weight: bold;
+   font-size: 20px;
+   @include margin-trailer(0.5);
+}
+
 }
 
 
