@@ -1,8 +1,10 @@
 module Openvault::Solr::Document::UserGeneratedContent
   def self.included base
     # ActiveModel/ActiveRecord stuff
+    base.send :include, ActiveModel::Observing
     base.send :extend, ActiveModel::Naming
     base.send :extend, ActiveModel::Callbacks
+    base.send :extend, ActiveModel::Observing
     base.send :define_model_callbacks, :destroy, :save
     base.send :include, ActiveRecord::Associations
     base.send :include, ActiveRecord::Reflection

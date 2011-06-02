@@ -16,9 +16,11 @@ class CatalogController < ApplicationController
 
   after_filter :invalidate_cache, :only => :tag
 
-  caches_action :show, :if => proc { |c|
+  caches_action :show, :expires_in => 1.day, :if => proc { |c|
     current_user.nil?
   }
+
+  caches_action :home, :expires_in => 1.hour, :if => proc { |c| current_user.nil? }
 
   def redirect_show_requests
     redirect_to catalog_url(params[:id]) if params[:id]
