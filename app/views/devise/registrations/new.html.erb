@@ -31,7 +31,7 @@
 
 <p>
   <%= f.check_box :terms_and_conditions, {}, true%>
-  <%= f.label :terms_and_conditions, "I accept the Open Vault Terms & Conditions" %>
+  <%= f.label :terms_and_conditions, "I accept the #{ link_to "Open Vault Terms & Conditions", '/blog/terms-and-conditions' }".html_safe %>
   </p>  
 
   <p><%= f.submit "Sign up" %></p>
