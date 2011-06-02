@@ -88,8 +88,11 @@ class CatalogController < ApplicationController
   end
 
   def home
-    (@response, @document_list) = get_search_results({:sort => "random"}, :fq => "{!raw f=media_dsid_s}Video.mp4", :rows => 90, :fl => 'id,pid_s,title_display')
-
+    pids = open(File.join(Rails.root, 'config', 'home.csv')).read.split(",").slice(0,90)
+    response, @document_list = get_solr_response_for_field_values("pid_s",pids, :rows => 90)
+    # (@response, @document_list) = get_search_results({:sort => "random"}, :fq => "{!raw f=media_dsid_s}Video.mp4", :rows => 90, :fl => 'id,pid_s,title_display')
+    @sprite = Sprite.new(:home_mosaic, @document_list)
+    @sprite.generate!
   end
 
   def print

@@ -1,6 +1,6 @@
 <% @document_list.each do |document| %>
 <div  class="thumbnail">
-  <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :thumbnail), :title => document.get(:title_display)).html_safe) %>
+  <%= link_to_document document, :label=>image_sprite(@sprite, document) %>
 </div>
 <% end %>
 </div>
@@ -43,7 +43,6 @@
         if(next.length == 0) {
           next = $('a', '#collections .pagination').first(); 
         }
-        console.log(next);
         next.click();
 
         
@@ -51,7 +50,6 @@
     };
 
       $('#collections').bind('mouseenter', function() {
-          console.log('cancelled');
           window.clearTimeout(collections_timer);
           });
 
