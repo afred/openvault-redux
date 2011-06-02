@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
     javascript_includes << ['jquery.min.js','jquery-ui-1.8.1.custom.min.js', 'rails.js', 'jquery.uiext.ajaxydialog.js']
     javascript_includes << [ 'blacklight' ]
-    javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "jquery.highlight.js", "jquery.scrollTo.js", "jquery.hotkeys.js", "jquery.formalize.min.js", "jquery.sausage.js", "swfobject.js", "jwplayer.js", "application"]
+    javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "jquery.highlight.js", "jquery.scrollTo.js", "jquery.formalize.min.js", "jquery.sausage.js", "swfobject.js", "jwplayer.js", "application"]
 
   end   
 
