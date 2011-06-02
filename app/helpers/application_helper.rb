@@ -25,7 +25,7 @@ module ApplicationHelper
     format = self.send "document_#{action_name}_partial_name", doc if self.respond_to? "document_#{action_name}_partial_name"
     format ||= document_partial_name(doc)
     begin
-      enforce_rights(doc, action_name) if action_name == "media"
+      enforce_rights(doc, action_name) 
       render :partial=>"catalog/_#{action_name}_partials/#{format}", :locals=>{:document=>doc}
     rescue Openvault::PermissionDenied
       render :partial=>"catalog/_#{action_name}_partials/permission_denied", :locals=>{:document=>doc}
@@ -36,7 +36,7 @@ module ApplicationHelper
 
   def enforce_rights(doc, action_name)
     case action_name.to_s
-    when /(show|embed)/
+    when /media/
       raise Openvault::PermissionDenied if doc.get("pid_s") =~ /^cbs/ and current_user.nil?
     end
   end
