@@ -33,4 +33,12 @@ class SolrDocument
      Blacklight.solr.add fedora_object.to_solr, :add_attributes => { :commitWithin => 10 } rescue nil
   end
 
+  def ==  a
+    a.is_a?(SolrDocument) && self.id == a.id 
+  end
+
+  def inspect
+    "#<SolrDocument:#{self.object_id} id=#{id} @_source=#{@_source.inspect} @export_formats=#{@export_formats.inspect}>"
+  end
+
 end
