@@ -1,0 +1,6 @@
+<%= tag :meta, :property => 'og:title', :content => @document.get(:title_display) %>
+<%= tag :meta, :property => 'og:type', :content => 'article' %>
+<%= tag :meta, :property => 'og:url', :content => catalog_url(@document.id) %>
+<%= tag :meta, :property => 'og:image', :content => catalog_url(@document.id, :format => 'jpg') %>
+<%= tag :meta, :property => 'og:site_name', :content => 'WGBH Open Vault' %>
+<%= tag :meta, :property => 'og:description', :content => truncate(@document.get(:dc_description_t).to_s, :length => 140, :separator => '. ') %>
