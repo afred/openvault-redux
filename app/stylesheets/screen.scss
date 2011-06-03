@@ -45,15 +45,16 @@ $grey: #e8e3e3;
 
 html {
    background-color: #558fba;
-   background-image: image-url("background-footer.jpg");
+  /*  background-image: image-url("bg-footer.jpg");
    background-repeat: no-repeat;
-   background-position: 0 100%;
+   background-position: 0 100%;   */
+  background-image: image-url("bg-repeater.png");
+  background-repeat: repeat-y;
 }
 
 body {
-    background-image: image-url("background-header.jpg");
-    background-repeat: no-repeat;
-   height: 100%;
+    background: image-url("bg-header.jpg") left top no-repeat, image-url("bg-footer.jpg") left bottom no-repeat, image-url("bg-repeater.png") left top repeat-y;
+    height: 100%;
 }
 
 h1,h2 {
@@ -99,11 +100,15 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include container;
     @include blueprint-typography-body;
     font-size: 11px;
+    min-height: 1000px;
+    background-image: image-url("bg-logo.png");
+    background-repeat: no-repeat;
 }
 
 #hd {
   @include column($blueprint-grid-columns);
   @include margin-leader(1);
+  padding-top:2px;
   position: relative;
 
   .site_title_container {
