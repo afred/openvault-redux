@@ -12,9 +12,13 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
     stylesheet_links << ["compiled/print", { :media => 'print' }]
 
-    javascript_includes << ['jquery.min.js','jquery-ui-1.8.1.custom.min.js', 'rails.js', 'jquery.uiext.ajaxydialog.js']
-    javascript_includes << [ 'blacklight' ]
-    javascript_includes << ['jquery.domsearch.js', 'liquidmetal.js', "jquery.highlight.js", "jquery.scrollTo.js", "jquery.formalize.min.js", "jquery.sausage.js", "swfobject.js", "jwplayer.js", "application"]
+    # js is included by jammit from config/assets.yml
+    javascript_includes = []
+    # javascript_includes << ['jquery.min.js','jquery-ui-1.8.1.custom.min.js', 'rails.js', 'jquery.uiext.ajaxydialog.js']
+    # javascript_includes << [ 'blacklight' ]
+    # javascript_includes << ["jquery.highlight.js", "jquery.scrollTo.js", "swfobject.js", "jwplayer.js", "application"]
+    
+    extra_head_content << ('<!--[if IE]>' + view_context.javascript_include_tag("flot/excanvas.min.js") + '<![endif]-->').html_safe  
 
   end   
 

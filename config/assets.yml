@@ -1,0 +1,18 @@
+javascripts:
+  openvault:
+    - public/javascripts/jquery.min.js
+    - public/javascripts/jquery-ui-1.8.1.custom.min.js
+    - public/javascripts/jquery.highlight.js
+    - public/javascripts/jquery.scrollTo.js
+    - public/javascripts/jquery.tools.min.js
+    - public/javascripts/jquery.uiext.ajaxydialog.js
+    - public/javascripts/rails.js
+    - public/javascripts/blacklight.js
+    - public/javascripts/flot/*.js
+    - public/javascripts/range_limit*.js
+    - public/javascripts/application.js
+
+  media:
+    - public/javascripts/jwplayer.js
+    - public/javascripts/swfobject.js
+
