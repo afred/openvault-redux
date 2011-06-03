@@ -589,12 +589,51 @@ a {
 .blacklight-passwords, .blacklight-sessions, .blacklight-registrations {
 #content {
    padding-top: 1em;
+  form {
+      p {
+          @include clearfix;
+          clear: left;
+          @include padding-trailer(0.5);
+          @include padding-leader(0.5);
+      }
+     label {
+       @include column(3);  
+       text-align: right;
+     }
+
+     input {
+         float: left;
+       display: inline-block;
+     }
+
+     input + label {
+        width: auto;
+        text-align: left;
+     }
+
+     #user_remember_me, #user_submit, #user_mla_updates, #user_terms_and_conditions  {
+         margin-left: 111px;
+     }
+
+     input[type="checkbox"] + label {
+        width: auto;
+        text-align: left;
+     }
+
+     #user_submit {
+        float: none;
+     }
+  }
+     .links {
+         margin-left: 111px;
+     }
 }
 h2 {
    font-weight: bold;
    font-size: 20px;
    @include margin-trailer(0.5);
 }
+
 
 }
 
