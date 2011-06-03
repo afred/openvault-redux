@@ -117,6 +117,11 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       top: 25px;
       font-size: 12.5px;
       text-align: right;
+      strong {
+         font-weight: bold;
+         display: inline-block;
+         padding-right: 10px;
+      }
   }
 }
 
