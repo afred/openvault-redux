@@ -11,6 +11,7 @@ Openvault::Application.routes.draw do
 
   resources :comments
 
+  match 'catalog_ugc/range_limit', :as => "range_limit_catalog_ugc"
   match "catalog_ugc/facet/:id", :to => 'catalog_ugc#facet'
   match 'users/comments', :to => 'catalog_ugc#index', :as => "my_page"
 
