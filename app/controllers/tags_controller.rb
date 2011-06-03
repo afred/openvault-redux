@@ -5,7 +5,7 @@ class TagsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @tags = @document.tag_list
+    @tags = @document.owner_tag_list_on(nil, :tags)
 
     respond_to do |format|
       format.html
@@ -16,7 +16,7 @@ class TagsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @tags = @document.tag_list
+    @tags = @document.owner_tag_list_on(nil, :tags)
 
     respond_to do |format|
       format.html
@@ -27,7 +27,7 @@ class TagsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @tags = @document.tag_list
+    @tags = @document.owner_tag_list_on(nil, :tags)
 
     respond_to do |format|
       format.html
@@ -46,7 +46,8 @@ class TagsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @document.tag_list << params[:tags].split(",").map(&:strip)
+    #@document.tag_list << params[:tags].split(",").map(&:strip)
+    current_user.tag(@document, :with => params[:tags], :on => 'tags')
     @document.save
 
     respond_to do |format|

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   include Blacklight::User
 
   acts_as_authorization_subject  :association_name => :roles
+  acts_as_tagger
 
   def to_s
     email
