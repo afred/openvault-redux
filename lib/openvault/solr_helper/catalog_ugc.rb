@@ -6,14 +6,13 @@ module Openvault::SolrHelper::CatalogUgc
     def restrict_to_records_with_comments solr_parameters, user_parameters
       solr_parameters[:fq] ||= []
       if current_user
-        if current_user.has_role? :admin
+        if current_user.has_role? :admin and user_params[:all]
           solr_parameters[:fq] << "comments_ids_i:[* TO *]"
         else
-          solr_parameters[:fq] << "comments_user_ids_i:#{current_user.id}"
+          solr_parameters[:fq] << "comments_user_ids_i:#{current_user.id} OR tags_user_ids_i:#{current_user.id}"
         end
       else
-        # TODO Public only..
-        solr_parameters[:fq] << "comments_ids_i:[* TO *]"
+        solr_parameters[:fq] << "comments_public_b:true"
       end
     end
 end
