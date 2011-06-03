@@ -137,7 +137,7 @@ Blacklight.configure(:shared) do |config|
     },
 
     :filter => {
-      "ri_collection_ancestors_s" => Proc.new { |value| Blacklight.config[:collection_titles][value] || false }
+      "ri_collection_ancestors_s" => Proc.new { |value| Blacklight.config[:collection_titles][value] if Blacklight.config[:collection_titles] || false }
     }
   }
 
