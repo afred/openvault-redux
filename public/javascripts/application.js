@@ -101,65 +101,25 @@ $(function() {
 });
 
 $(function() {
-
-    var media_selector = 'video, audio';
-    var player = null;
-
-    $(media_selector).each(function() {
-      options =  {
-        'flashplayer': '/swfs/player.swf',
-     //   provider: 'http',
-     //   'http.startparam':'start', 
-         skin: '/swfs/glow.zip',
-         events: {
-           onTime: function() {
-              $(this).trigger('timeupdate'); // HTML5 event
-           }
-         },
-        'plugins': {
-           'gapro-2': {}
-         }
-    
-      }
-
-      if($(this).prev('img').length > 0 && $(this).is('audio')) {
-        options['height'] = '28';
-        options['controlbar'] = 'bottom';
-      }
-      jw = jwplayer($(this).attr('id')).setup(options);
-
-      if(player == null) {
-        player = jw;
-      }
-    });
-
-         var start = 0;
-         try {
-          start = /t=(\d+)/.exec(location.hash).pop();
-            player.play().seek(start);
-         }
-         catch(err) {
-         }
-
-
-    function timestamp_to_s(timestamp) {
-      var s = 0;
-              if(typeof timestamp != 'string' || timestamp.indexOf(':') == -1) { return timestamp; }
-              var t = timestamp.split(":");
-
-              s = parseFloat(t[2]);
-              s += trimParseInt(t[1]) * 60;
-              s += trimParseInt(t[0]) * 60*60;
-
-              return s;
-        }
-
-   function trimParseInt(s) {
-        if(s != undefined) {
-            return s.replace(/^0+/,'');
-        } else {
-            return 0;
-        }
+  
+  function timestamp_to_s(timestamp) {
+    var s = 0;
+    if(typeof timestamp != 'string' || timestamp.indexOf(':') == -1) { return timestamp; }
+    var t = timestamp.split(":");
+  
+    s = parseFloat(t[2]);
+    s += trimParseInt(t[1]) * 60;
+    s += trimParseInt(t[0]) * 60*60;
+  
+    return s;
+  }
+  
+  function trimParseInt(s) {
+    if(s != undefined) {
+      return s.replace(/^0+/,'');
+    } else {
+      return 0;
+    }
   }
 
    if($('.datastream-video,.datastream-audio').length > 0 && $('.datastream-transcript').length > 0) {

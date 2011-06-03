@@ -38,6 +38,7 @@ group :development, :test do
 end
 
 # gem "mysql2", "~> 0.2.0"
+gem "jammit"
 
 gem "blacklight", :path => "./blacklight"
 gem "blacklight_advanced_search"
