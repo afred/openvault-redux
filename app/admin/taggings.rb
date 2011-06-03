@@ -1,4 +1,4 @@
-ActiveAdmin.register ActsAsTaggableOn::Tagging do
+ActiveAdmin.register Tagging do
   index do
     column "Tag" do |t|
       t.tag.name
