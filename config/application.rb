@@ -41,6 +41,6 @@ module Openvault
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log", 10, 10485760)
+    config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10485760)
   end
 end
