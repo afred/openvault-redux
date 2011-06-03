@@ -1,4 +1,4 @@
-<%= content_tag :li, :class => "comment comment_#{comment.id}", :"data-timecode_begin" => (comment.metadata[:begin] if comment.metadata), :"data-timecode_end" => (comment.metadata[:end] if comment.metadata) do %>
+<%= content_tag :li, :class => "comment comment-#{comment.id}", :"data-timecode_begin" => (comment.metadata[:begin] if comment.metadata), :"data-timecode_end" => (comment.metadata[:end] if comment.metadata) do %>
 <strong><%= comment.title || nil %></strong>
 <div class="byline">
   <% if comment.user %>

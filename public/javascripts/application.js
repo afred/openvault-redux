@@ -13,7 +13,7 @@
     Blacklight.do_more_facets_behavior.selector = "a.more_facets_link";
 
     $(function() {
-       $('#document .blacklight-comments a').ajaxyDialog({
+       comments_dialog = $('#document .blacklight-comments a').ajaxyDialog({
          modal: false,
          dialogContainer: '#annotations_modal_dialog'
        });
@@ -37,6 +37,27 @@
         modal: false,
          dialogContainer: '#annotations_modal_dialog'
          });
+
+        try {
+          start = /(comment-\d+)/.exec(location.hash).pop();
+      
+
+          scrollToComment = function(event, dialog) {
+            comments_dialog.unbind('ajaxydialogafterdisplay');
+            comment = $("." + start); 
+             $('#annotations_modal_dialog').scrollTo(comment)
+             comment.addClass('active');
+          };
+ comments_dialog.bind('ajaxydialogafterdisplay', scrollToComment)
+          
+          comments_dialog.first().ajaxyDialog("open");
+        
+
+
+         }
+         catch(err) {
+         }
+
         });
 
 

@@ -884,6 +884,11 @@ h2 {
     @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
 }
 
+#annotations_modal_dialog {
+  max-height: 300px;
+    overflow-y: auto;
+}
+
 .ui-widget-header {
    @include border-radius(0, 0);
    background: $blue;

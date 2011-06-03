@@ -126,6 +126,7 @@
                     this._trigger('load', null, dialog);
             
                     dialog.dialog("open");
+                    this._trigger('afterDisplay', null, dialog);
                   }
                   $("body").css("cursor", "auto");
               },
