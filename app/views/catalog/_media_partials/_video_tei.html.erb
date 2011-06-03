@@ -1,5 +1,5 @@
 <div class="datastream primary-datastream datastream-video datastream-video-mp4">
-  <%= render_video_player(datastream_url(document.fedora_object.datastream["Video.mp4"]), :size => "320x240", :controls => true, :poster => datastream_url(document.fedora_object.datastream["Thumbnail"])) %>
+  <%= render_video_player(datastream_url(document.fedora_object.datastream["Video.mp4"]), :size => "320x240", :controls => true, :poster => document.thumbnail.url(:style => :poster)) %>
 </div>
 
 <div class="secondary-datastream-container">

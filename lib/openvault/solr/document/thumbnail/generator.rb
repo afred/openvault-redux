@@ -15,7 +15,8 @@ module Openvault::Solr::Document::Thumbnail
       { :style => {
           :preview => "120x",
           :thumbnail => "54x42#",
-          :feature => "380x"
+          :feature => "380x",
+          :poster => "320x240#"
         }
       }
     end
