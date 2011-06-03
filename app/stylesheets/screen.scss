@@ -710,6 +710,32 @@ h2 {
 
    }
 
+   .registration-required-splash {
+       width: 320px;
+       height: 240px;
+       position: relative;
+
+      .error {
+        background-color: rgba(2,6,95, 0.5);
+        padding: 20px;
+        width: 280px;
+        height: 200px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: white;
+      }
+
+      h2 {
+         font-size: 20px;
+         text-transform: uppercase;
+         font-weight: bold;
+      }
+      a {
+  @include link-colors($action-color, $action-hover-color, $link-active-color, $action-color, $link-focus-color); 
+      }
+   }
+
     .primary-datastream-container, .secondary-datastream-container {
        h2 {
            @include column(2.5);
