@@ -23,6 +23,7 @@ module MediaHelper
     html += image_tag options[:poster], :width => options[:width] if options[:poster]
     html += tag("audio", options)
 
+    html += javascript_include_tag('player.js')
 
     html.html_safe
   end
@@ -37,13 +38,19 @@ module MediaHelper
       options[:width], options[:height] = size.split("x") if size =~ /^\d+x\d+$/
     end
   
+    html = ''
+
     if sources.is_a?(Array)
-      content_tag("video", options) do
+        html += content_tag("video", options) do
         sources.map { |source| tag("source", :src => source) }.join.html_safe
       end
     else
       options[:src] = sources
-      tag("video", options)
+      html += tag("video", options)
     end    
+
+    html += javascript_include_tag('player.js')
+
+    html.html_safe
   end
 end
