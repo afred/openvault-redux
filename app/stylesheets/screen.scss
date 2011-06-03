@@ -108,23 +108,26 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
   .site_title_container {
      @include column(5);
-     height: 50px;
+     height: 39px;
+     padding-bottom: 5px;
   }
 
   .site_title a {
       display: block;
      @include replace-text-with-dimensions("openvault.png");
+     background-position: 0 0;
   }
 
   .subtitle {
      @include replace-text-with-dimensions("wgbh_mla.png");
-     @include margin-leader(1.5);
+     margin-top: 23px;
+     background-position: 0 0;
   }
 
   .user_util_links {
       position: absolute;
       right: 7px;
-      top: 25px;
+      top: 20px;
       font-size: 12.5px;
       text-align: right;
       strong {
@@ -274,7 +277,7 @@ a {
 #sidebar {
   @include column(5.5);
   @include pull($blueprint-grid-columns);
-  @include margin-leader(4.15);
+  margin-top: 60px;
   h2 {
     @include padding-leader(1);
     @include padding-trailer(0.7);
@@ -1309,6 +1312,28 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
 
 .blacklight-catalog-home {
 
+    #hd {
+        @include margin-leader(2);
+
+  .site_title_container {
+     @include column(5);
+     height: 55px;
+     padding-bottom: 10px;
+  }
+
+  .site_title a {
+     @include replace-text-with-dimensions("logo_home.png");
+  }
+
+  .subtitle {
+     @include replace-text-with-dimensions("wgbh_mla_flat.png");
+     margin-top: 18px;
+  }
+
+  .user_util_links {
+      top: 10px;
+  }
+    }
 
     #main {
     @include column($blueprint-grid-columns);
