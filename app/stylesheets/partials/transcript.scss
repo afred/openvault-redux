@@ -1,0 +1,38 @@
+.transcript {
+  h3 {
+   @include margin-leader(1.5);
+   @include margin-trailer(1.5);
+  }
+ 
+  strong {
+    font-weight: bold;
+    display: block;
+    @include margin-leader(1);
+    clear: left;
+  }
+
+  .para {
+    @include margin-trailer(1);
+    margin-right: 10px;
+  }
+
+  .current {
+     color: darken($orange, 30%);
+  }
+
+  .incident {
+     font-style: italic;
+     color: $quiet-color;
+  }
+
+  .tei-metadata {
+     display: none;
+  }
+
+}
+
+.log p {
+   @include prepend(0);
+   @include append(0.5);
+   @include margin-leader(1);
+}

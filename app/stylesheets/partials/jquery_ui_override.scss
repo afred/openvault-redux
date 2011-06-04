@@ -1,0 +1,36 @@
+.ui-widget-overlay {
+  background-image: none;
+}
+
+.ui-widget {
+  font-size: $base-font-size;
+  line-height: $base-line-height; 
+}
+
+.ui-dialog {
+  padding: 0;
+  @include border-radius(0, 0);
+  border: 0;
+  @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
+}
+
+.ui-widget-header {
+  @include border-radius(0, 0);
+  background: $blue;
+  border: none;
+  color: white;
+}
+
+.ui-widget-content {
+  a {
+    @extend a;
+  }
+}
+
+.ui-dialog  .ui-dialog-content {
+  @include append(0.5);
+  @include prepend(0.5);
+  @include padding-leader(1);
+  @include padding-trailer(1);
+}
+

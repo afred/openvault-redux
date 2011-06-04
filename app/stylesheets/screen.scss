@@ -1,9 +1,5 @@
 // This import applies a global reset to any page that imports this stylesheet.
 @import "compass/reset";
-
-// To configure blueprint, edit the partials/base.sass file.
-@import "partials/base";
-
 @import "compass/css3/gradient";
 @import "compass/css3/box-shadow";
 @import "compass/css3/border-radius";
@@ -23,9 +19,8 @@ $document-grid-columns: 19.5;
 
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
-//@import "blueprint/liquid";
-
 @import "blueprint/colors";
+
 $link-color: #0a9cd5;
 $dark-link-color: #006699;
 
@@ -48,26 +43,20 @@ body {
   height: 100%;
 }
 
-h1,h2 {
+h1,h2,h3 {
   font-weight: bold;
 }    
 
-h1 {
+.page-title {
   font-size: 20px;
   @include margin-trailer(0.3);
 }
 
-h1,h2 {
-      font-weight: bold;
+h1 {
+  @extend .page-title;
+}
 
-}    
-    h1 {
-      font-size: 20px;
-      @include margin-trailer(0.3);
-    }
-
-
-b {
+strong, b {
   font-weight: bold;
 }
 
@@ -138,7 +127,6 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     text-align: right;
     
     strong {
-      font-weight: bold;
       display: inline-block;
       padding-right: 10px;
     }
@@ -169,12 +157,12 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     margin: 0;
     
     ul, li {
-	  list-style: none;
-	  display: inline-block;
-	}
+      list-style: none;
+      display: inline-block;
+    }
 	
-	li {
-	  margin-right:  2em;
+    li {
+      margin-right:  2em;
     }
   } 
 }
@@ -275,7 +263,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 
 .blacklight-passwords, .blacklight-sessions, .blacklight-registrations {
   h2 {
-    font-size: 20px;
+    @extend .page-title;
     @include margin-trailer(0.5);
   }
   
@@ -336,4 +324,5 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 // Combine the partials into a single screen stylesheet.
 @import "partials/home";
 @import "partials/record";
+@import "partials/jquery_ui_override";
 @import "partials/catalog-index";

@@ -1,21 +1,4 @@
-
 /* Catalog Record Page */
-
-.related-content {
-
-  .mlt {
-     @include margin-trailer(1);
-    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
-     padding: 10px;
-     background-color: #fff;
-
-     a {
-         font-weight: bold;
-       display: block;
-     }
-  }
-}
-
 .blacklight-catalog-show {
   #sidebar {
     h2 {
@@ -30,76 +13,76 @@
   }
 }
 
-
+/* document */
 #document {
-      @include padding-leader(2);
+  @include padding-leader(2);
 
-    hr {
-      @include column($content-grid-columns);
-      @include pull(1);
-      margin-bottom: 0;
-    }
+  hr {
+    @include column($content-grid-columns);
+    @include pull(1);
+    margin-bottom: 0;
+  }
 
-    .document_heading {
-      @include column(14);
-      @include padding-trailer(0.5);
-    }
+  /* show partial */
+  .document_heading {
+    @include column(14);
+    @include padding-trailer(0.5);
+  }
 
-    .documentFunctions {
-       display: none;
-    }
+  .documentFunctions {
+    display: none;
+  }
 
+  div.tools {
+    @include prepend(1.5);
+    @include column(2.5, true);
+    @include padding-leader(0.5);
+  }
 
-    div.tools {
-        @include prepend(1.5);
-      @include column(2.5, true);
-      @include padding-leader(0.5);
-    }
+  ul.tools {
+    li {
+      display: inline-block;
 
-    ul.tools {
-      li {
-         display: inline-block;
+      &:after {
+        content: " | ";
       }
 
-      li:after {
-         content: " | ";
-      }
-
-      li:last-of-type:after {
-         content: "";
+      &:last-of-type:after {
+        content: "";
       }
     }
+  }
 
-    .document {
-        @include column(19);
-    }
+  .document {
+    @include column(19);
+  }
 
-    .defList_container {
-        @include column(19);
-        @include padding-leader(0.5);
-        @include padding-trailer(0.5);
+  .defList_container {
+     @include column(19);
+     @include padding-leader(0.5);
+     @include padding-trailer(0.5);
 
-       .label {
-          @include column(2.75);
-          @include append(0.25);
-          @include margin-trailer(0.5);
-          @include padding-leader(0.1);
-          @include padding-trailer(0.1);
-          text-indent: 5px;
-          background-color: #ddd;
-          text-align: right;
-          font-weight: bold;
-          clear: both;
-       }
+     .label {
+       @include column(2.75);
+       @include append(0.25);
+       @include margin-trailer(0.5);
+       @include padding-leader(0.1);
+       @include padding-trailer(0.1);
+       text-indent: 5px;
+       background-color: #ddd;
+       text-align: right;
+       font-weight: bold;
+       clear: both;
+     }
 
-       .value {
-          @include column(12);
-       }
+     .value {
+       @include column(12);
+     }
 
-       & > div {
-           @include clearfix;
-           margin-bottom: 1em;
-       }
+     & > div {
+       @include clearfix;
+       margin-bottom: 1em;
+     }
     }
 
     .blacklight-tags, .blacklight-comments {
@@ -113,75 +96,33 @@
        }
     }
 
-      .new_tag, .new_annotation {
-          @include prepend(1.5);
-         @include column(2.75, true);
-     }
+    .new_tag, .new_annotation {
+      @include prepend(1.5);
+      @include column(2.75, true);
+    }
 
+    /* media */
     .media {
-       @include padding-leader(1);
-       @include padding-trailer(1);
-        @include column($document-grid-columns, true);
-    }
-    .primary-datastream {
-       @include column(8);
+      @include padding-leader(1);
+      @include padding-trailer(1);
+      @include column($document-grid-columns, true);
     }
 
-    .primary-datastream-container {
-       @extend .primary-datastream;
-    }
-
-    .secondary-datastream-container {
-       @include column(9.75, true);
-       @include prepend(1.75);
-       position: relative;
-
-   }
-
-   .registration-required-splash {
-       width: 320px;
-       height: 240px;
-       position: relative;
-
-      .error {
-        background-color: rgba(2,6,95, 0.5);
-        padding: 20px;
-        width: 280px;
-        height: 200px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: white;
-      }
-
-      h2 {
-         font-size: 20px;
-         text-transform: uppercase;
-      }
-      a {
-  @include link-colors($action-color, $action-hover-color, $link-active-color, $action-color, $link-focus-color); 
-      }
-   }
-
-    .primary-datastream-container, .secondary-datastream-container {
+    .datastream-container {   
        h2 {
-           @include column(2.5);
+         @include column(2.5);
          text-transform: uppercase;
        }
 
        .sync {
-          width: 29px;
-          height: 13px;
-          margin-right: 2px;
-          background-repeat: no-repeat;
-          text-indent: -9999px;
-          display: inline-block;
-          background-image: image-url("sync_to_vid.png");
-          cursor: pointer;
+         margin-right: 2px;
+         display: inline-block;
+         @include replace-text-with-dimensions("sync_to_vid.png");
+         cursor: pointer;
 
-          &:hover {
-            background-image: image-url("sync_to_vid_over.png");
-          }
+         &:hover {
+           @include replace-text-with-dimensions("sync_to_vid_over.png");
+         }
        }
 
        .datastream-actions {
@@ -196,10 +137,10 @@
             position: absolute;
             left: 28px;
             top: 100px;
-            background-image: image-url("sync_to_trans.png");
-          &:hover {
-            background-image: image-url("sync_to_trans_over.png");
-          }
+            @include replace-text-with-dimensions("sync_to_trans.png");
+            &:hover {
+              @include replace-text-with-dimensions("sync_to_trans_over.png");
+            }
          }
 
          .q_field {
@@ -218,42 +159,85 @@
        }
    }
 
-    .secondary-datastream {   
-        width: 100%;
-       overflow-y: scroll;
-       height: 240px;
+   .primary-datastream-container, .secondary-datastream-container {
+     @extend .datastream-container;
+   }
 
-       .highlight {
-         background-color: #ffff00;
-       }
-    }
+   .primary-datastream {
+     @include column(8);
+   }
 
-    .primary-datastream.datastream-transcript {
-      @extend .secondary-datastream;
-      @include column(14);
-      @include prepend(4);
-      height: 480px;
-    }
+   .primary-datastream-container {
+     @extend .primary-datastream;
+   }
 
-    .pbcore-metadata {
-       @include column($document-grid-columns);
-       @include pull(1);
-       @include prepend(1);
-       @include append(1);
-       @include padding-leader(1);
-       @include padding-trailer(2);
-       background-color: #ddd;
+   .secondary-datastream-container {
+     @include column(9.75, true);
+     @include prepend(1.75);
+     position: relative;
+   }
 
-    .instantiation, .source, .description, .date, .place, .people {
+   .registration-required-splash {
+      width: 320px;
+      height: 240px;
+      position: relative;
+
+      .error {
+        background-color: rgba(2,6,95, 0.5);
+        padding: 20px;
+        width: 280px;
+        height: 200px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: white;
+      }
+
+      h2 {
+         font-size: 20px;
+         text-transform: uppercase;
+      }
+
+      a {
+        @include link-colors($action-color, $action-hover-color, $link-active-color, $action-color, $link-focus-color); 
+      }
+   }
+
+   .datastream-transcript {   
+     width: 100%;
+     overflow-y: scroll;
+     height: 240px;
+
+     .highlight {
+       background-color: #ffff00;
+     }
+   }
+
+   .primary-datastream.datastream-transcript {
+     @include column(14);
+     @include prepend(4);
+     height: 480px;
+   }
+
+   /* metadata */
+   .pbcore-metadata {
+     @include column($document-grid-columns);
+     @include pull(1);
+     @include prepend(1);
+     @include append(1);
+     @include padding-leader(1);
+     @include padding-trailer(2);
+     background-color: #ddd;
+
+     .instantiation, .source, .description, .date, .place, .people {
        @include column(6);
        @include margin-trailer(1.5);
-    }
+     }
 
-    h3, strong {
-        @include margin-leader(1);
-       font-weight: bold;
+     h3, strong {
+       @include margin-leader(1);
        display: block;
-    }
+     }
 
     .instantiation strong, .source strong, .description strong {
       font-weight: normal;
@@ -276,107 +260,34 @@
     .description, .people {
        @include column(6, true);
     }
-
-    }
+  }
 }
 
 .media_fragment_template {
-   display: none;
+  display: none;
 }
 
-.transcript {
-    
-  h3 {
-   font-weight: bold;
-   @include margin-leader(1.5);
-   @include margin-trailer(1.5);
-  }
- 
-  strong {
-    font-weight: bold;
-    display: block;
-    @include margin-leader(1);
-    clear: left;
-  }
+/* transcript styles */
+@import 'transcript';
 
-  .para {
-    @include margin-trailer(1);
-    margin-right: 10px;
-  }
-
-  .current {
-     color: darken($orange, 30%);
-  }
-
-  .incident {
-     font-style: italic;
-     color: $quiet-color;
-  }
-
-  .tei-metadata {
-     display: none;
-  }
-
-}
-
-.log p {
-   @include prepend(0);
-   @include append(0.5);
-   @include margin-leader(1);
-}
-
-.ui-widget-overlay {
-   background-image: none;
-}
-
-.ui-widget {
-   font-size: $base-font-size;
-   line-height: $base-line-height; 
-}
-
-.ui-dialog {
-   padding: 0;
-   @include border-radius(0, 0);
-   border: 0;
-    @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
-}
-
+/* annotations lightbox */
 #annotations_modal_dialog {
   max-height: 300px;
-    overflow-y: auto;
-}
-
-.ui-widget-header {
-   @include border-radius(0, 0);
-   background: $blue;
-   border: none;
-   color: white;
-}
-
-.ui-widget-content {
-   a {
-     @extend a;
-   }
-}
-  .ui-dialog  .ui-dialog-content {
-    @include append(0.5);
-    @include prepend(0.5);
-    @include padding-leader(1);
-    @include padding-trailer(1);
+  overflow-y: auto;
 }
 
 
-
+/* share */
 #at15s {
-   @include border-radius(0, 0);
-   border: 0;
-    @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
-    background: none;
+  @include border-radius(0, 0);
+  border: 0;
+  @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
+  background: none;
 }
 
 #at15s_inner {
-   border: none;
-   margin: -5px;
+  border: none;
+  margin: -5px;
 }
 
 #at15s_head {
@@ -387,71 +298,71 @@
 }
 
 .at300bs {
-   display: inline-block;
-
-   background: none;
-   height: 0px;
-   width: 0px;
-   line-height: auto;
+  display: inline-block;
+  background: none;
+  height: 0px;
+  width: 0px;
+  line-height: auto;
 }                                
 
-        .blacklight-comments {
+.blacklight-comments {
   .defList_container {
-     @include column(14.5);
-     @include push(3.5);
-  .label {
-     font-weight: bold;
-     display: inline;
-     @include append(0.25);
-  }
+    @include column(14.5);
+    @include push(3.5);
 
-  .value {
+    .label {
+       font-weight: bold;
+       display: inline;
+       @include append(0.25);
+    }
+
+    .value {
       display: inline;
+    }
   }
-  }
-
-        }
+}
                
-        .blacklight-collections-show {
+/* Collection page */
+.blacklight-collections-show {
 
-    #content {
-  @include padding-trailer(2);
+  #content {
+    @include padding-trailer(2);
   }
-            #document {
-            .document_heading {
-               @include column($document-grid-columns, true);
-            }
-            hr { 
-               @include margin-leader(1);
-               @include margin-trailer(1);
-            }
-        }
-            .featured_image {
-               float: left;
-               margin-right: 1em;
-            }
 
-            .content {
-               h1 {
-                  display: none;
-               }
-            }
+  #document {
+    .document_heading {
+       @include column($document-grid-columns, true);
+    }
 
+    hr { 
+      @include margin-leader(1);
+      @include margin-trailer(1);
+    }
+  }
 
+  .featured_image {
+    float: left;
+    margin-right: 1em;
+  }
 
-            .collection-links {
-               @include column(4);
-            }
+  .content {
+    h1 {
+      display: none;
+    }
+  }
 
-            .related-links {
-               @include column(4, true);
-            }
+  .collection-links {
+    @include column(4);
+  }
 
-           .funders {
-               @include column($document-grid-columns, true);
+  .related-links {
+    @include column(4, true);
+  }
 
-           }
-        }
+  .funders {
+    @include column($document-grid-columns, true);
+  }
+}
 
 
 .blacklight-catalog-print {
@@ -499,6 +410,20 @@
     .datastream-transcript {
        height: auto;
        overflow: visible;
+    }
+  }
+}
+
+.related-content {
+  .mlt {
+    @include margin-trailer(1);
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+    padding: 10px;
+    background-color: #fff;
+
+    a {
+      font-weight: bold;
+      display: block;
     }
   }
 }
