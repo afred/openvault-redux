@@ -142,18 +142,27 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   @include prepend($sidebar-grid-columns);
 }
 
-#ft {
-  @include column($blueprint-grid-columns);
-  border-top: 1px solid #fff;
+.footer-container {
+  border-top: 1px solid rgba(255,255,255,0.2);
   @include margin-leader(1.5);
   @include padding-leader(0.5);
-  @include padding-trailer(0.5);
-  
-  a {
-    @include link-colors(#fff, #ccc, $link-active-color, $link-visited-color, $link-focus-color); 
-  }
+  @include padding-trailer(1);
+  background-color: rgba(0,0,0,0.1);
+}
+
+#ft {
+  @include container;
+  @include blueprint-typography-body;
+  font-size: 10px;
 
   .menu {
+    @include column($blueprint-grid-columns);
+    @include padding-leader(0.5);
+    @include padding-trailer(0.5);
+  
+    a {
+      @include link-colors(#fff, #ccc, $link-active-color, $link-visited-color, $link-focus-color); 
+    }
     margin: 0;
     
     ul, li {
@@ -162,9 +171,23 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     }
 	
     li {
-      margin-right:  2em;
+      margin-right:  0.3em;
+
+      &:after {
+         padding-left: 0.3em;
+         content: " | ";
+         color: white;
+      }
+
+      &:last-of-type:after {
+         content: "";
+      }
     }
   } 
+
+  .copyright {
+     color: white;
+  }
 }
 
 #content {
