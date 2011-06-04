@@ -1,0 +1,420 @@
+
+/* Catalog Index*/
+.blacklight-catalog-index {
+  #content {
+    @include padding-trailer(2);
+  }
+  
+  #search-bar {
+    @include margin-trailer(0);
+  }
+
+  #appliedParams {
+    @include column($document-grid-columns - 0.5, true);
+    @include pull(1);
+    @include prepend(1);
+    @include append(1);
+    background-color: $grey;
+    @include padding-leader(1);
+    @include padding-trailer(1.25);
+    @include margin-trailer(1);
+  }
+  
+  #sidebar {
+    @include padding-trailer(1);
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
+    background-color: $grey;
+    min-height: 600px;
+    
+    h2 {
+      background-color: $orange;
+    }
+
+    &:empty {
+       display: none;
+    }
+  }
+}
+
+.facet_limit {
+  border-bottom: 1px solid #888;
+
+  h3 {
+    @include padding-leader(0.5);
+    @include padding-trailer(0.5);
+    text-transform: uppercase;
+    font-weight: bold;
+    @include prepend(0.5);
+    @include append(0.5);
+    &:hover {
+      background-color: darken(#e8e3e3, 10%);
+    }
+  }
+
+  h4 {
+    @include padding-leader(0.5);
+    font-weight: bold;
+    background-color: white;
+    @include prepend(0.5);
+    @include append(0.5);
+  }
+
+  .twiddle {
+    cursor: pointer;
+    background-image: url(/images/arrow_closed.png);
+    background-repeat: no-repeat;
+    background-position: 5px 48%;
+    padding-left: 15px;
+  }
+
+  .twiddle-open {
+    background-image: url(/images/arrow_open.png);
+    background-position: 3px 48%;
+  }
+
+  ul {
+    background-color: white;
+    @include prepend(0.5);
+    @include append(0.5);
+    @include padding-leader(0.25);
+    @include padding-trailer(1.5);
+
+    ul {
+      @include padding-trailer(1);
+    }
+  }
+
+  li {
+    @include padding-trailer(0.2);
+  }
+
+  .range_limit {
+    background-color: white;
+    @include prepend(0.25);
+    @include append(0.25);
+    @include padding-leader(0.25);
+    @include padding-trailer(1.5);
+    .distribution {
+      cursor: crosshair;
+    }
+  }
+}
+
+.blacklight-ri_collection_ancestors_s {
+   display: none;
+}
+
+.blacklight-catalog-index {
+  .document {
+      @include column($document-grid-columns - 0.5);
+    border-bottom: 1px solid #CCC;
+    @include margin-leader(0.5);
+    @include margin-trailer(0.25);
+    @include padding-trailer(0.5);
+    min-height: 100px;
+    position: relative;
+  }
+
+  .documentFunctions {
+     display: none;
+  }
+
+  .documentHeader {
+     @include column($document-grid-columns - 3.5);
+     @include push(0.5);
+     float: right;
+     margin-bottom: 0;
+  }
+
+  .index_title {
+     font-size: 12px;
+
+     a {
+       color: $dark-link-color;
+       font-weight: bold;
+     }
+  }
+
+  .thumbnail {
+     @include column(3);
+     clear: left;
+  }
+
+  .defList_container {
+     @include column(14.5);
+     @include push(0.5);
+     
+    .label {
+       font-weight: bold;
+       display: inline;
+       @include append(0.25);
+    }
+
+    .value {
+      display: inline;
+    }
+  }
+
+  .blacklight-fulltext_t {
+    .label {
+       display: none;
+    }
+  }
+
+  .blacklight-fulltext_t, .blacklight-dc_description_t {
+    @include margin-trailer(0.5);
+     
+    em { /* highlight */
+      font-weight: bold;
+      color: $font-color;
+    }
+  }
+}
+
+.search-results-header {
+  @include column($document-grid-columns - 0.5);
+  @include padding-trailer(1);
+  border-bottom: 1px solid #CCC;
+}
+
+.pageEntriesInfo {
+  @include column(5.5);
+  @include prepend(5);
+}
+
+#startOverLink {
+  display: none;
+}
+
+#sortAndPerPage {
+  @include column(4);
+  @include pull(10.5);
+
+  .sort {
+    margin-top: -0.3em;
+  }
+}
+
+.per_page {
+  display: none;
+} 
+
+.pagination {
+  @include clearfix;
+
+  h2 {
+    display: none;
+  }
+
+  .page_links {
+    text-align: right;
+  }
+
+  .previous_page {
+    margin-right: 1em;
+  }
+
+  .next_page {
+     margin-left: 1em;
+  }
+}
+
+
+#documents + .pagination {
+   @include column(10);
+   @include prepend(8);
+}
+
+.appliedFilter {
+  &.query {
+     display: none;
+  }
+
+  @include append(0.5);  
+  .filterName {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .filterValue, .btnRemove {
+    padding: 2px;
+    display: inline-block;
+    background-color: #f7f7f7;
+    @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 2px);
+  }
+  .filterValue {
+     padding-left: 5px;
+     padding-right: 5px;
+     position: relative;
+  }
+
+  .filterValue a {
+     color: inherit;
+     &:hover {
+        text-decoration: none;
+     }
+  }
+
+
+  .remove {
+     cursor: pointer;
+  }
+
+
+  .remove a:after {
+      text-indent: 0;
+     content: "x";
+     padding-left: 5px;
+  }
+
+  .remove:hover {
+       background-color: darken(#f7f7f7, 15%);
+  }
+}
+
+
+ul.facet_extended_list { margin:0; clear: both; margin: 1.5em 0 1.5em 0;}
+ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
+.facet_extended_list {text-align: left;} /* for our ajaxy dialog to make sure we're overriding the yui global text-align: center */
+.facet_extended_list .sort_options {
+  text-align: right
+}
+.facet_extended_list .prev_next_links { float: left; }
+
+/* jquery-ui-like buttonsets, but without actually using jquery-ui */
+.facet_extended_list .sort_options .az, .facet_extended_list .sort_options .numeric, .facet_extended_list .next_page, .facet_extended_list .prev_page {
+  display: inline-block;
+  background: #F6F6F6;  
+  border: 1px solid #CCCCCC;
+  padding: 0.2em 1em;
+  font-weight: bold;
+}
+.facet_extended_list .next_page, .facet_extended_list .sort_options .numeric {
+  border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  -webkit-border-radius: 0 4px 4px 0;
+}
+.facet_extended_list .prev_page, .facet_extended_list .sort_options .az {
+  border-radius: 4px 0 0 4px;
+  -moz-border-radius: 4px 0 0 4px;
+  -webkit-border-radius: 4px 0 0 4px;
+}
+.facet_extended_list .prev_next_links .disabled {
+  background: none;
+  color: gray;
+  font-weight: normal;
+}
+.facet_extended_list .sort_options .disabled {
+  /* in this case disabled really means selected */
+  background-color: #E2EDFE;
+  border:1px solid #C4DAFE;
+}
+.facet_extended_list .sort_options a:hover, .facet_extended_list .prev_next_links a:hover {
+  border: 1px solid #999999; 
+  background: #dadada;  
+  color: #212121; 
+}
+
+
+
+/* Collections index */
+
+
+.blacklight-collections-index {
+
+    #appliedParams {
+       display: none;
+    }
+
+    .search-results-header {
+       display: none;
+    }
+
+    #sidebar {
+       display: none;
+    }
+    .documentHeader, .thumbnail {
+       float: none;
+       display: block;
+       margin: 0;
+       height: auto;
+     }
+
+    .blacklight-collection {
+      @include column(4);
+      border: none;
+      padding-top: 90px;
+      min-height: 2em;
+      height: 200px;
+
+    .thumbnail {
+        position: absolute;
+        top: 0;
+        height: 90px;
+        img {
+           height: 90px;
+        }
+    }
+
+    .documentHeader {
+       @include column(4);
+       @include push(0);
+       float: none;
+       display: block;
+       margin: 0;
+       height: auto;
+    }
+
+    .index_title {
+       @include column(4);
+       @include push(0);
+       float: none;
+       margin: 0;
+       display: block;
+       @include margin-leader(0.2);
+    }
+
+    .defList_container {
+        float: none;
+        width: auto;
+        margin: 0;
+        display: block;
+
+       div {
+       display: none;
+      }
+
+    .blacklight-dc_description_t, .blacklight-dc_description_t .value {
+       display: block;
+    }
+}
+
+     }
+
+    .blacklight-series {
+        clear: left;
+         display: block;
+         width: auto;
+         float: none;
+         min-height: 1em;
+         border: none;
+         margin: 0;
+         padding: 0;
+
+    .index_title {
+       @include push(0);
+       margin: 0;
+       float: none;
+    }
+
+      .thumbnail {
+         display: none;
+      }
+
+      .defList_container {
+         display: none;
+      }
+
+    }
+}

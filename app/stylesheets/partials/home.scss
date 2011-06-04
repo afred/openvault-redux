@@ -1,0 +1,169 @@
+
+.blacklight-catalog-home {
+
+    #hd {
+        @include margin-leader(2);
+
+  .site_title_container {
+     @include column(5);
+     height: 55px;
+     padding-bottom: 10px;
+  }
+
+  .site_title a {
+     @include replace-text-with-dimensions("logo_home.png");
+  }
+
+  .subtitle {
+     @include replace-text-with-dimensions("wgbh_mla_flat.png");
+     margin-top: 18px;
+  }
+
+  .user_util_links {
+      top: 10px;
+  }
+    }
+
+    #main {
+    @include column($blueprint-grid-columns);
+    @include prepend(0);
+       background-color: transparent;
+       padding: 0px;
+    }
+
+    #content {
+        min-height: 0;
+       width: 100%;
+       padding: 0;
+       margin: 0;
+       border: none;
+       background-color: transparent;
+    @include single-box-shadow(rgba(0,0,0,0), 0px, 1px, 5px);
+    @include margin-trailer(2);
+    }
+
+  #search-bar {
+      margin-left: 220px;
+  }
+
+  #collections {
+      position: relative;
+      @include column(11);
+      background-color: #fff;
+      img {
+          width: 100%;
+     @include margin-trailer(0.5);
+      }
+     h3 {
+       font-weight: bold;
+     }
+
+     .document {
+         @include column(10.5);
+         @include prepend(0.25);
+         @include append(0.25);
+         @include padding-trailer(0.5);
+        display: none;
+
+    }
+        .document:first-of-type {
+           display: block;
+        }
+
+        .pagination {
+            float: right;
+            margin-top: 11px;
+            @include append(0.5);
+
+          a {
+            text-indent: -9999px;
+            display: inline-block;
+            width: 11px;
+            height: 8px;
+            margin-right: 2px;
+            background-color: #5f8eb1;
+          }
+
+          a.active {
+            background-color: #33ccff;
+          }
+        }
+  }
+
+  #blog {
+      @include push(0.5);
+     @include column(15.5,true);
+      background-color: #fff;
+
+      .post {
+          @include column(14.5);
+     @include prepend(0.5);
+     @include append(0.5);
+     @include margin-leader(0.5);
+     @include margin-trailer(0.5);
+     border-bottom: 1px solid #ccc;
+      }
+
+      .post:last-of-type {
+        border-bottom: none;
+      }
+      .byline {
+         @include column(3);
+         .thumbnail img {
+             max-width: 100px;
+         }
+      }
+  .body {
+      @include column(11);
+
+     h3 {
+       font-weight: bold;
+     }
+
+     p {
+        @include margin-leader(0.25);
+        @include margin-trailer(0.5);
+     }
+ }
+  }
+
+  #blog, #collections {
+  h2 {
+     background-color: $blue;
+     color: white;
+     text-transform: uppercase;
+     width: auto;
+     @include padding-leader(0.5);
+     @include padding-trailer(0.5);
+     @include prepend(0.5);
+     @include margin-trailer(0.5);
+  }
+  .see_all {
+     float: right;
+     color: white;
+     line-height: 30px;
+     @include append(0.25);
+  }
+  }
+
+
+
+    .sidebar {
+       display: none;
+    }
+
+    #main { 
+   .thumbnail {
+      float: left;
+      width: 54px;
+      height: 42px;
+      margin-right: 1px;
+      margin-bottom: 1px;
+
+      img {
+        width: 54px;
+        height: 42px;
+      }
+   }
+   }
+}
