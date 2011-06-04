@@ -1,0 +1,116 @@
+$(function() {
+  
+  function timestamp_to_s(timestamp) {
+    var s = 0;
+    if(typeof timestamp != 'string' || timestamp.indexOf(':') == -1) { return timestamp; }
+    var t = timestamp.split(":");
+  
+    s = parseFloat(t[2]);
+    s += trimParseInt(t[1]) * 60;
+    s += trimParseInt(t[0]) * 60*60;
+  
+    return s;
+  }
+  
+  function trimParseInt(s) {
+    if(s != undefined) {
+      return s.replace(/^0+/,'');
+    } else {
+      return 0;
+    }
+  }
+
+   if($('.datastream-video,.datastream-audio').length > 0 && $('.datastream-transcript').length > 0) {
+     //select all timecode-enabled elements
+     $('*[data-timecode_begin]').attr('data-timecode', true);
+     $('*[data-timecode_end]').attr('data-timecode', true);
+     smil_elements = $('*[data-timecode]');
+
+     smil_elements.each(function(index) {
+       //fill in missing timecode as best as possible
+       if(($(this).data('timecode_begin')) == 'undefined') {
+         var pred = smil_elements.slice(0, index).has('*[data-timecode]');
+         $(this).data('timecode_begin', Math.max(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_end]') }).first().data('timecode_end')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_begin]') }).first().data('timecode_begin'))));
+       }
+
+       if(($(this).data('timecode_end')) == 'undefined') {
+         var pred = smil_elements.slice(0, index).has('*[data-timecode]');
+         $(this).data('timecode_end', Math.min(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_begin]') }).first().data('timecode_begin')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_end]') }).first().data('timecode_end'))));
+       }
+     });
+
+     //convert hh:mm:ss.ff to seconds
+     smil_elements.each(function() {
+       var begin = timestamp_to_s($(this).data('timecode_begin'));
+       var end = timestamp_to_s($(this).data('timecode_end'));
+        $(this).data('begin_seconds', begin);
+        $(this).data('end_seconds', end);
+     });
+
+     //sync the media with the transcript
+     $(player).sync(smil_elements, { 'time': function() { return this.getPosition() }});
+     smil_elements.bind('sync-on', function() { $(this).addClass('current'); });
+     smil_elements.bind('sync-off', function() { 
+       $('.last').removeClass('last');
+       $(this).removeClass('current').addClass('last'); 
+     });
+
+     //sync the transcript with the media
+     smil_elements.each(function() {
+       $('<a class="sync">[sync]</a>').prependTo($(this)).bind('click', function() { player.seek($(this).parent().data('begin_seconds')); }) ;
+     });
+     if(smil_elements.length > 0) {
+       $('<a class="sync">[sync]</a>').prependTo($('.datastream-actions')).bind('click', function() {
+         if($('.current').length > 0) {
+     $('.secondary-datastream').scrollTo($('.current'));
+         } else {
+     $('.secondary-datastream').scrollTo($('.last'));
+
+         }
+    return false;
+  });
+     }
+   }
+    });
+
+(function($) {
+  $.fn.sync = function(target, options) {
+    media = this;
+    var settings = {
+      'begin' : 'begin_seconds',
+      'end' : 'end_seconds',
+      'on' : function() { $(this).trigger('sync-on'); },
+      'off' : function() { $(this).trigger('sync-off'); },
+      'time' : function() { return this.currentTime },
+      'poll' : false,
+      'pollingInterval' : 1000,
+      'event': 'timeupdate'
+    }
+
+    $.extend( settings, options );
+
+    if(settings['poll']) {
+      setInterval(function() { $(media).trigger('timeupdate'); }, settings['pollInterval']);
+    } 
+
+    this.bind(settings['event'], function() {
+      t = jQuery.proxy(settings['time'], this)();
+      target.each(function() {
+       if($(this).data(settings['begin']) <= t && t <= $(this).data(settings['end'])) {
+         if($(this).data('sync') != true) {
+           $(this).data('sync', true);
+           jQuery.proxy(settings['on'], this)();
+         }
+       } else {
+         if($(this).data('sync') == true) {
+           $(this).data('sync', false);
+           jQuery.proxy(settings['off'], this)();
+         }
+       }
+      });
+    });
+
+  }
+
+}(jQuery));
+

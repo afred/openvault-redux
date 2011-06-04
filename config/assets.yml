@@ -11,8 +11,12 @@ javascripts:
     - public/javascripts/flot/*.js
     - public/javascripts/range_limit*.js
     - public/javascripts/application.js
+    - public/javascripts/openvault/browse.js
 
   media:
     - public/javascripts/jwplayer.js
     - public/javascripts/swfobject.js
+    - public/javascripts/openvault/annotations.js
+    - public/javascripts/openvault/sync.js
+    - public/javascripts/openvault/transcript_search.js
 

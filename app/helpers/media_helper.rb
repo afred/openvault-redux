@@ -23,7 +23,7 @@ module MediaHelper
     html += image_tag options[:poster], :width => options[:width] if options[:poster]
     html += tag("audio", options)
 
-    html += javascript_include_tag('player.js')
+    html += javascript_include_tag('openvault/player.js')
 
     html.html_safe
   end
@@ -49,7 +49,7 @@ module MediaHelper
       html += tag("video", options)
     end    
 
-    html += javascript_include_tag('player.js')
+    html += javascript_include_tag('openvault/player.js')
 
     html.html_safe
   end
