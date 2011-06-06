@@ -93,6 +93,7 @@ class CatalogController < ApplicationController
     # (@response, @document_list) = get_search_results({:sort => "random"}, :fq => "{!raw f=media_dsid_s}Video.mp4", :rows => 90, :fl => 'id,pid_s,title_display')
     @sprite = Sprite.new(:home_mosaic, @document_list)
     @sprite.generate!
+    render :layout => 'home'
   end
 
   def print

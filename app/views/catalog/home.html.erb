@@ -1,10 +1,10 @@
+<% content_for :mosaic do %>
 <% @document_list.each do |document| %>
 <div  class="thumbnail">
   <%= link_to_document document, :label=>image_sprite(@sprite, document) %>
 </div>
 <% end %>
-</div>
-</div>
+<% end %>
 
 <div id="collections">
   <%= link_to 'See all >', collections_path, :class => 'see_all' %>
@@ -87,6 +87,3 @@
 
 <%= link_to image_tag('supportwgbh_orange.gif', :alt => "Support WGBH", :style => "float: right; margin-right: -7px; width: 150px;"), "http://www.wgbh.org/donatetowgbh?utm_source=openvault&utm_medium=web&utm_campaign=button" %> 
 
-
-<div>
-  <div>
