@@ -3,6 +3,7 @@
   <%= f.hidden_field :commentable_type %>
   <%# f.hidden_field :public %>
 
+  <%= f.label :public, "Privacy Setting:" %>
   <%= f.radio_button(:public, true) %>  <%= f.label :public, "Public", :value => true %>
   <%= f.radio_button(:public, false) %>   <%= f.label :public, "Private", :value => false %>
 
