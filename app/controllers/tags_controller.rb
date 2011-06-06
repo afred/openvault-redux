@@ -1,5 +1,10 @@
 class TagsController < ApplicationController
   include Blacklight::SolrHelper
+  load_and_authorize_resource :only => [:new, :edit]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to new_user_session_url(:referer => request.url), :alert => exception.message
+  end
 
   def index
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
@@ -35,8 +40,6 @@ class TagsController < ApplicationController
   end
 
   def edit
-    @tag = ActsAsTaggableOn::Tag.find_by_name(params[:id])
-
     respond_to do |format|
       format.html
     end

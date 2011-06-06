@@ -55,7 +55,7 @@ gem "cql-ruby"
 gem "rubytree"
 gem "oai"
 gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
-gem "acts_as_commentable", :git => 'https://github.com/jackdempsey/acts_as_commentable.git'
+gem "acts_as_commentable", :git => 'git://github.com/jackdempsey/acts_as_commentable.git'
 gem "acts_as_rateable"
 gem "progressbar"
 gem "parslet"

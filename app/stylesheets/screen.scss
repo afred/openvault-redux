@@ -161,7 +161,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include padding-trailer(0.5);
   
     a {
-      @include link-colors(#fff, #ccc, $link-active-color, $link-visited-color, $link-focus-color); 
+      @include link-colors(#fff, #ccc, $link-active-color, #fff, $link-focus-color); 
     }
     margin: 0;
     
