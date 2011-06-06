@@ -1,6 +1,6 @@
 var player = null;
 
-$('video,audio').each(function() {
+$('#video-mp4,#audio-mp3,video,audio').each(function() {
   options =  {
     'flashplayer': '/swfs/player.swf',
  //   provider: 'http',
