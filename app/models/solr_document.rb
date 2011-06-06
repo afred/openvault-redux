@@ -1,6 +1,9 @@
 class SolrDocument 
   include Blacklight::Solr::Document
-  include Openvault::Solr::Document::UserGeneratedContent
+  include BlacklightUserGeneratedContent::Document
+  include BlacklightUserGeneratedContent::Commentable
+  include BlacklightUserGeneratedContent::Taggable
+
 
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )

@@ -9,11 +9,8 @@ Openvault::Application.routes.draw do
   match 'catalog/:id/tag', :to => 'catalog#tag', :as => 'tag_catalog'
   match 'blog' => 'blog#index', :as => 'blog'
 
-  resources :comments
-
-  match 'catalog_ugc/range_limit', :as => "range_limit_catalog_ugc"
-  match "catalog_ugc/facet/:id", :to => 'catalog_ugc#facet'
-  match 'users/comments', :to => 'catalog_ugc#index', :as => "my_page"
+  match 'user_generated_content/range_limit', :as => "range_limit_user_generated_content"
+  match "users/page", :to => "user_generated_content#index", :as => "my_page"
 
   match "collections/facet/:id", :to => 'collections#facet'
   resources :collections, :only => [:index, :show]

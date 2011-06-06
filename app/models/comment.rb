@@ -2,6 +2,7 @@ class Comment < ActiveRecord::Base
   serialize :metadata
 
   include ActsAsCommentable::Comment
+  include BlacklightUserGeneratedContent::Comment
 
   belongs_to :commentable, :polymorphic => true
 
