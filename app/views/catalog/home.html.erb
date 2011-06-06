@@ -27,26 +27,43 @@
 
       $('#collections .document').hide().first().show();
       $('#collections .document').each(function(i) {
-        $('<a href="#collections">' + i + '</a>').bind('click', function() { 
+
+        $('<a class="page" href="#collections">' + i + '</a>').bind('click', function() { 
           $('#collections .document').hide().eq(i).show();
-          $('.active', '#collections').removeClass('active');
+          $('.page.active', '#collections').removeClass('active');
           $(this).addClass('active');
         startCollectionsTimer();
           }).appendTo($('#collections .pagination'));
       }); 
-      $('#collections .pagination a').first().addClass('active');
+      $('#collections .pagination .page').first().addClass('active');
+
+      $('<a href="#collections" class="pause">||</a>').bind('click', function() {
+          window.clearTimeout(collections_timer);
+          $('#collections').addClass('paused');
+          $(this).hide();
+          $('.play', '#collections').show();
+          return false;
+        }).prependTo($('#collections .pagination'));
+
+      $('<a href="#collections" class="play">&gt;</a>').bind('click', function() {
+          $('#collections').removeClass('paused');
+          startCollectionsTimer();
+          $(this).hide();
+          $('.pause', '#collections').show();
+          return false;
+        }).hide().prependTo($('#collections .pagination'));
 
       startCollectionsTimer = function() {
           window.clearTimeout(collections_timer);
       collections_timer = window.setTimeout(function() { 
-        var next = $('.active', '#collections .pagination').next();
+        var next = $('.page.active', '#collections .pagination').next();
         if(next.length == 0) {
-          next = $('a', '#collections .pagination').first(); 
+          next = $('.page', '#collections .pagination').first(); 
         }
         next.click();
 
         
-      }, 10000)
+      }, 10000);
     };
 
       $('#collections').bind('mouseenter', function() {
@@ -54,6 +71,9 @@
           });
 
       $('#collections').bind('mouseleave', function() {
+        if($(this).is('.paused')) {
+           return;
+        }
         startCollectionsTimer();
       });
 
