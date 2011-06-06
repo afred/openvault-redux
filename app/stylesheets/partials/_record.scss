@@ -381,6 +381,16 @@
   }
 }
 
+.citation {
+   h4 {
+      font-weight: bold;
+      @include margin-leader(1);
+      &:first-of-type {
+        margin-top: 0;
+      }
+   }
+}
+
 
 .blacklight-catalog-print {
   body, html {
