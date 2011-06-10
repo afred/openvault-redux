@@ -267,6 +267,23 @@
   display: none;
 }
 
+.media_fragment {
+    @include margin-leader(1);
+    @include margin-trailer(1);
+  #comment_metadata_begin, #comment_metadata_end {
+     width: 60px;
+  }
+
+  #comment_metadata_begin {
+     margin-right: 10px;
+  }
+
+}
+
+  #comment_comment {
+     height: 100px;
+  }
+
 /* transcript styles */
 @import 'transcript';
 
@@ -321,7 +338,7 @@
     }
   }
 }
-               
+
 /* Collection page */
 .blacklight-collections-show {
 
@@ -362,6 +379,16 @@
   .funders {
     @include column($document-grid-columns, true);
   }
+}
+
+.citation {
+   h4 {
+      font-weight: bold;
+      @include margin-leader(1);
+      &:first-of-type {
+        margin-top: 0;
+      }
+   }
 }
 
 

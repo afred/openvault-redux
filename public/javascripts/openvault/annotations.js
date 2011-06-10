@@ -10,7 +10,15 @@
          modal: false,
          dialogContainer: '#annotations_modal_dialog',
          load: function(event, dialog) {
-           $('.record_annotation_metadata', dialog).append($('.media_fragment_template .media_fragment').clone());
+           md = $('.record_annotation_metadata', dialog).append($('.media_fragment_template .media_fragment').clone());
+           if(player != null) {
+             try {
+             $('#comment_metadata_begin', md).val(s_to_timestamp(parseInt(player.getPosition())));
+             $('#comment_metadata_end', md).val(s_to_timestamp(parseInt(player.getPosition())));
+             } catch(error) {
+
+             }
+           }
          }
        });
       /* $('.user_util_links a').ajaxyDialog({

@@ -1,6 +1,15 @@
 .blacklight-catalog-home {
+    @include padding-leader(2);
+  #hd, #bd, #mosaic {
+  @include container;
+  @include blueprint-typography-body;
+  font-size: 11px;
+      float: none;
+      display: block;
+  }
+
+
   #hd {
-    @include margin-leader(2);
 
     .site_title_container {
        @include column(5);
@@ -26,12 +35,14 @@
     display: none;
   }
 
-  #main {
-    @include column($blueprint-grid-columns);
-    @include prepend(0);
-    background-color: transparent;
-    padding: 0px;
+  .mosaic-container {
+     margin-top: -82px;
+     padding-top: 82px;
+     background-color: $blue;
+  }
 
+  #mosaic {
+      @include margin-trailer(1);
     .thumbnail {
       float: left;
       width: 54px;
@@ -44,6 +55,15 @@
         height: 42px;
       }
     }
+
+  }
+
+  #main {
+    @include column($blueprint-grid-columns);
+    @include prepend(0);
+    background-color: transparent;
+    padding: 0px;
+
   }
 
   #content {
@@ -109,10 +129,10 @@
 
     .pagination {
       float: right;
-      margin-top: 11px;
+      margin-top: 7px;
       @include append(0.5);
 
-      a {
+      .page {
         text-indent: -9999px;
         display: inline-block;
         width: 11px;
@@ -123,6 +143,14 @@
         &.active {
           background-color: #33ccff;
         }
+      }
+
+      .play {
+
+      }
+
+      .pause {
+
       }
     }
   }

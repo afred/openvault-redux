@@ -12,7 +12,7 @@
     <div class="label">Tags (<%= document.tags.length %>)</div>
     <div class="value"><%= document.tags.join(", ") %></div>
   </div>
-  <%= link_to "Add Tag", new_catalog_tags_path(:catalog_id => document.id), :class => "new_tag" if current_user %>
+  <%= link_to "Add Tag", new_catalog_tags_path(:catalog_id => document.id), :class => "new_tag" %>
 
   <div class="blacklight-comments">
     <div class="label">Annotations</div>
@@ -21,5 +21,5 @@
       <%= link_to "public annotations (#{ document.comments.where(:public => true).length })", catalog_comments_path(:catalog_id => document.id, :public => true) %>
     </div>
   </div>
-  <%= link_to "Add Annotation", new_catalog_comment_path(:catalog_id => document.id), :class => 'new_annotation' if current_user%>
+  <%= link_to "Add Annotation", new_catalog_comment_path(:catalog_id => document.id), :class => 'new_annotation' %>
   </div>

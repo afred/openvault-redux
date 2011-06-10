@@ -1,4 +1,3 @@
-$(function() {
   
   function timestamp_to_s(timestamp) {
     var s = 0;
@@ -11,6 +10,31 @@ $(function() {
   
     return s;
   }
+
+  function s_to_timestamp(time) {
+	var t = new Array(0,0,0);
+
+	t[2] = time;
+
+	if(t[2] >= 60) {
+		t[1] = parseInt(t[2]/60);
+		t[2] -= t[1]*60;
+
+		if(t[1] >=60) {
+		t[0] = parseInt(t[1]/60);
+		t[1] -= t[0]*60;
+		}
+	}
+
+	if(t[0] < 10) { t[0] = "0" + t[0];}
+	if(t[1] < 10) { t[1] = "0" + t[1];}
+	if(t[2] < 10) { t[2] = "0" + t[2];}
+
+	return t.join(':');
+      
+
+      
+  }
   
   function trimParseInt(s) {
     if(s != undefined) {
@@ -19,6 +43,8 @@ $(function() {
       return 0;
     }
   }
+
+$(function() {
 
    if($('.datastream-video,.datastream-audio').length > 0 && $('.datastream-transcript').length > 0) {
      //select all timecode-enabled elements

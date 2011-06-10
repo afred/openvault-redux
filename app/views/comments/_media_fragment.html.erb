@@ -3,10 +3,10 @@
       <%= f.fields_for :metadata do |m| %>
       <div>Enter the timecode:</div>
       <div>
-      <%= m.label :begin %>
-      <%= m.text_field :begin %>
+      <%= m.label :begin, "Start" %>
+      <%= m.text_field :begin, :placeholder => "00:00" %>
       <%= m.label :end %>
-      <%= m.text_field :end %>
+      <%= m.text_field :end, :placeholder => "00:00" %>
     </div>
      <% end %>
     <% end %>

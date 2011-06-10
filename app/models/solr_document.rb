@@ -44,4 +44,8 @@ class SolrDocument
     "#<SolrDocument:#{self.object_id} id=#{id} @_source=#{@_source.inspect} @export_formats=#{@export_formats.inspect}>"
   end
 
+  def self.connection
+    Blacklight.solr
+  end
+
 end
