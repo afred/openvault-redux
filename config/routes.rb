@@ -20,6 +20,8 @@ Openvault::Application.routes.draw do
   match 'catalog/map', :as => "map_catalog"
   match 'catalog/opensearch', :as => "opensearch_catalog"
   match 'catalog/citation', :as => "citation_catalog"
+  match 'catalog/embed', :as => "embed_catalog"
+  match 'catalog/oembed', :as => "oembed_catalog"
   match 'catalog/email', :as => "email_catalog"
   match 'catalog/sms', :as => "sms_catalog"
   match 'catalog/endnote', :as => "endnote_catalog"
