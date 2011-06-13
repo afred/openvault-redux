@@ -1,3 +1,8 @@
 <div class="datastream primary-datastream datastream-image">
   <%= image_tag datastream_url(document.fedora_object.datastream["Image.jpg"]) %>
 </div>
+<div class="media_fragment_template">
+  <%= render :partial => "comments/image_fragment" %>
+</div>
+<% stylesheet_links << "imgareaselect-default" %>
+<% javascript_includes << "jquery.imgareaselect.pack.js" %>

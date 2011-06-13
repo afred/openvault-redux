@@ -1,0 +1,10 @@
+  <div class="media_fragment">
+    <%= fields_for :comment  do |f| %>
+      <%= f.fields_for :metadata do |m| %>
+      <div>Slice the image</div>
+      <div>
+      <%= m.hidden_field :crop %>
+    </div>
+     <% end %>
+    <% end %>
+  </div>
