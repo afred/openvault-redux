@@ -28,7 +28,7 @@ class SolrDocument
   SolrDocument.use_extension( Blacklight::Solr::Document::DublinCore)
   SolrDocument.use_extension( Openvault::Solr::Document::Thumbnail)
   SolrDocument.use_extension( Openvault::Solr::Document::Pbcore)
- # SolrDocument.use_extension( BlacklightOembed::Solr::Document::OembedRich )  
+  SolrDocument.use_extension( BlacklightOembed::Solr::Document::OembedRich )  
   #
   #
 
