@@ -5,11 +5,19 @@
 
 	<%= render 'constraints', :localized_params=>params %>
 
-        <h2>No results found for your search</h2>
+        <h2>We did not find any matches for this search.</h2>
 <div id="documents" class="noresults">
-  <h3>Try modifying your search</h3>
+  <h3>Suggestions:</h3>
   <ul>
-  	<li>Use fewer keywords to start, then refine your search using the links on the left.</li>
+    <li>Make sure all words are spelled correctly.</li>
+    <li>If your search included many words, try again with fewer words.</li>
+    <li>Try synonyms of your search terms.</li>
+    <li>Try more general terms.</li>
   </ul>
 </div>
+
+<p>Please note that the Open Vault site contains records for WGBH productions, which aired on WGBH or PBS. For current programs, try <a href="http://wgbh.org" target="_blank">WGBH.org</a> or <a href="http://pbs.org" target="_blank">PBS.org</a>.</p>
+<br />
+
+<p>You can also explore Open Vault through its <%= link_to "Collections and Series", collections_path %>.</p>
 
