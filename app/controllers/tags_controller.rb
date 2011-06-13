@@ -3,7 +3,7 @@ class TagsController < ApplicationController
   load_and_authorize_resource :only => [:new, :edit]
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to new_user_session_url(:referer => request.url), :alert => exception.message
+    redirect_to new_user_session_url(:referer => request.url, :no_layout => (1 if request.xhr?)), :alert => exception.message
   end
 
   def index
