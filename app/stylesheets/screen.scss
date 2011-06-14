@@ -293,7 +293,15 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   #content {
     padding-top: 1em;
     
-    form {
+   
+    
+    .links {
+      margin-left: 111px;
+    }
+  }
+}
+
+    .user_new {
       p {
         @include clearfix;
         clear: left;
@@ -333,8 +341,31 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     .links {
       margin-left: 111px;
     }
-  }
-}
+
+    #annotations_modal_dialog {
+        .user_new { 
+          label {
+           @include column(2);
+          }
+          input + label, input[type="checkbox"] + label {
+             width: 180px;
+          }
+
+          select {
+             width: 180px;
+          }
+        }
+
+        
+      #user_remember_me, #user_submit, #user_mla_updates, #user_terms_and_conditions  {
+         margin-left: 75px;
+      }
+
+        .links {
+           margin-left: 75px;
+        }
+       
+    }
 
 .comment {
   @include margin-trailer(1);

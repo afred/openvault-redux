@@ -17,7 +17,7 @@
        });
        $('.new_tag,.new_annotation,a.comments').ajaxyDialog({
          modal: false,
-        width: $(window).width() / 2,
+        width: $(window).width() / 3,
          dialogContainer: '#annotations_modal_dialog',
          chainAjaxySelector: "a:not([target]),form:not([target])",
          load: function(event, dialog) {
