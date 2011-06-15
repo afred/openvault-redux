@@ -32,6 +32,10 @@ textarea {
   max-width: 1030px;
 }
 
+#access {
+  display: none;
+}
+
 #page {
   width: 1030px;
   margin: 0 auto;
@@ -50,7 +54,7 @@ overflow: hidden;
 text-align: left;
 background-image: url('/images/openvault.png?1304697733');
 background-repeat: no-repeat;
-background-position: 50% 50%;
+background-position: 0% 50%;
 width: 306px;
 height: 39px;
 }
@@ -80,6 +84,10 @@ top: 60px;
 
 #search-bar {
   margin-top: 65px;
+}
+
+#branding {
+  border: none;
 }
 
 #branding, #main, #colophon {

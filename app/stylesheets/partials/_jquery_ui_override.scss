@@ -12,6 +12,7 @@
   @include border-radius(0, 0);
   border: 0;
   @include single-box-shadow(rgba(0,0,0,0.7), 0px, 0px, 50px);
+  width: 325px;
 }
 
 .ui-widget-header {
