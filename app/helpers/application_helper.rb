@@ -91,6 +91,12 @@ module ApplicationHelper
     nil
   end
 
+  def render_field_value
+    value = [value] unless value.is_a? Array
+    value = value.collect { |x| x.respond_to?(:force_encoding) ? x.force_encoding("UTF-8") : x}
+    return value.join(field_value_separator).html_safe
+  end
+
   # Widon't 2.1 (the update based on Matthew Mullenweg's regular expression)
   # http://www.shauninman.com/archive/2007/01/03/widont_2_1_wordpress_plugin
   #
