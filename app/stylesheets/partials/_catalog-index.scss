@@ -117,6 +117,10 @@
 .pageEntriesInfo {
   @include column(5.5);
   @include prepend(5);
+
+  b { 
+     font-weight: normal;
+  }
 }
 
 #startOverLink {
@@ -162,6 +166,14 @@
    @include prepend(8);
 }
 
+#appliedParams {
+    color: #666;
+  h3 {
+     @include margin-trailer(0.5);
+     font-weight: normal;
+  }
+}
+
 .appliedFilter {
   @include append(0.5);  
 
@@ -190,7 +202,7 @@
        color: inherit;
        &:hover {
          text-decoration: none;
-         color: $orange;
+         color: $action-color;
        }
 
      }
@@ -208,7 +220,7 @@
      }
 
      &:hover {
-       color: $orange;
+       color: $action-color;
      }
   }
 }

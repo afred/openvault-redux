@@ -45,6 +45,7 @@
 
       &:after {
         content: " | ";
+        color: $action-color;
       }
 
       &:last-of-type:after {
@@ -234,7 +235,6 @@
      @include pull(1);
      @include prepend(1);
      @include append(1);
-     @include padding-leader(1);
      @include padding-trailer(2);
      background-color: #ddd;
 
@@ -289,9 +289,9 @@
 }
 
   #comment_comment {
+    @include margin-leader(1);
     @include margin-trailer(1);
      height: 100px;
-     @include margin-trailer(1);
   }
 
   #comment_submit {
@@ -309,6 +309,7 @@
 #annotations_modal_dialog {
   max-height: 300px;
   overflow-y: auto;
+
     #new_tag {
        label {
            display: block;
