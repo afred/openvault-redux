@@ -2,6 +2,7 @@
     <%= fields_for :comment  do |f| %>
       <%= f.fields_for :metadata do |m| %>
         <div>
+          <%= image_tag 'select_key.gif', :style => 'float: right; margin-right: 25px; margin-left: 50px;' %>
 To annotate part of the image, 
 drag and select the area.
         </div>
