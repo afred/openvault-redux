@@ -66,7 +66,7 @@
           };
  comments_dialog.bind('ajaxydialogafterdisplay', scrollToComment)
           
-          comments_dialog.first().ajaxyDialog("open");
+          comments_dialog.first().ajaxyDialog("open", '/comments/' + start.split('-')[1]);
         
 
 

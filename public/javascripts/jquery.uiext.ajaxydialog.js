@@ -28,11 +28,12 @@
                   }                
               },
                         
-              open: function() {
+              open: function(url) {
                 var self = this;
                 var element = self.element[0];                                
-                                
-                if ( element.tagName.toUpperCase() == "A") {
+                if(typeof(url) != "undefined") { 
+                  self._loadUrl(url);
+                } else if ( element.tagName.toUpperCase() == "A") {
                   self._handleClick();
                 } else if (element.tagName.toUpperCase() == "FORM") {
                   self._handleSubmit();
@@ -41,11 +42,10 @@
               
               close: function() {
                 this.dialogContainer().dialog("close"); 
-              },                            
-              
-              _handleClick: function() {
+              },
+
+              _loadUrl: function(url) {
                   var self = this;
-                  var url = this.element.attr("href");
                   var requestDialog = self.dialogContainer();
             
                   $("body").css("cursor", "progress");
@@ -60,6 +60,13 @@
                         self._displayFailure(url, xhr, msg); 
                       }
                   });                                
+
+                        },
+              _handleClick: function() {
+                  var self = this;
+                  var url = this.element.attr("href");
+                  self._loadUrl(url);
+
               },
               
               _handleSubmit: function() {

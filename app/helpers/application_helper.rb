@@ -107,6 +107,20 @@ module ApplicationHelper
   def render_google_analytics_code
     render :partial => 'layouts/google_analytics', :locals => { :tracker_id => GOOGLE_ANALYTICS_TRACKER_ID } if defined?(GOOGLE_ANALYTICS_TRACKER_ID)
   end
+
+  def render_comment_metadata_information comment
+    if comment.metadata[:begin] && comment.metadata[:end] && comment.metadata[:begin] != comment.metadata[:end]
+      return "[Timecode #{comment.metadata[:begin]}-#{comment.metadata[:end]}]"
+    end
+
+    if comment.metadata[:begin]
+      return "[Timecode #{comment.metadata[:begin]}]"
+    end
+
+    if comment.metadata[:crop]
+      return "[Crop]"
+    end
+  end
   
   
 end

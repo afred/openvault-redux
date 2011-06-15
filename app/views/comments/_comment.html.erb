@@ -5,7 +5,7 @@
 
 <% unless comment.metadata.blank?%>
   <%= content_tag :div, comment.metadata.to_json, :class => 'comment_metadata' %>
-  <%= link_to "View", "##{comment.id}", :class => 'comment_view', :target => 'parent' %>
+  <%= link_to [render_comment_metadata_information(comment),"View"].join("&nbsp;&nbsp;").html_safe, "##{comment.id}", :class => 'comment_view', :target => 'parent' %>
 <% end %>
 
 <% if current_user and comment.user == current_user %>
