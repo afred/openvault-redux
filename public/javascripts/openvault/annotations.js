@@ -16,14 +16,14 @@
      }
        $('.tools .cite a').ajaxyDialog( {
          modal: false,
-         width: '325px',
+         width: '350px',
          position: dialog_position
        });
 
 
        comments_dialog = $('.new_tag,.new_annotation,a.comments,#document .blacklight-comments a').ajaxyDialog({
          modal: false,
-         width: '325px',
+         width: '350px',
          position: dialog_position,
          dialogContainer: '#annotations_modal_dialog',
          chainAjaxySelector: "a:not([target]),form:not([target])",
