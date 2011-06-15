@@ -8,9 +8,12 @@
       });
      }
 
-       var anchor = $('div.tools').position();
-       var dialog_position = [anchor.left - 300, (anchor.top + 50)] 
+     var dialog_position = 'center';
 
+     if($('div.tools').length > 0) {
+       var anchor = $('div.tools').position();
+       dialog_position = [anchor.left - 300, (anchor.top + 50)] 
+     }
        $('.tools .cite a').ajaxyDialog( {
          modal: false,
          width: '325px',
