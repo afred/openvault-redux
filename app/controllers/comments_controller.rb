@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
     @response, @documents = get_solr_response_for_field_values("id",params[:catalog_id])
     @document = @documents.first
 
-    @comment = Comment.new :commentable => @document
+    @comment = Comment.new :commentable => @document, :public => true
 
     respond_to do |format|
       format.html # new.html.erb
