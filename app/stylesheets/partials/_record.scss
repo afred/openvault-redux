@@ -101,6 +101,7 @@
       @include column(2.75, true);
     }
 
+
     /* media */
     .media {
       @include padding-leader(1);
@@ -119,9 +120,11 @@
          display: inline-block;
          @include replace-text-with-dimensions("sync_to_vid.png");
          cursor: pointer;
+         opacity: 0.5;
 
          &:hover {
            @include replace-text-with-dimensions("sync_to_vid_over.png");
+           opacity: 1;
          }
        }
 
@@ -138,8 +141,10 @@
             left: 28px;
             top: 100px;
             @include replace-text-with-dimensions("sync_to_trans.png");
+            opacity: 0.5;
             &:hover {
               @include replace-text-with-dimensions("sync_to_trans_over.png");
+           opacity: 1;
             }
          }
 
@@ -273,7 +278,6 @@
 
 .media_fragment {
     @include margin-leader(1);
-    @include margin-trailer(1);
   #comment_metadata_begin, #comment_metadata_end {
      width: 60px;
   }
@@ -285,7 +289,17 @@
 }
 
   #comment_comment {
+    @include margin-trailer(1);
      height: 100px;
+     @include margin-trailer(1);
+  }
+
+  #comment_submit {
+    display: block;
+  }
+
+  .comment_metadata {
+     display: none;
   }
 
 /* transcript styles */
@@ -295,6 +309,21 @@
 #annotations_modal_dialog {
   max-height: 300px;
   overflow-y: auto;
+    #new_tag {
+       label {
+           display: block;
+          @include margin-trailer(1);
+       }
+
+       input {
+          display: block;
+          @include margin-trailer(1);
+       }
+
+       #tags {
+          width: 80%;
+       }
+    }
 }
 
 
@@ -312,7 +341,7 @@
 }
 
 #at15s_head {
-  background: $blue;
+  background: #8a8e90;
   color: white;
   padding: .5em 1em .3em;
   font-weight: bold;
@@ -451,10 +480,15 @@
     @include single-box-shadow(rgba(0,0,0,0.3), 0px, 1px, 5px);
     padding: 10px;
     background-color: #fff;
+    line-height: 14px;
 
     a {
       font-weight: bold;
       display: block;
+      @include margin-trailer(0.25);
+    }
+    .thumbnail {
+      @include margin-trailer(0.5);
     }
   }
 }

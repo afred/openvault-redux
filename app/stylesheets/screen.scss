@@ -20,12 +20,21 @@ $document-grid-columns: 19.5;
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
 @import "blueprint/colors";
-
 $link-color: #0a9cd5;
+$link-active-color: $link-hover-color;
 $dark-link-color: #006699;
 
 $action-color: #cc6600;
 $action-hover-color: lighten(#d76b11, 20%);
+$action-active-color: $action-hover-color;
+$action-focus-color: $link-focus-color;
+$action-visited-color: $link-visited-color;
+
+$footer-color: #fff;
+$footer-hover-color: #ccc;
+$footer-active-color: $footer-hover-color; 
+$footer-focus-color: $footer-active-color;
+$footer-visited-color: #fff;
 
 $blue: #11629e;
 $orange: #ff9e25;
@@ -64,6 +73,11 @@ i {
   font-style: italic;
 }
 
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
 ul, li {
   list-style: none;
   padding: 0;
@@ -81,7 +95,7 @@ a:hover, a:active {
 
 a.action, .tools a, .new_tag, .new_annotation, .sync {
   font-weight: bold;
-  @include link-colors($action-color, $action-hover-color, $link-active-color, $link-visited-color, $link-focus-color); 
+  @include link-colors($action-color, $action-hover-color, $action-active-color, $action-visited-color, $action-focus-color); 
   text-transform: uppercase;
   font-size: 10px;
 }
@@ -161,7 +175,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include padding-trailer(0.5);
   
     a {
-      @include link-colors(#fff, #ccc, $link-active-color, #fff, $link-focus-color); 
+      @include link-colors($footer-color, $footer-hover-color, $footer-active-color, $footer-visited-color, $footer-focus-color); 
     }
     margin: 0;
     
