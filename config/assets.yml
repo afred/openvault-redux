@@ -7,6 +7,7 @@ javascripts:
     - public/javascripts/jquery.tools.min.js
     - public/javascripts/jquery.jtruncate.js
     - public/javascripts/jquery.uiext.ajaxydialog.js
+    - public/javascripts/jquery.imgareaselect.pack.js
     - public/javascripts/json2.js
     - public/javascripts/rails.js
     - public/javascripts/blacklight.js
