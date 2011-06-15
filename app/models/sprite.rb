@@ -1,4 +1,5 @@
 class Sprite
+  require 'RMagick'
   attr_reader :name, :document_list
   attr_accessor :options
 
