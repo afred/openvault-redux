@@ -27,7 +27,7 @@
 
   <% cache("catalog_browse_collections") do %>
     <%= form_tag catalog_index_path, :method => :get, :class => 'collections' do %>
-      <%= select "id", nil, grouped_options_for_select(collections_list.group_by { |x| x.get("dc_type_s") }.map { |key, values| [key.pluralize, values.map { |x| [x.get('title_display'), x.get('id')] }]}.sort_by { |x| x.first }), { :prompt => "Series and Collections" }  %>
+      <%= select "id", nil, grouped_options_for_select(collections_list.group_by { |x| x.get("dc_type_s") }.map { |key, values| [key.pluralize, values.map { |x| [x.get('title_display'), x.get('id')] }]}.sort_by { |x| x.first }), { :prompt => "Collections and Series" }  %>
       <%= submit_tag 'Browse collection'%>
     <% end %>
   <% end %>
