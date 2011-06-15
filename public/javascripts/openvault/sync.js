@@ -48,27 +48,27 @@ $(function() {
 
    if($('.datastream-video,.datastream-audio').length > 0 && $('.datastream-transcript').length > 0) {
      //select all timecode-enabled elements
-     $('*[data-timecode_begin]').attr('data-timecode', true);
-     $('*[data-timecode_end]').attr('data-timecode', true);
+     $('*[data-timecodebegin]').attr('data-timecode', true);
+     $('*[data-timecodeend]').attr('data-timecode', true);
      smil_elements = $('*[data-timecode]');
 
      smil_elements.each(function(index) {
        //fill in missing timecode as best as possible
-       if(($(this).data('timecode_begin')) == 'undefined') {
+       if(($(this).data('timecodebegin')) == 'undefined') {
          var pred = smil_elements.slice(0, index).has('*[data-timecode]');
-         $(this).data('timecode_begin', Math.max(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_end]') }).first().data('timecode_end')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_begin]') }).first().data('timecode_begin'))));
+         $(this).data('timecodebegin', Math.max(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecodeend]') }).first().data('timecodeend')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecodebegin]') }).first().data('timecodebegin'))));
        }
 
-       if(($(this).data('timecode_end')) == 'undefined') {
+       if(($(this).data('timecodeend')) == 'undefined') {
          var pred = smil_elements.slice(0, index).has('*[data-timecode]');
-         $(this).data('timecode_end', Math.min(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_begin]') }).first().data('timecode_begin')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecode_end]') }).first().data('timecode_end'))));
+         $(this).data('timecodeend', Math.min(timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecodebegin]') }).first().data('timecodebegin')), timestamp_to_s(pred.grep(function(e) { return $(e).is('*[data-timecodeend]') }).first().data('timecodeend'))));
        }
      });
 
      //convert hh:mm:ss.ff to seconds
      smil_elements.each(function() {
-       var begin = timestamp_to_s($(this).data('timecode_begin'));
-       var end = timestamp_to_s($(this).data('timecode_end'));
+       var begin = timestamp_to_s($(this).data('timecodebegin'));
+       var end = timestamp_to_s($(this).data('timecodeend'));
         $(this).data('begin_seconds', begin);
         $(this).data('end_seconds', end);
      });
