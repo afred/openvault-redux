@@ -5,6 +5,7 @@ javascripts:
     - public/javascripts/jquery.highlight.js
     - public/javascripts/jquery.scrollTo.js
     - public/javascripts/jquery.tools.min.js
+    - public/javascripts/jquery.jtruncate.js
     - public/javascripts/jquery.uiext.ajaxydialog.js
     - public/javascripts/json2.js
     - public/javascripts/rails.js

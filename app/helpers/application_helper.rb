@@ -69,9 +69,14 @@ module ApplicationHelper
     (link_to_unless(options[:suppress_link], item.value.html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + "&nbsp;".html_safe + render_facet_count(item.hits)).html_safe
   end
 
-  def render_field_value value
-    value = [value] unless value.is_a? Array
-    value.compact.map { |v| v.gsub("&lt;", "<").gsub("&gt;", ">").gsub("&quot;", '"').gsub(/<resource_link res="([^"]+)">(.+)<\/resource_link>/) { |match| link_to widont($2).html_safe, catalog_url("org.wgbh.mla\:#{$1}") } }.join(field_value_separator).html_safe
+  def render_index_field_value(args) 
+    value = super(args)
+
+    if args[:field] and args[:field] == 'dc_description_t' and value.length > 600
+      return (truncate(value, :length => 500, :separator => ". ") + " #{((link_to_document(args[:document], :label => 'more') if args[:document]))}").html_safe
+    end
+
+    value
   end
 
   def render_document_show_field_label(*args)

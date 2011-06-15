@@ -31,3 +31,8 @@ $(function() {
   $('.facet_limit').not(':has(h3)').hide();
 });
 
+$(function() {
+  $('.blacklight-catalog-show .blacklight-dc_description_t .value').jTruncate({length: 500, moreText: " more", minTrail: 100});
+  $('.blacklight-catalog-show .blacklight-topic_cv .value').jTruncate({length: 300, minTrail: 50, moreText: " more"});
+  $('.blacklight-catalog-show .blacklight-tags .value').jTruncate({length: 150, minTrail: 50, moreText: " more"});
+});
