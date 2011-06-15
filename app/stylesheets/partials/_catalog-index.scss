@@ -476,10 +476,6 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
 }
 
 .blacklight-user_generated_content {
-    .blacklight-tags, .blacklight-comments {
-       @include push(3);
-       clear: left;
-    }
 }
 
 .noresults {

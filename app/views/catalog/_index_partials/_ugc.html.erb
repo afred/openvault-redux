@@ -1,0 +1,33 @@
+<%# default partial to display solr document fields in catalog index view -%>
+<div  class="thumbnail">
+  <%= link_to_document document, :label=>(image_tag(document.thumbnail.url(:style => :preview)).html_safe) %>
+</div>  
+
+<div class="defList_container">
+  <%# default partial to display solr document fields in catalog show view -%>
+  <% index_field_names.each do |solr_fname| -%>
+    <% value = render_index_field_value :document => document, :field => solr_fname %>
+    <% unless value.blank? %>
+      <div class="blacklight-<%= solr_fname.parameterize %>" >
+	    <div class="label"><%= render_index_field_label :field => solr_fname %></div>
+            <div class="value"><%= render_index_field_value :document => document, :field => solr_fname %></div>
+          </div>
+    <% end -%>
+  <% end -%>          
+  <div class="blacklight-tags">
+      <div class="label">My Tags</div>
+      <div class="value">
+      <%= document.owner_tag_list_on(current_user, :tags).join(", ") %>
+      </div>
+  </div>
+  <div class="blacklight-comments">
+    <div class="label">My Notes</div>
+      <div class="value">
+      <% document.comments.where(:user_id => current_user.id).each do |c| %>
+        <p><span style="display: inline-block; width: 90px"><%= c.created_at.strftime("%m/%d/%Y") %></span><%= truncate(c.comment, :length => 150) %> <%= link_to '[View]', catalog_path(document.id, :anchor=> "comment-#{c.id}") %> </p>
+      <% end %>
+      </div>
+  </div>
+
+</div>
+
