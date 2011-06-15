@@ -10,10 +10,13 @@ SELECT ?pid FROM <#ri> WHERE {
     objs.each do |obj|
       doc = Nokogiri::XML(obj.datastream['PBCore'].content) rescue nil
       next unless doc
-
-      doc.xpath('//pbcore:pbcoreCoverage[text(pbcore:coverage) = "n/d"]', xmlns).each(&:delete)
-
       update_needed = false
+
+      doc.xpath('//pbcore:pbcoreCoverage[pbcore:coverage/text() = "n/d"]', xmlns).each do |x|
+        x.remove
+        update_needed = true
+      end
+
       obj.datastream['PBCore'].content = doc.to_s if update_needed
       obj.datastream['PBCore'].save if update_needed
     end
