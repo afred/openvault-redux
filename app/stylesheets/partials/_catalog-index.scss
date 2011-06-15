@@ -177,9 +177,11 @@
 
   .filterValue {
     display: inline-block;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
     position: relative;
+    height: 17px;
+    padding-bottom: 1px;
     background-image: image-url("filter_bg_middle.png");
     background-repeat: repeat-x;
 
@@ -215,7 +217,6 @@
     .filterValue {
        margin-left: 3px;
        margin-right: 3px;
-       height: 18px;
     }
 
     .filterValue:nth-of-type(2) {
