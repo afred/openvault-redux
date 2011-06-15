@@ -17,6 +17,11 @@ SELECT ?pid FROM <#ri> WHERE {
         update_needed = true
       end
 
+      doc.xpath('//pbcore:pbcoreCoverage[pbcore:coverage/text() = "undated"]', xmlns).each do |x|
+        x.remove
+        update_needed = true
+      end
+
       obj.datastream['PBCore'].content = doc.to_s if update_needed
       obj.datastream['PBCore'].save if update_needed
     end
