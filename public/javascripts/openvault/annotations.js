@@ -8,16 +8,20 @@
       });
      }
 
-       comments_dialog = $('#document .blacklight-comments a').ajaxyDialog({
-         modal: false,
-         dialogContainer: '#annotations_modal_dialog'
-       });
+       var anchor = $('div.tools').position();
+       var dialog_position = [anchor.left - 300, (anchor.top + 50)] 
+
        $('.tools .cite a').ajaxyDialog( {
-         modal: false
-       });
-       $('.new_tag,.new_annotation,a.comments').ajaxyDialog({
          modal: false,
-        width: $(window).width() / 3,
+         width: '325px',
+         position: dialog_position
+       });
+
+
+       comments_dialog = $('.new_tag,.new_annotation,a.comments,#document .blacklight-comments a').ajaxyDialog({
+         modal: false,
+         width: '325px',
+         position: dialog_position,
          dialogContainer: '#annotations_modal_dialog',
          chainAjaxySelector: "a:not([target]),form:not([target])",
          load: function(event, dialog) {

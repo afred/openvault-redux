@@ -265,7 +265,12 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
       font-size: 12px;
       @include padding-leader(0.2);
       color: #fff;
+      font-weight: normal;
       @include column(3);
+
+      &:after {
+         content: ": ";
+      }
     }
 
     .categories, .collections {
