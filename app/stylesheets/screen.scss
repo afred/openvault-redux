@@ -141,6 +141,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     font-size: 12.5px;
     text-align: right;
     color: $link-visited-color;
+
+    a {
+      @include link-colors($link-visited-color, $link-hover-color, $link-active-color, $link-visited-color, $link-focus-color);
+    }
     
     strong {
       display: inline-block;
