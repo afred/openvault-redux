@@ -81,6 +81,13 @@ module Openvault::Pbcore
       {:coverageType => e.xpath('pbcore:coverageType', xmlns).first.content.html_safe, :coverage => e.xpath('pbcore:coverage', xmlns).first.content.html_safe }
     end.group_by {|e| e[:coverageType] }
   end
+
+  def rights
+    @pbcore.xpath('//pbcore:pbcoreRightsSummary', 'pbcore' => PBCORE_NS).map do |e|
+       e.xpath('pbcore:rightsSummary', xmlns).first.content.html_safe
+    end
+  end
+
   end
 
 

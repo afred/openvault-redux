@@ -25,7 +25,13 @@
 
       <div class="metadata">
         <% @document.get(:disseminates_s, :sep => nil).each do |f| %>
-          <%= render :partial => "catalog/_metadata_partials/#{f.parameterize('_').gsub('-', '_')}", :locals => { :document => @document } rescue nil %>
+          <%= 
+              begin
+                render :partial => "catalog/_metadata_partials/#{f.parameterize('_').gsub('-', '_')}", :locals => { :document => @document }
+              rescue ActionView::MissingTemplate
+
+              end
+              %>
         <% end %>
       </div>
 

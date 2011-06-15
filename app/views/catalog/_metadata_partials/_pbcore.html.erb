@@ -51,6 +51,12 @@ source_credits = ''
     </div>
   </div>
   <% end %>
+
+
+  <% unless pbcore.rights.empty? %>
+  <h3 class="toggler">Rights</h3>
+  <%= pbcore.rights.first %>
+<% end %>
 </div>   
 
 <div class="description">
