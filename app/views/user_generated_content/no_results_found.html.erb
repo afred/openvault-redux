@@ -1,0 +1,12 @@
+        <% extra_head_content << render_opensearch_response_metadata %>
+        <% extra_body_classes << 'no-results-found' %>
+
+	<%= render :partial => 'did_you_mean' %>
+
+	<%= render 'constraints', :localized_params=>params %>
+
+        <h1>My Notes</h1>
+<div id="documents" class="noresults">
+  <h3>All tags and annotations of records are saved in My Notes.</h3>
+</div>
+
