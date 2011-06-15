@@ -140,10 +140,12 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     top: 20px;
     font-size: 12.5px;
     text-align: right;
+    color: $link-visited-color;
     
     strong {
       display: inline-block;
       padding-right: 10px;
+      color: black;
     }
   }
 }
