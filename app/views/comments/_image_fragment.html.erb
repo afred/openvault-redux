@@ -1,7 +1,10 @@
   <div class="media_fragment">
     <%= fields_for :comment  do |f| %>
       <%= f.fields_for :metadata do |m| %>
-      <div>Slice the image</div>
+        <div>
+To annotate part of the image, 
+drag and select the area.
+        </div>
       <div>
       <%= m.hidden_field :crop %>
     </div>
