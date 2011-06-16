@@ -9,6 +9,7 @@ class AddProfileDataToUser < ActiveRecord::Migration
   end
 
   def self.down
+    remove_column :users, :terms_and_conditions
     remove_column :users, :mla_updates
     remove_column :users, :country
     remove_column :users, :postal_code
