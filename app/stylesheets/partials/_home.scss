@@ -39,6 +39,7 @@
      margin-top: -82px;
      padding-top: 82px;
      background-color: $blue;
+     @include linear-gradient(color-stops(#003366, #025a97));
   }
 
   #mosaic {
