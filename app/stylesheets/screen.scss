@@ -42,14 +42,12 @@ $orange: #ff9e25;
 $grey: #e8e3e3;
 
 html {
-  background-color: #558fba;
+  background-color: #4282B2;
 }
 
 body {	
-  background-image: image-url("bg-repeater.png");
-  background-repeat: repeat-y;
-  
-  background: image-url("bg-header.jpg") left top no-repeat, image-url("bg-footer.jpg") left bottom no-repeat, image-url("bg-repeater.png") left top repeat-y;
+  background-image: image-url("background.jpg");
+  background-repeat: no-repeat;
   height: 100%;
 }
 
