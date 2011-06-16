@@ -108,6 +108,11 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   background-repeat: no-repeat;
 }
 
+.truncate_more_link {
+   padding-left: 5px;
+   display: inline-block;
+}
+
 #hd {
   @include column($blueprint-grid-columns);
   @include margin-leader(1);
