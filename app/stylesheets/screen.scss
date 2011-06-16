@@ -171,6 +171,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
   @include margin-leader(1.5);
   @include padding-leader(0.5);
   @include padding-trailer(1);
+  background-color: darken(#4282B2, 10%);
   background-color: rgba(0,0,0,0.1);
 }
 

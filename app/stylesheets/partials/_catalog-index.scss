@@ -140,9 +140,12 @@
   display: none;
 } 
 
+.pagination-container .pagination {
+  text-align: right;
+}
+
 .pagination {
   @include clearfix;
-  text-align: right;
 
   h2 {
     display: none;

@@ -7,3 +7,30 @@
 .sprite-home_mosaic {
   display: block;
 }
+
+#document ul.tools .cite:after {
+  content: "";
+}
+
+#ft .menu .menu-item-567:after {
+  content: "";
+}
+
+#document ul.tools li {
+  display: inline;
+  padding-left: 5px;
+}
+
+#ft .menu li {
+  display: inline;
+  padding-left: 5px;
+}
+
+* #hd {
+  padding-bottom: 1.29em;
+}
+
+.footer-container {
+  border-top: 1px solid #999;
+  background-color: darken(#4282B2, 10%);
+}
