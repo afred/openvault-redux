@@ -390,7 +390,7 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
       @include margin-trailer(1);
     }
 
-    h2 {
+    #content h2 {
        clear: left;
        @include margin-leader(1);
        font-size: 16px;
