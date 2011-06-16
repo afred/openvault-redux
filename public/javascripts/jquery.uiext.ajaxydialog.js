@@ -100,6 +100,7 @@
               _loadToDialog: function(html_content, jqXHR, uri) {     
                   var self = this;
                   var dialog = self.dialogContainer();
+	          self.options.dialogContainer = dialog;
                   //Cheesy way to restore it to it's default options, plus
                   //our own local options, since its' a reuseable dialog.
                   //for now we insist on modal:true. 
