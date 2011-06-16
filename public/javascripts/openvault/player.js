@@ -3,8 +3,8 @@ var player = null;
 $('#video-mp4,#audio-mp3,video,audio').each(function() {
   options =  {
     'flashplayer': '/swfs/player.swf',
- //   provider: 'http',
- //   'http.startparam':'start', 
+    provider: 'http',
+    'http.startparam':'start', 
      skin: '/swfs/glow.zip',
      events: {
        onTime: function() {
