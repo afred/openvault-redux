@@ -129,6 +129,7 @@
 
     .pagination {
       float: right;
+      text-align: auto;
       margin-top: 7px;
       @include append(0.5);
 
