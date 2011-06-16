@@ -26,7 +26,7 @@ module Wordpress
     end
 
     def date
-      self.post["date"]
+      DateTime.parse(self.post["date"])
     end
 
     def author_name
