@@ -36,3 +36,8 @@ $(function() {
   $('.blacklight-catalog-show .blacklight-topic_cv .value').jTruncate({length: 300, minTrail: 50, moreText: " more"});
   $('.blacklight-catalog-show .blacklight-tags .value').jTruncate({length: 150, minTrail: 50, moreText: " more"});
 });
+
+$(function() {
+  $('.blacklight-collections-index .blacklight-collection').first().before($('<h2>Collections</h2>'));
+  $('.blacklight-collections-index .blacklight-series').first().before($('<h2>Series</h2>'));
+});

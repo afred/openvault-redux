@@ -381,12 +381,26 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
        display: none;
     }
 
+    #search-bar {
+      @include margin-trailer(1);
+    }
+
+    h2 {
+       clear: left;
+       @include margin-leader(1);
+       font-size: 16px;
+    }
+
     .search-results-header {
        display: none;
     }
 
     #sidebar {
        display: none;
+    }
+
+    #content {
+      @include padding-leader(2);
     }
      
     .documentHeader, .thumbnail {

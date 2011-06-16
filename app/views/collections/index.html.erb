@@ -1,0 +1,33 @@
+	<% @page_title = application_name + " Search Results" %>
+
+        <% extra_head_content << render_opensearch_response_metadata %>
+
+	<%= render :partial => 'did_you_mean' %>
+
+	<%= render 'constraints', :localized_params=>params %>
+
+        <div class="search-results-header">
+  
+  <div class="pageEntriesInfo">
+    <%= page_entries_info @response.docs, :entry_name=>'item' %>
+    <%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
+  </div>
+  
+	<%= render 'sort_and_per_page' %>
+  
+        <%= render 'results_pagination' %>
+      </div>
+
+      <h1>Collections and Series</h1>
+  
+      <p>The WGBH Media Library and Archives records are largely organized around the broadcast series and programs for which materials were created. Collections contain records organized around a particular topic, material type, or grant-funded project. Series aired on WGBH and/or PBS.</p>
+
+	<%= render_document_list_partial %>
+
+	<% sidebar_items << capture do %>
+	  <%= render :partial=>'facets' %>
+	<% end %>
+
+  <%= render 'results_pagination' %>
+
+
