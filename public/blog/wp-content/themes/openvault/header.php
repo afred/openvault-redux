@@ -65,6 +65,14 @@
 	 */
 	wp_head();
 ?>
+<script type="text/javascript">
+jQuery(function() {
+  jQuery('#browse input').hide();
+   jQuery('#browse select').bind('change', function() {
+     jQuery(this).closest('form').submit();
+   });
+});
+</script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -144,10 +152,10 @@
 <option value="Massachusetts">Massachusetts</option>
 <option value="Science &amp; Technology">Science &amp; Technology</option>
 <option value="Social Sciences">Social Sciences</option></optgroup></select>
-      <input name="commit" type="submit" value="Browse Category" style="display: none; ">
+      <input name="commit" type="submit" value="Browse Category" >
 </form>
     <form accept-charset="UTF-8" action="/catalog" class="collections" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓" style="display: none; "></div>
-      <select id="id_" name="id[]"><option value="">Series and Collections</option>
+      <select id="id_" name="id[]"><option value="">Collections and Series</option>
 <optgroup label="Collections"><option value="march-march-on-washington">March on Washington</option>
 <option value="prpe-press-and-the-people">Press and the People</option>
 <option value="sbro-say-brother">Say Brother</option>
@@ -172,7 +180,7 @@
 <option value="ntw-sond-soundings">Soundings</option>
 <option value="ntw-twca-twentieth-century-artists">Twentieth Century Artists</option>
 <option value="ntw-visi-visions">Visions</option></optgroup></select>
-      <input name="commit" type="submit" value="Browse collection" style="display: none; ">
+      <input name="commit" type="submit" value="Browse collection">
 </form></div>
 </div>
 	</header><!-- #branding -->
