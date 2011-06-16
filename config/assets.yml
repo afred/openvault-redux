@@ -23,3 +23,5 @@ javascripts:
     - public/javascripts/openvault/sync.js
     - public/javascripts/openvault/transcript_search.js
 
+  ie:
+    - public/javascripts/IE9.js
