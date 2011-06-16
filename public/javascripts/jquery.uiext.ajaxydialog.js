@@ -57,6 +57,9 @@
                         self._loadToDialog(resp);
                       },
                       error: function(xhr, msg) {
+                               if(xhr.status == 401) {
+                        return self._loadUrl('/users/sign_in');       
+                               }
                         self._displayFailure(url, xhr, msg); 
                       }
                   });                                
@@ -86,6 +89,9 @@
                         self._loadToDialog(resp, jqXHR, actionUri);
                       },
                       error: function(xhr, msg) {
+                               if(xhr.status == 401) {
+                        return self._loadUrl('/users/sign_in');       
+                               }
                         self._displayFailure(actionUri, xhr, msg); 
                       }
                   });
