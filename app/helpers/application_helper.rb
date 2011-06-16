@@ -41,6 +41,10 @@ module ApplicationHelper
     end
   end
 
+  def document_heading
+    super.to_s.html_safe
+  end
+
   def render_document_heading(document=@document, options={})
     render :partial => 'document_heading', :locals => { :document => document, :heading => document_heading }
   end
