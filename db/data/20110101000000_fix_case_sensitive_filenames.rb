@@ -7,6 +7,7 @@ class FixCaseSensitiveFilenames < ActiveRecord::Migration
     # %x[ find hydra-jetty/fedora/default/data/objects -exec grep ":Vietnam" -l {} \; | xargs perl -pi -e "s/:Vietnam/:vietnam/g" ]
 
     %x[ mv ./datastreams/ov1/org.wgbh.mla_Vietnam+PBCore+PBCore.0 ./datastreams/ov1/org.wgbh.mla_vietnam+PBCore+PBCore.0 ]
+    %x[ cp ./datastreams/ov1/org.wgbh.mla_vietnam+PBCore+PBCore.0 ./datastreams/ov1/org.wgbh.mla_vietnam+PBCore+PBCore.3 ]
     %x[ mv ./datastreams/ov1/org.wgbh.mla_NTW+PBCore+PBCore.0 ./datastreams/ov1/org.wgbh.mla_ntw+PBCore+PBCore.0      ]
     %x[ mv ./datastreams/ov1/org.wgbh.mla_TOCN+PBCore+PBCore.0 ./datastreams/ov1/org.wgbh.mla_tocn+PBCore+PBCore.0     ]
     %x[ mv ./datastreams/ov1/org.wgbh.mla_PRPE+PBCore+PBCore.0 ./datastreams/ov1/org.wgbh.mla_prpe+PBCore+PBCore.0      ]
