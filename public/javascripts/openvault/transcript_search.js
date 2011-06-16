@@ -27,7 +27,18 @@ $(function() {
        i = 0;
      }
 
-     $('.secondary-datastream').scrollTo($('.secondary-datastream .highlight').eq(i));
+     next = $('.secondary-datastream .highlight').eq(i); 
+
+     if(next.length == 0) {
+       next = $('.secondary-datastream .highlight').first();
+     }
+
+
+     if(next.length == 0) {
+       next = {top: 0}
+     }
+
+     $('.secondary-datastream').scrollTo(next);
      i++;
      if(i > max) {
        i = 0;
