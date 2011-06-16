@@ -9,37 +9,53 @@ Template: twentyeleven
 @import url("../twentyeleven/style.css");
 
 html {
-  margin-top: 0 !important;
-  background-color: #558fba;
-  background-image: url("/images/background-footer.jpg");
-  background-repeat: no-repeat;
-  background-position: 0 100%;
 }
 
 body {
-  background-color: #558fba;
-  background-image: url("/images/background-header.jpg");
-  background-repeat: no-repeat;
-  height: 100%;
   font-weight: normal;
+  padding: 0;
+  background-image: url('/images/bg-repeater.png?1307135441');
+  background-repeat: repeat-y;
+  background: url('/images/bg-header.jpg?1307135907') left top no-repeat, url('/images/bg-footer.jpg?1307135890') left bottom no-repeat, url('/images/bg-repeater.png?1307135441') left top repeat-y;
+  height: 100%;
 }
-
+input {
+  line-height: 1.25em;
+}
 textarea {
  width: 258px;
 }
 
 .one-column #page {
-  max-width: 1030px;
 }
 
 #access {
   display: none;
 }
 
-#page {
-  width: 1030px;
+#branding, #main {
+  width: 991px;
   margin: 0 auto;
   overflow: hidden;
+}
+#branding, #main, #colophon {
+  padding: 0;
+}
+
+input[type="text"] {
+  padding: inherit;
+}
+
+.one-column #page {
+width: auto;
+max-width: inherit;
+margin: 0;
+
+}
+#page {
+width: auto;
+max-width: inherit;
+margin: 0;
   line-height: 1.5;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   color: #333;
@@ -48,6 +64,13 @@ textarea {
 }
 
 #site-title {
+  margin: 0;
+  margin-top: 12px;
+  
+  padding: 0;
+}
+
+#site-title a {
 display: block;
 text-indent: -119988px;
 overflow: hidden;
@@ -88,11 +111,10 @@ top: 60px;
 
 #branding {
   border: none;
+  background-image: url('/images/bg-logo.png?1307135246');
+  background-repeat: no-repeat;
 }
 
-#branding, #main, #colophon {
-  padding: 0;
-}
 
 #primary {
   width: 790px;
@@ -182,16 +204,16 @@ border: 1px solid #CCC;
   display: inline-block;
 }
 
-/* line 157, ../../../app/stylesheets/screen.scss */
+/* line 240, ../../../app/stylesheets/screen.scss */
 #search-bar {
   display: inline;
   float: left;
-  margin-right: 10px;
-  width: 710px;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 1.295em;
-  padding-bottom: 1.295em;
+  margin-right: 8px;
+  width: 713.5px;
+  padding-left: 37px;
+  padding-right: 18.5px;
+  padding-top: 0.648em;
+  padding-bottom: 0.648em;
   margin-bottom: 1.295em;
   -moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
@@ -199,22 +221,22 @@ border: 1px solid #CCC;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
   background-color: #ff9e25;
 }
-/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #search-bar {
   overflow-x: hidden;
 }
-/* line 167, ../../../app/stylesheets/screen.scss */
+/* line 250, ../../../app/stylesheets/screen.scss */
 #search-bar #search {
   display: inline;
   float: left;
-  margin-right: 10px;
-  width: 230px;
+  margin-right: 8px;
+  width: 214px;
 }
-/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #search-bar #search {
   overflow-x: hidden;
 }
-/* line 171, ../../../app/stylesheets/screen.scss */
+/* line 253, ../../../app/stylesheets/screen.scss */
 #search-bar #search h2 {
   text-indent: -119988px;
   overflow: hidden;
@@ -223,48 +245,54 @@ border: 1px solid #CCC;
   margin: 0;
   padding: 0;
 }
-/* line 176, ../../../app/stylesheets/screen.scss */
+/* line 258, ../../../app/stylesheets/screen.scss */
 #search-bar #search hr {
   display: none;
 }
-/* line 182, ../../../app/stylesheets/screen.scss */
+/* line 263, ../../../app/stylesheets/screen.scss */
 #search-bar #browse {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 470px;
+  width: 454.5px;
+  padding-left: 37px;
+  padding-top: 0.4em;
 }
-/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #search-bar #browse {
   overflow-x: hidden;
-}                               
-/* line 184, ../../../app/stylesheets/screen.scss */
+}
+/* line 268, ../../../app/stylesheets/screen.scss */
 #search-bar #browse h2 {
   font-size: 12px;
-  font-weight: bold;
   padding-top: 0.259em;
   color: #fff;
+  font-weight: normal;
   display: inline;
   float: left;
-  margin-right: 10px;
-  width: 90px;
+  margin-right: 8px;
+  width: 103px;
 }
-/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #search-bar #browse h2 {
   overflow-x: hidden;
 }
-/* line 192, ../../../app/stylesheets/screen.scss */
+/* line 275, ../../../app/stylesheets/screen.scss */
+#search-bar #browse h2:after {
+  content: ": ";
+}
+/* line 280, ../../../app/stylesheets/screen.scss */
 #search-bar #browse .categories, #search-bar #browse .collections {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 170px;
+  width: 167.75px;
 }
-/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p299@openvault-rails3/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #search-bar #browse .categories, * html #search-bar #browse .collections {
   overflow-x: hidden;
 }
-/* line 195, ../../../app/stylesheets/screen.scss */
+/* line 283, ../../../app/stylesheets/screen.scss */
 #search-bar #browse .categories select, #search-bar #browse .collections select {
   width: 90%;
 }
@@ -278,30 +306,135 @@ border: 1px solid #CCC;
   margin-bottom: 0em;
 }                                                 
 
-/* line 135, ../../../app/stylesheets/screen.scss */
+
+/* line 290, ../../../app/stylesheets/screen.scss */
 .q_field {
   position: relative;
-  margin-bottom: 0.648em;
+  margin-top: 0.428em;
+  margin-bottom: 0.428em;
   width: 170px;
+  padding-bottom: 2px;
   height: 2em;
 }
-/* line 141, ../../../app/stylesheets/screen.scss */
+/* line 298, ../../../app/stylesheets/screen.scss */
 .q_field .q {
   width: 150px;
   padding-right: 20px;
   font-size: 12px;
   color: #666;
-  padding-top: 0.324em;
-  padding-bottom: 0.324em;
+  line-height: 1.25em;
 }
-/* line 150, ../../../app/stylesheets/screen.scss */
+/* line 306, ../../../app/stylesheets/screen.scss */
 .q_field .submit {
   position: absolute;
-  top: 8px;
+  top: 5px;
   right: 0;
-}     
+}
+
 #search-bar {
-  width: 710px;
   margin-left: 230px;
   margin-right: 10px;
+}
+
+#colophon .widget-area {
+  border: none;
+padding: 0;
+  background: none;
+  font-size: 10px;
+ -moz-box-shadow: none;
+ -webkit-box-shadow: none;
+ -o-box-shadow: none;
+  box-shadow: none;
+}
+
+#colophon {
+  padding-left: 0;
+  margin: 0;
+  width: auto;
+}
+
+#supplementary {
+  padding: 0;
+  border: none;
+  color: #fff;
+}
+
+/* line 166, ../../../app/stylesheets/screen.scss */
+#colophon, .footer-container {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1.943em;
+  padding-top: 0.648em;
+  padding-bottom: 1.295em;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* line 174, ../../../app/stylesheets/screen.scss */
+#supplementary {
+  width: 991px;
+  margin: 0 auto;
+  overflow: hidden;
+  *zoom: 1;
+  line-height: 1.5;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #fff;
+  font-size: 10px;
+}
+/* line 179, ../../../app/stylesheets/screen.scss */
+#colophon .menu {
+  display: inline;
+  float: left;
+  margin-right: 8px;
+  width: 991px;
+  padding-top: 0.648em;
+  padding-bottom: 0.648em;
+  margin: 0;
+}
+/* line 147, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #colophon .menu {
+  overflow-x: hidden;
+}
+/* line 184, ../../../app/stylesheets/screen.scss */
+#colophon .menu a, #colophon .menu .ui-widget-content a, .ui-widget-content #colophon .menu a {
+  color: white;
+font-weight: normal;
+}
+/* line 18, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+#colophon .menu a:visited, #colophon .menu .ui-widget-content a:visited, .ui-widget-content #colophon .menu a:visited {
+  color: white;
+}
+/* line 21, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+#colophon .menu a:focus, #colophon .menu .ui-widget-content a:focus, .ui-widget-content #colophon .menu a:focus {
+  color: #cccccc;
+}
+/* line 24, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+#colophon .menu a:hover, #colophon .menu .ui-widget-content a:hover, .ui-widget-content #colophon .menu a:hover {
+  color: #cccccc;
+}
+/* line 27, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+#colophon .menu a:active, #colophon .menu .ui-widget-content a:active, .ui-widget-content #colophon .menu a:active {
+  color: #cccccc;
+}
+/* line 189, ../../../app/stylesheets/screen.scss */
+#colophon .menu ul, #colophon .menu li {
+  list-style: none;
+  display: inline-block;
+font-size: 10px;
+}
+/* line 194, ../../../app/stylesheets/screen.scss */
+#colophon .menu li {
+  margin-right: 0.3em;
+}
+/* line 197, ../../../app/stylesheets/screen.scss */
+#colophon .menu li:after {
+  padding-left: 0.3em;
+  content: " | ";
+  color: white;
+}
+/* line 203, ../../../app/stylesheets/screen.scss */
+#colophon .menu li:last-of-type:after {
+  content: "";
+}
+/* line 209, ../../../app/stylesheets/screen.scss */
+#colophon .copyright {
+  color: white;
 }
