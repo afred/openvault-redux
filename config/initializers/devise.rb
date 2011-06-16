@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  config.mailer_sender = "openvault+do-not-reply@wgbh.org"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -51,7 +51,7 @@ Devise.setup do |config|
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
-  config.stretches = 10
+  config.stretches = 20
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "30ac9b86edc6c0a0b5a00dff5ca4fefd5ac6d33a2f9f3e6ee6643fbdaf08b2a01bfa1b5141a44ebc719f17ee8080888b9f959bd4d489d1cea68028253916e499"
@@ -137,7 +137,7 @@ Devise.setup do |config|
   # :authlogic_sha512 (then you should set stretches above to 20 for default behavior)
   # and :restful_authentication_sha1 (then you should set stretches to 10, and copy
   # REST_AUTH_SITE_KEY to pepper)
-  # config.encryptor = :sha512
+  config.encryptor = :authlogic_sha512
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
