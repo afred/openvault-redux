@@ -142,6 +142,7 @@
 
 .pagination {
   @include clearfix;
+  text-align: right;
 
   h2 {
     display: none;
@@ -149,6 +150,7 @@
 
   .page_links {
     text-align: right;
+    display: inline;
   }
 
   .previous_page {
