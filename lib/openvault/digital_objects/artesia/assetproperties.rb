@@ -81,6 +81,8 @@ module Openvault::DigitalObjects::Artesia
          end
        end
 
+       sleep(5)
+
        repository.find_by_sparql("SELECT ?pid FROM <#ri> WHERE {
          ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <#{self.uri}> .
                                  
@@ -92,6 +94,7 @@ module Openvault::DigitalObjects::Artesia
          FILTER(!bound(?object)) }                        
        ").each do |obj|
          obj.memberOfCollection << "info:fedora/wgbh:openvault"
+         sleep 1  
          obj.save
          Blacklight.solr.add obj.to_solr
        end
@@ -133,8 +136,16 @@ module Openvault::DigitalObjects::Artesia
          next link if predicate.blank?
 
          rev = { :subject => link[:object], :predicate => "info:wgbh/artesia:relations##{predicate}", :object => link[:subject] }
-         [link, rev]
-       end.flatten.uniq
+
+         relsext = case link[:predicate].split("#").last
+                   when "CHILD"
+                     { :subject => link[:subject], :predicate => "info:fedora/fedora-system:def/relations-external#isMemberOfCollection", :object => link[:object] }
+                   when "BELONGTO"
+                     { :subject => link[:subject], :predicate => "info:fedora/fedora-system:def/relations-external#isPartOf", :object => link[:object] }
+
+                   end
+         [link, rev, relsext]
+       end.flatten.compact.uniq
      end
   end
 end
