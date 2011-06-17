@@ -34,10 +34,25 @@ module Openvault::DigitalObjects::Artesia
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
          name = uois.xpath('//UOIS/@NAME').first.to_s
          files = []
-         files = Dir.glob("/Volumes/MLAMellonDigLib3/media/**/#{name}")
-         files += Dir.glob("/Volumes/MLAMellonDigLib3/media/**/#{File.basename(name, File.extname(name))}.*")
+         files = Dir.glob(File.join(Rails.root, "public", "media/**/#{name}"))
+         files += Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
          files.reject! { |x| x =~ /thumbnails\/.*\// }
          obj.add_media_datastreams!(files.uniq)
+       end.each do |obj|
+         uois = Nokogiri::XML(obj['UOIS_XML'].content)
+         name = uois.xpath('//UOIS/@NAME').first.to_s
+         files = Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
+         thumbnail = files.select { |x| x =~ /thumbnails\/.*\// }.sort_by { |x| x.length }.first
+
+         if thumbnail
+           ds = obj['Thumbnail']
+           ds.dsLocation = Openvault::Media.filename_to_url(thumbnail)
+           ds.mimeType = 'image/jpg'
+           ds.controlGroup = 'R'
+           ds.save
+         end
+
+
        end
 
        objects.each do |obj|
