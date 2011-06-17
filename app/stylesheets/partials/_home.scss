@@ -23,7 +23,7 @@
 
     .subtitle {
        @include replace-text-with-dimensions("wgbh_mla_flat.png");
-       margin-top: 18px;
+       margin-top: 10px;
     }
 
     .user_util_links {
