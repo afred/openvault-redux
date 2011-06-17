@@ -37,7 +37,7 @@ module ApplicationHelper
   def enforce_rights(doc, action_name)
     case action_name.to_s
     when /media/
-      raise Openvault::PermissionDenied if doc.get("pid_s") =~ /^cbs/ and current_user.nil?
+      raise Openvault::PermissionDenied if (doc.get("pid_s") =~ /^cbs/ or doc.get("pbcore_pbcorePublisher_distributor_s") =~ /cbs/i) and current_user.nil?
     end
   end
 
