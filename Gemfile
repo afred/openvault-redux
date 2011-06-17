@@ -5,7 +5,7 @@ gem 'rails', '3.0.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -16,6 +16,7 @@ gem 'sqlite3'
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 gem 'ruby-debug'
 # gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'exception_notification'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -37,13 +38,14 @@ group :development, :test do
   gem "aruba"
 end
 
-# gem "mysql2", "~> 0.2.0"
+gem "mysql2", "~> 0.2.0"
 gem "jammit"
 
 gem "blacklight", :path => "./blacklight"
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
 gem "blacklight_user_generated_content"
+gem "blacklight-sitemap"
 gem "compass"
 gem "nokogiri", "~>1.5.0.beta.3"
 gem "streamly"
@@ -71,6 +73,7 @@ gem "dynamic_form"
 gem "activeadmin"
 gem "retryable"
 gem "carmen"
+gem "trollop"
 
 gem 'rails-footnotes', '>= 3.7', :group => :development
 gem "rsolr-footnotes"
