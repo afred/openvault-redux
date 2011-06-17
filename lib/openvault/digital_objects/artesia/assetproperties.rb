@@ -92,8 +92,8 @@ module Openvault::DigitalObjects::Artesia
          FILTER(!bound(?object)) }                        
        ").each do |obj|
          obj.memberOfCollection << "info:fedora/wgbh:openvault"
-         Blacklight.solr.add obj.to_solr
          obj.save
+         Blacklight.solr.add obj.to_solr
        end
 
        Blacklight.solr.commit

@@ -39,13 +39,16 @@ module Openvault::DigitalObjects::Artesia
            dsid = mime.gsub('x-', '').split("/").map(&:parameterize).join(".")
            dsid.gsub!('video/', 'audio/') if f =~ /^audio/
            dsid.gsub!('jpeg', 'jpg')
+           dsid.gsub!('mpeg', 'mp3')
+           dsid.gsub!('application', 'text') if dsid =~ /xml/
            dsid.capitalize!
 
            if dsid =~ /xml/
-             root_name = Nokogiri::XML(f).root.name
+             root_name = Nokogiri::XML(open(f)).root.name
              root_name = 'newsml' if root_name =~ /news/
              dsid = dsid.split(".").insert(1, root_name.downcase).join(".")
            end
+           dsid.gsub!('Text', 'Transcript') if dsid =~ /xml$/ and (dsid =~ /tei/ or dsid =~ /newsml/)
              
            ds = self[dsid]
            #ds.file = open(f)
