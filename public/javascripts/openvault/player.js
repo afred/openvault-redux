@@ -17,10 +17,14 @@ $('#video-mp4,#audio-mp3,video,audio').each(function() {
 
   }
 
-  if($(this).prev('img').length > 0 && $(this).is('audio')) {
-    options['height'] = '28';
-    options['controlbar'] = 'bottom';
+  if($(this).is('audio')) {
+   options['provider'] = 'sound';
+    if($(this).prev('img').length > 0) {
+      options['height'] = '28';
+      options['controlbar'] = 'bottom';
+    }
   }
+
   jw = jwplayer($(this).attr('id')).setup(options);
 
   if(player == null) {
