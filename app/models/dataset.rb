@@ -15,7 +15,7 @@ class Dataset < ActiveRecord::Base
     obj.models << 'info:fedora/artesia:assetProperties'
     obj.save
 
-    Rubydora.repository.find(pid)
+    obj = Rubydora.repository.find(pid)
     
 
     obj.process!
