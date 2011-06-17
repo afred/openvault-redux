@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
           }));
         }
         catch(err) {
-          alert(err); 
+       //   alert(err); 
         }
         
         // Div initially hidden to show hover mouseover legend for
