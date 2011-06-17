@@ -5,7 +5,7 @@ class Dataset < ActiveRecord::Base
 
   def process!
     obj = Rubydora.repository.find(pid)
-    obj = Rubydora.repository.create(pid, { :label => dataset.metadata['description'], :logMessage => ""}) if obj.new?
+    obj = Rubydora.repository.create(pid, { :label => metadata['description'], :logMessage => ""}) if obj.new?
     ds = obj.datastreams['File']
     ds.content = %x[ tidy -xml -i -n #{attachment.path} ]
     ds.mimeType = 'text/xml'
