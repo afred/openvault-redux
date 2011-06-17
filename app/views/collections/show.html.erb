@@ -11,7 +11,7 @@
       <%= render_document_unapi_microformat @document %>
       <% post = Wordpress::Post.find(@document[:id]) %>
 
-      <%= image_tag post.images('full')['url'], :class => 'featured_image' %>
+      <%= image_tag post.images('full')['url'], :class => 'featured_image' rescue nil %>
       <div class="content">
       <%= raw(post.content) %>
     </div>
