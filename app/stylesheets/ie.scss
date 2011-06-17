@@ -34,3 +34,8 @@
   border-top: 1px solid #999;
   background-color: darken(#4282B2, 10%);
 }
+
+#document .secondary-datastream-container .sync {
+  *display: block;
+  *float: left;
+}

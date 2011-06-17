@@ -9,14 +9,15 @@ Template: twentyeleven
 @import url("../twentyeleven/style.css");
 
 html {
+  background-color: #4282B2;
 }
 
 body {
   font-weight: normal;
   padding: 0;
-  background-image: url('/images/bg-repeater.png?1307135441');
-  background-repeat: repeat-y;
-  background: url('/images/bg-header.jpg?1307135907') left top no-repeat, url('/images/bg-footer.jpg?1307135890') left bottom no-repeat, url('/images/bg-repeater.png?1307135441') left top repeat-y;
+  background-color: #4282B2;
+  background-image: url('/images/background.jpg?1308243933');
+  background-repeat: no-repeat;
   height: 100%;
 }
 input {
