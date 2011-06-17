@@ -3,3 +3,12 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-Agent: *
 # Disallow: /
+User-Agent: *
+Disallow: /catalog?*
+Disallow: /catalog/?*
+Disallow: /fedora/*/Proxy
+Disallow: /catalog/*/citation
+Disallow: /catalog?q=*&
+Allow: /catalog?q=*
+
+Sitemap: http://openvault.wgbh.org/sitemap.xml.gz
