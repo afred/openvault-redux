@@ -19,7 +19,7 @@ Openvault::Application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :info
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -35,7 +35,7 @@ Openvault::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
   # config.threadsafe!
@@ -46,4 +46,16 @@ Openvault::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  Paperclip.options[:command_path] = "/usr/local/bin/"
+
+config.action_mailer.default_url_options = { :host => "openvault.wgbh.org" }
+
+ # config.active_record.table_name_prefix = 'ov21_'
+config.middleware.use ExceptionNotifier,
+  :email_prefix => "[Exception] ",
+  :sender_address => %{"Exception Notifier" <openvault_tech@wgbh.org>},
+  :exception_recipients => %w{chris_beer@wgbh.org openvault_tech@wgbh.org}
 end
+
+GOOGLE_ANALYTICS_TRACKER_ID = "UA-237277-2"
