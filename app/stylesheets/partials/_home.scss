@@ -142,7 +142,7 @@
         margin-right: 2px;
         background-color: #5f8eb1;
 
-        &.active {
+        &:hover, &.active {
           background-color: #33ccff;
         }
       }
