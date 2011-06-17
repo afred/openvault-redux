@@ -58,7 +58,9 @@ module Openvault::Solr::Document::Thumbnail
       dst.unlink
 
       "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
-      rescue
+      rescue => e
+ 	Rails.logger.warn("#{e.backtrace}")
+	return "/images/1x1.gif"
         return "#{base_url}/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
         file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
         tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
