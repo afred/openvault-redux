@@ -1,0 +1,9 @@
+<% if flash_notice = flash.delete(:notice) %>
+  <div class="ui-state-highlight ui-corner-all notice"><%= flash_notice %></div>
+<% end %>
+<% if flash_alert = flash.delete(:alert) %>
+  <div class="ui-state-error ui-corner-all error"><%= flash_alert %></div>
+<% end %>
+<% if flash_error = flash.delete(:error) %>
+  <div class="ui-state-error ui-corner-all error"><%= flash_error %></div>
+<% end %>
