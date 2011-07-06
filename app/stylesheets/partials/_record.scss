@@ -404,12 +404,18 @@
     }
   }
 
+  .collection-links, .related-links {
+     li {
+       @include margin-trailer(0.3);
+     }
+  }
+
   .collection-links {
-    @include column(4);
+    @include column(6);
   }
 
   .related-links {
-    @include column(4, true);
+    @include column(6, true);
   }
 
   .funders {
