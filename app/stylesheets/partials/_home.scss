@@ -111,6 +111,7 @@
     position: relative;
     @include column(11);
     background-color: #fff;
+    min-height: 383px;
 
     img {
       width: 100%;
