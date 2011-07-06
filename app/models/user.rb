@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   acts_as_authorization_subject  :association_name => :roles
   acts_as_tagger
 
+  before_validation do
+    self.login = self.email
+  end
+
   def to_s
     email
   end
