@@ -5,7 +5,11 @@
 # Disallow: /
 User-Agent: *
 Disallow: /catalog?*
+Disallow: /collections?*
 Disallow: /catalog/?*
+Disallow: /catalog/*/comments
+Disallow: /catalog/facet/*
+Disallow: /catalog/range_limit?*
 Disallow: /fedora/*/Proxy
 Disallow: /catalog/*/citation
 Disallow: /catalog?q=*&
