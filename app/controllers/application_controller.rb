@@ -42,9 +42,9 @@ class ApplicationController < ActionController::Base
   #  and will not cause redirect loops.
   def stored_location_for *args
     referer = params[:referer] || request.referer
-    
+
     if referer && (referer =~ %r|^https?://#{request.host}#{root_path}| ||
-        referer =~ %r|^https?://#{request.host}:#{request.port}#{root_path}|)
+      referer =~ %r|^https?://#{request.host}:#{request.port}#{root_path}|)
       #self-referencing absolute url, make it relative
       referer.sub!(%r|^https?://#{request.host}(:#{request.port})?|, '')
     elsif referer && referer =~ %r|^(\w+:)?//|
@@ -55,6 +55,11 @@ class ApplicationController < ActionController::Base
       referer = nil
     elsif referer && referer[0,1] != '/'
       referer = nil
+    end
+
+    if referer and request.xhr?
+      referer += (referer =~ /\?/ ? "&" : "?")
+      referer += "no_layout=true" 
     end
       
     return referer || super(*args)
