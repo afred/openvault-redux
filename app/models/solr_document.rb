@@ -17,9 +17,12 @@ class SolrDocument
   # and Blacklight::Solr::Document#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension( Blacklight::Solr::Document::DublinCore)    
-  field_semantics.merge!(    
+  SolrDocument.field_semantics.merge!(    
                          :title => "title_display",
+			 :description => "dc_description_t",
                          :author => "dc_creator_s",
+	  		 :subject => "topic_cv",
+			 :type => "dc_Type_s",
                          :language => "language_facet",
                          :format => "format"
                         )
