@@ -13,6 +13,11 @@ class CatalogController < ApplicationController
 
   before_filter :handle_search_start_over, :only => :index
   before_filter :redirect_show_requests, :only => :index
+  before_filter :fix_capitalization, :only => :show
+
+  def fix_capitalization
+    params[:id] = params[:id].downcase if params[:id] =~ /Vietnam/
+  end
 
   after_filter :invalidate_cache, :only => :tag
 
