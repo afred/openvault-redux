@@ -90,7 +90,11 @@
                       },
                       error: function(xhr, msg) {
                                if(xhr.status == 401) {
-                        return self._loadUrl('/users/sign_in');       
+                        var redirect_url = '/users/sign_in';       
+                               if(actionUri == '/users/sign_in') {
+                                  redirect_url += "?error=1";
+                               }
+                        return self._loadUrl(redirect_url);
                                }
                         self._displayFailure(actionUri, xhr, msg); 
                       }

@@ -2,6 +2,8 @@
 <p>An Open Vault account is required to view select media and to add tags and annotations. Sign-up is quick and free.</p>
             <%= render :partial=>'/flash_msg' %>
 
+            <%= '<div class="ui-state-error ui-corner-all error">Invalid email or password.</div>'.html_safe if params[:error] %>
+
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <p><%= f.label :email %>
   <%= f.email_field :email %></p>
