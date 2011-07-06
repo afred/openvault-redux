@@ -1,5 +1,6 @@
 <h2>Log in</h2>
 <p>An Open Vault account is required to view select media and to add tags and annotations. Sign-up is quick and free.</p>
+            <%= render :partial=>'/flash_msg' %>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <p><%= f.label :email %>
