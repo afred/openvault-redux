@@ -15,6 +15,10 @@ Openvault::Application.routes.draw do
   match "collections/facet/:id", :to => 'collections#facet'
   resources :collections, :only => [:index, :show]
 
+  #match "catalog/org.wgbh.mla\:Vietnam" => redirect("/collections/vietnam-the-vietnam-collection")
+  match "radio" => redirect("/catalog?f%5Bri_collection_ancestors_s%5D%5B%5D=info:fedora/org.wgbh.mla:pledge")
+
+  match 'oai', :to => 'catalog#oai'
   # Catalog stuff.
   match 'catalog/range_limit', :as => "range_limit_catalog"
   match 'catalog/map', :as => "map_catalog"
@@ -28,7 +32,7 @@ Openvault::Application.routes.draw do
   match 'catalog/send_email_record', :as => "send_email_record_catalog"
   match "catalog/facet/:id", :to => 'catalog#facet', :as => 'catalog_facet'
   match 'catalog/unapi', :to => "catalog#unapi", :as => 'unapi'
-  resources :catalog, :only => [:index, :show, :update], :constraints => { :id => /([A-Za-z0-9]|:|-|\.)+([A-Za-z0-9]|:|-){4}/ } do
+  resources :catalog, :only => [:index, :show, :update], :constraints => { :id => /([A-Za-z0-9]|:|-|\.)*([A-Za-z0-9]|:|-){7}/ } do
     member do
       get 'cite'
       get 'print'
