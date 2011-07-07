@@ -17,6 +17,7 @@ Openvault::Application.routes.draw do
 
   #match "catalog/org.wgbh.mla\:Vietnam" => redirect("/collections/vietnam-the-vietnam-collection")
   match "radio" => redirect("/catalog?f%5Bri_collection_ancestors_s%5D%5B%5D=info:fedora/org.wgbh.mla:pledge")
+  match "user_util_links", :to => 'utility#user_util_links'
 
   match 'oai', :to => 'catalog#oai'
   # Catalog stuff.
