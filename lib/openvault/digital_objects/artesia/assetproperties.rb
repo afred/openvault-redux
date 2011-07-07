@@ -37,6 +37,7 @@ module Openvault::DigitalObjects::Artesia
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{name}"))
          files += Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
          files.reject! { |x| x =~ /thumbnails\/.*\// }
+         files.reject! { |x| x =~ /audio/ and x =~ /flv/ }
          obj.add_media_datastreams!(files.uniq)
        end.each do |obj|
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
