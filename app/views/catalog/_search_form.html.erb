@@ -22,7 +22,7 @@
     <%= form_tag catalog_index_path, :method => :get, :class => 'categories' do %>
       <%= select 'f', 'merlot_s', grouped_options_for_select({"Categories" => top_level_categories.items.map { |x| x.value.gsub('1/', '') } }), { :prompt => "Categories" }, :name => 'f[merlot_s][]' %>
       <%= submit_tag 'Browse Category' %>
-    <% end %>
+    <% end if top_level_categories %>
   <% end %>
 
   <% cache("catalog_browse_collections") do %>
@@ -30,6 +30,6 @@
       <%= select "id", nil, grouped_options_for_select(collections_list.group_by { |x| x.get("dc_type_s") }.map { |key, values| [key.pluralize, values.map { |x| [x.get('title_display'), x.get('id')] }]}.sort_by { |x| x.first }), { :prompt => "Collections and Series" }  %>
       <%= submit_tag 'Browse collection'%>
     <% end %>
-  <% end %>
+  <% end if collections_list%>
 </div>
 </div>
