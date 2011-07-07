@@ -71,6 +71,8 @@ jQuery(function() {
    jQuery('#browse select').bind('change', function() {
      jQuery(this).closest('form').submit();
    });
+
+  jQuery('.user_util_links').load('/user_util_links');
 });
 </script>
 </head>
@@ -116,6 +118,8 @@ jQuery(function() {
 			?>
 				<?php get_search_form(); ?>
 			<?php endif; ?>
+
+			<div class="user_util_links"></div>
 
 			<nav id="access" role="navigation">
 				<h1 class="section-heading"><?php _e( 'Main menu', 'twentyeleven' ); ?></h1>
