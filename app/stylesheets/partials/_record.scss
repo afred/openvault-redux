@@ -405,6 +405,9 @@
   }
 
   .collection-links, .related-links {
+     p {
+       @include margin-trailer(0.3);
+     }
      li {
        @include margin-trailer(0.3);
      }
