@@ -17,7 +17,7 @@ Feature: Search Filters
     And I fill in "q" with "bod"
     And I press "search"
     Then I should be on "the catalog page"
-    And I should see "No items found"
+    And I should see "We did not find any matches for this search."
     And I should not see "Filters applied"
   
   Scenario: Apply and remove filters
