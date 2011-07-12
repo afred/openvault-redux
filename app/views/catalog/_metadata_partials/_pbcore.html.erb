@@ -5,6 +5,32 @@ source_credits = ''
 %>
 <div class="pbcore-metadata">
 
+<div class="source">
+  <% unless  pbcore.titles.reject { |type, value| value == document.get(:title_display) }.empty? and pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.empty? %>
+  <h3 class="toggler">Source</h3>
+  <div>
+    <% pbcore.titles.reject { |type, value| value == document.get(:title_display) }.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+    <% end %>
+
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <div><strong><%= type %></strong> <%= value %></div>
+    <% end %>
+    <div class="source-credits">
+    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
+      <%= "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>".html_safe if value =~ /ABC/ %>
+      <%= "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>".html_safe if value =~ /CBS/ %>
+    <% end %>
+    </div>
+  </div>
+  <% end %>
+
+
+  <% unless pbcore.rights.empty? or pbcore.rights.first =~ /WGBH/ %>
+  <h3 class="toggler">Rights</h3>
+  <%= pbcore.rights.first %>
+<% end %>
+</div>   
 
 <% instantiations = pbcore.instantiation %>
 <% unless instantiations.blank? %>
@@ -32,32 +58,6 @@ source_credits = ''
 
 </div>
 <% end %>
-<div class="source">
-  <% unless  pbcore.titles.reject { |type, value| value == document.get(:title_display) }.empty? and pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.empty? %>
-  <h3 class="toggler">Source</h3>
-  <div>
-    <% pbcore.titles.reject { |type, value| value == document.get(:title_display) }.each do |type, value| %>
-      <div><strong><%= type %></strong> <%= value %></div>
-    <% end %>
-
-    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
-      <div><strong><%= type %></strong> <%= value %></div>
-    <% end %>
-    <div class="source-credits">
-    <% pbcore.publishers.reject{|type, value| value == 'WGBH Educational Foundation' }.each do |type, value| %>
-      <%= "Footage Courtesy of <a href=\"http://www.abcnewsvsource.com/\" rel=\"nofollow\">ABCNews</a>".html_safe if value =~ /ABC/ %>
-      <%= "Footage Courtesy of <a href=\"http://www.cbsnews.com/\" rel=\"nofollow\">CBS News</a>".html_safe if value =~ /CBS/ %>
-    <% end %>
-    </div>
-  </div>
-  <% end %>
-
-
-  <% unless pbcore.rights.empty? or pbcore.rights.first =~ /WGBH/ %>
-  <h3 class="toggler">Rights</h3>
-  <%= pbcore.rights.first %>
-<% end %>
-</div>   
 
 <div class="description">
 <% unless pbcore.descriptions.reject{|type, value| type == 'Abstract' or value == @document.get('dc_description_t') }.empty? %>
