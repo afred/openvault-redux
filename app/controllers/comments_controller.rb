@@ -63,7 +63,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to(@comment) }
+        format.html { redirect_to( catalog_comment_url(:catalog_id => @comment.commentable_id, :id => @comment.id, :no_layout => (1 if request.xhr?))) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
         format.html { render :action => "new" }
@@ -79,7 +79,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment }
+        format.html { redirect_to( catalog_comment_url(:catalog_id => @comment.commentable_id, :id => @comment.id, :no_layout => (1 if request.xhr?))) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -95,7 +95,7 @@ class CommentsController < ApplicationController
     @comment.destroy
     
     respond_to do |format|
-      format.html {  redirect_to @comment }
+      format.html { redirect_to( catalog_comments_url(:catalog_id => @comment.commentable_id,:no_layout => (1 if request.xhr?))) }
       format.xml  { head :ok }
     end
   end

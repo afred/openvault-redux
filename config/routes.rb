@@ -39,7 +39,7 @@ Openvault::Application.routes.draw do
       get 'print'
       get 'image'
     end
-    resources :comments
+    resources :comments, :constraints => { :id => /[0-9]+/ }
     resource :tags
   end
 
