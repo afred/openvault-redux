@@ -7,7 +7,7 @@ class Dataset < ActiveRecord::Base
     obj = Rubydora.repository.find(pid)
     obj = Rubydora.repository.create(pid, { :label => metadata['description'], :logMessage => ""}) if obj.new?
     ds = obj.datastreams['File']
-    ds.content = %x[ tidy -xml -i -n #{attachment.path} ]
+    ds.content = %x[ tidy -xml -i -utf8 #{attachment.path} ]
     ds.mimeType = 'text/xml'
 
     ds.save
