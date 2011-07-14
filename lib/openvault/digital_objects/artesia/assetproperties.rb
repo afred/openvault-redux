@@ -9,9 +9,15 @@ module Openvault::DigitalObjects::Artesia
      end
 
      def process!
+       uoi_ids = {}
        objects = assetProperties.xpath('//UOIS').map do |uois|
+         next if uoi_ids[uois['UOI_ID']]
+         next if uois.xpath('WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /Not to be released to Open Vault/i and not x =~ /text-only record/ }
+         uoi_ids[uois['UOI_ID']] = true
          Rubydora.repository.find("org.wgbh.mla:#{uois['UOI_ID']}").delete rescue nil
+
          obj = Rubydora.repository.create("org.wgbh.mla:#{uois['UOI_ID']}") 
+         print "Created: #{obj.pid} \n"
          
          obj.models << 'info:fedora/artesia:asset'
          obj.models << 'info:fedora/wgbh:CONCEPT'
@@ -24,14 +30,17 @@ module Openvault::DigitalObjects::Artesia
          ds.save
 
          Rubydora.repository.find(obj.pid)
-       end.each do |obj|
+       end.compact.each do |obj|
+         print "Adding Relationships: #{obj.pid}]n"
          assetProperties_links.select { |x| x[:subject] == obj.pid }.each do |link|
+           print "   ^-- -> #{link[:predicate]} -> #{link[:object] } "
            obj.add_relationship(link[:predicate], "info:fedora/#{link[:object]}")
          end
        end.each do |obj|
          obj.add_metadata_sdef_datastreams!
        end.each do |obj|
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
+         next if uois.xpath('//WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /text-only record/i }
          name = uois.xpath('//UOIS/@NAME').first.to_s
          files = []
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{name}"))
@@ -64,6 +73,7 @@ module Openvault::DigitalObjects::Artesia
                # Transcript
                object = Rubydora.repository.find(link[:object])
                dsid = object.datastreams.keys.select { |x| x =~ /\.xml$/ }.first
+               next unless dsid
                ds = obj[dsid]
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'text/xml'
@@ -73,6 +83,7 @@ module Openvault::DigitalObjects::Artesia
              when "PLACEDGR"                     
                object = Rubydora.repository.find(link[:object])
                dsid = object.datastreams.keys.select { |x| x =~ /^Image/ }.first
+               next unless dsid
                ds = obj['Thumbnail']
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'image/jpg'
