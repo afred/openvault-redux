@@ -54,7 +54,7 @@ class TagsController < ApplicationController
     @document.save
 
     respond_to do |format|
-      format.html { redirect_to new_catalog_tags_path(:catalog_id => @document.id) }
+      format.html { redirect_to new_catalog_tags_path(:catalog_id => @document.id, :no_layout => (1 if request.xhr?)) }
       format.json { render :json => @document.tag_list }
     end
   end

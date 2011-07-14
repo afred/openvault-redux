@@ -180,7 +180,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
 #ft {
   @include container;
   @include blueprint-typography-body;
-  font-size: 10px;
+  font-size: 11px;
 
   .menu {
     @include column($blueprint-grid-columns);

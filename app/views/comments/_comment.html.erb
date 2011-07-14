@@ -11,7 +11,7 @@
 <% if current_user and comment.user == current_user %>
 <div>
 <%= link_to 'Edit', edit_comment_path(comment) %>
-<%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %>
+<%# link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %>
      </div>
    </li>
  <% end %>

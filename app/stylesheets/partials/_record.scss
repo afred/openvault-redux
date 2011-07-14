@@ -240,10 +240,15 @@
      @include padding-trailer(2);
      background-color: #ddd;
 
-     .instantiation, .source, .description, .date, .place, .people {
+     .instantiation, .source, .date, .place, .people {
        @include column(6);
        @include margin-trailer(1.5);
      }
+
+    .description {
+      clear: left;
+      @include column(12);
+    }
 
      h3, strong {
        @include margin-leader(1);
@@ -260,6 +265,7 @@
       }
     }
 
+
     .pbcore-description-block {
        @include margin-trailer(1);
     }
@@ -268,7 +274,7 @@
        clear: left;
     }
 
-    .description, .people {
+    .people {
        @include column(6, true);
     }
   }

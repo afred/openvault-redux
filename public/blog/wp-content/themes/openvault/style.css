@@ -19,6 +19,7 @@ body {
   background-image: url('/images/background.jpg?1308243933');
   background-repeat: no-repeat;
   height: 100%;
+  min-width: 997px;
 }
 input {
   line-height: 1.25em;
@@ -56,6 +57,7 @@ margin: 0;
 #page {
 width: auto;
 max-width: inherit;
+  min-width: 991px;
 margin: 0;
   line-height: 1.5;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -210,6 +212,20 @@ border: 1px solid #CCC;
 #colophon .widget_nav_menu ul, #colophon .widget_nav_menu li {
    list-style: none;
   display: inline-block;
+}
+
+
+.wp-caption {
+  background: transparent;
+}
+
+.wp-caption .wp-caption-text {
+  padding: 10px 0 5px 10px;
+}
+
+.wp-caption-text:before {
+  content: "";
+  display: none;
 }
 
 /* line 142, ../../../app/stylesheets/screen.scss */
@@ -387,7 +403,7 @@ height: 32px;
   border: none;
 padding: 0;
   background: none;
-  font-size: 10px;
+  font-size: 11px;
  -moz-box-shadow: none;
  -webkit-box-shadow: none;
  -o-box-shadow: none;
@@ -465,7 +481,7 @@ font-weight: normal;
 #colophon .menu ul, #colophon .menu li {
   list-style: none;
   display: inline-block;
-font-size: 10px;
+font-size: 11px;
 }
 /* line 194, ../../../app/stylesheets/screen.scss */
 #colophon .menu li {
