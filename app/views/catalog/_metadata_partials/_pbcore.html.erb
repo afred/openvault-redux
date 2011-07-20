@@ -1,5 +1,5 @@
 <%
-require 'lib/openvault/pbcore'
+require 'openvault/pbcore'
 pbcore = Openvault::Pbcore::Document.new(@document.get('pbcore_s') || @document.fedora_object.datastream["PBCore"].content)
 source_credits = '' 
 %>

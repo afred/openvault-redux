@@ -14,8 +14,7 @@ gem 'rails', '3.0.7'
 # gem 'capistrano'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
+# gem 'ruby-debug19'
 gem 'exception_notification'
 
 # Bundle the extra gems:
@@ -63,12 +62,10 @@ gem "acts_as_commentable", :git => 'git://github.com/jackdempsey/acts_as_comment
 gem "acts_as_rateable"
 gem "progressbar"
 gem "parslet"
-gem "rubydora" 
-gem "soap4r"
+gem "rubydora" , "~>0.1.0"
 gem "devise"
 gem "paperclip"
 gem "rmagick"
-gem "ruby-debug"
 gem "render_inheritable"
 gem "data_migrate"
 gem "dynamic_form"

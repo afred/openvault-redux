@@ -51,4 +51,22 @@ class SolrDocument
     Blacklight.solr
   end
 
+  def get *args
+    force_to_utf8(super(*args))
+  end
+
+  private
+  def force_to_utf8(value)
+    case value
+    when Hash
+      value.each { |k, v| value[k] = force_to_utf8(v) }
+    when Array
+      value.each { |v| force_to_utf8(v) }
+    when String
+      value.force_encoding("utf-8")  if value.respond_to?(:force_encoding) 
+    end
+    value
+  end
+  
+
 end
