@@ -4,6 +4,12 @@
 class CatalogController < ApplicationController
   include Blacklight::SolrHelper
   include Blacklight::Catalog
+  include BlacklightOaiProvider::ControllerExtension
+
+  include BlacklightHighlight::ControllerExtension
+
+  include BlacklightMoreLikeThis::ControllerExtension
+
   include Openvault::SolrHelper::DefaultSort
   include Openvault::SolrHelper::BoostMedia
   include Openvault::SolrHelper::Restrictions

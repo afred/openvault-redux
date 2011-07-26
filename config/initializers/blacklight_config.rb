@@ -26,7 +26,13 @@ Blacklight.configure(:shared) do |config|
   config[:default_solr_params] = {
     :qt => "search",
     :per_page => 10,
-    "f.merlot_s.facet.sort" => "index"
+    "f.merlot_s.facet.sort" => "index",
+   'hl.fl' => ['fulltext_t', 'dc_description_t'],
+   'hl.mergeContiguous' => true,
+   'f.fulltext_t.hl.snippets' => 3,
+   'f.fulltext_t.hl.fragsize' => 300,
+   'f.dc_description_t.hl.alternateField' => 'dc_description_t',
+   'f.dc_description_t.hl.fragsize' => 50000
   }
   
   
@@ -248,18 +254,13 @@ Blacklight.configure(:shared) do |config|
     'oai_dc_xml' => { :content_type => 'text/xml' } 
   }
 
-  config[:mlt] = {
-    :fields => "title_t, dc_description_ts, pbcore_pbcoreTitle_ts, ri_collection_ancestors_s",
-    :qf => "title_ts^1000 ri_collection_ancestors_s^50",
-    :count => 3
+  config[:more_like_this] = {
+    'mlt.fl' => "title_t, dc_description_ts, pbcore_pbcoreTitle_ts, ri_collection_ancestors_s",
+    'mlt.qf' => "title_ts^1000 ri_collection_ancestors_s^50",
+    'mlt.count' => 3
   }
 
   config[:highlight] = {
-   'hl.fl' => ['fulltext_t', 'dc_description_t'],
-   'f.fulltext_t.hl.snippets' => 3,
-   'f.fulltext_t.hl.fragsize' => 300,
-   'f.dc_description_t.hl.alternateField' => 'dc_description_t',
-   'f.dc_description_t.hl.fragsize' => 50000
   }
 
   config[:oai] = {
