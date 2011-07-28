@@ -13,6 +13,7 @@ module Openvault::Solr::Document::Thumbnail
 
     def config
       { :style => {
+          :default => nil,
           :preview => "120x",
           :thumbnail => "54x42#",
           :feature => "380x",
@@ -21,65 +22,69 @@ module Openvault::Solr::Document::Thumbnail
       }
     end
 
-    def url(options= { :style => :default})
+    def original
       require 'open-uri'
+      thumbnail_url = @document.get('thumbnail_url_s') if @document.get('thumbnail_url_s')
+      thumbnail_url ||= @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Image.jpg"].url if @document.fedora_object.datastreams.keys.include? 'Image.jpg'
+      thumbnail_url ||= @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Thumbnail"].url if @document.fedora_object.datastreams.keys.include? 'Thumbnail'
+
+      filename = File.join(base_path, @document.id.parameterize, "default.jpg")
+      unless File.exists?(filename)
+        FileUtils.mkdir_p dir_path
+        File.open(filename, 'wb') { |f| f.write open(thumbnail_url).read } 
+        FileUtils.chmod 0644, filename
+      end
+
+      if File.new(filename).size == 0
+        FileUtils.rm filename 
+        return nil
+      end
+
+      filename
+    end
+
+    def path(options= { :style => :default})
       begin
-      if options[:style] == :default
-        return @document.get('thumbnail_url_s') if @document.get('thumbnail_url_s')
+        filename = File.join(base_path, @document.id.parameterize, "#{options[:style]}.jpg")
+        return filename if File.exists? filename
 
-        if @document.fedora_object.datastreams.keys.include? 'Image.jpg'
-          return @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Image.jpg"].url
+        style = config[:style][options[:style]]
+
+        FileUtils.mkdir_p dir_path
+
+        return File.join(Rails.root, 'public', 'images', '1x1.gif') unless original
+
+        if style
+          tn = Paperclip::Thumbnail.new File.open(original), { :geometry => style }
+
+          dst = tn.make
+          FileUtils.chmod 0644, dst.path
+          FileUtils.mv dst.path, filename
+          filename
+        else
+          original
         end
-
-        return @document.fedora_object.repository.client.url + "/" + @document.fedora_object.datastream["Thumbnail"].url
+      rescue
+        return File.join(Rails.root, 'public', 'images', '1x1.gif')
       end
+    end
 
-      return "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg" if File.exists? File.join(dir_path, "#{options[:style]}.jpg")
-
-      style = config[:style][options[:style]]
-      raise "#{options[:style]} is not in #{config[:style][:keys].join ","}" unless style
-
-      file = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
-
-
-      file.write open(url()).read
-      file.rewind
-
-      tn = Paperclip::Thumbnail.new file, { :geometry => style }
-
-      dst = tn.make
-      FileUtils.chmod 0644, dst.path
-
-
-      FileUtils.mkdir_p dir_path
-      FileUtils.mv dst.path, File.join(dir_path, "#{options[:style]}.jpg") 
-
-      file.unlink
-      dst.unlink
-
-      "#{base_url}/#{@document.get('pid_s').parameterize}/#{options[:style]}.jpg"
-      rescue => e
- 	Rails.logger.warn("#{e.backtrace}")
-	return "/images/1x1.gif"
-        return "#{base_url}/no-image-available-#{options[:style]}.jpg" if File.exists? File.join(Rails.root, "public", "system",  "thumbnails", "no-image-available-#{options[:style]}.jpg")
-        file = File.join Rails.root, "public", "images", 'no-image-available.jpg'
-        tn = Paperclip::Thumbnail.new open(file), { :geometry => style }
-        dst = tn.make
-        FileUtils.mv dst.path, File.join(base_path, "no-image-available-#{options[:style]}.jpg")
-        "#{base_url}/no-image-available-#{options[:style]}.jpg"
-      end
+    def url options = nil
+      path(options).gsub(File.join(Rails.root, 'public'), '')
     end
 
     protected
+
     def base_url
-      "/system/thumbnails"
+      '/system/thumbnails'
     end
+
     def base_path
        File.join(Rails.root, "public", "system",  "thumbnails")
     end
 
     def dir_path
-      File.join(base_path, @document.get('pid_s').parameterize)
+      File.join(base_path, @document.id.parameterize)
     end
   end
 end
