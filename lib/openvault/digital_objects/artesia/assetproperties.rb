@@ -8,19 +8,53 @@ module Openvault::DigitalObjects::Artesia
        doc['format'] = 'asset_properties'
      end
 
-     def process!
-       uoi_ids = {}
-       objects = assetProperties.xpath('//UOIS').map do |uois|
-         next if uoi_ids[uois['UOI_ID']]
-         next if uois.xpath('WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /Not to be released to Open Vault/i and not x =~ /text-only record/ }
-         uoi_ids[uois['UOI_ID']] = true
-         Rubydora.repository.find("org.wgbh.mla:#{uois['UOI_ID']}").delete rescue nil
+     def uoi_to_pid
+       @uoi_to_pid ||= {}
+     end
 
-         obj = Rubydora.repository.create("org.wgbh.mla:#{uois['UOI_ID']}") 
-         print "Created: #{obj.pid} \n"
+     def process!
+       objects = assetProperties.xpath('//UOIS').map do |uois|
+         next if uoi_to_pid[uois['UOI_ID']]
+         uoi_to_pid[uois['UOI_ID']] = "org.wgbh.mla:#{uois['UOI_ID']}"
+
+         if uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first
+           uoi_to_pid[uois['UOI_ID']] = "org.wgbh.mla:#{uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first.to_s.parameterize}"
+         elsif
+           if uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first and not uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s =~ /wgbh/i
+           uoi_to_pid[uois['UOI_ID']] = "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first 
+           uoi_to_pid[uois['UOI_ID']] = "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first 
+           end
+         end
+
+
+
+         pid = uoi_to_pid[uois['UOI_ID']]
+         print "#{pid}\n"
+
+         response = Blacklight.solr.find :q => "{!raw f=dc_identifier_s}#{uois['UOI_ID']}"
+         response.docs.each { |d| d.fedora_object.delete rescue nil }
+         Blacklight.solr.delete_by_query("{!raw f=dc_identifier_s}#{uois['UOI_ID']}")
+
+         Rubydora.repository.find("org.wgbh.mla:#{uois['UOI_ID']}").delete rescue nil
+         Rubydora.repository.find(pid).delete rescue nil
+         [pid, uois]
+       end.map do |pid, uois|
+
+
+         next if uois.xpath('WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /Not to be released to Open Vault/i and not x =~ /text-only record/ }
+
+
+         obj = Rubydora.repository.create(pid) 
          
          obj.models << 'info:fedora/artesia:asset'
          obj.models << 'info:fedora/wgbh:CONCEPT'
+
+         case nola = uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first.to_s
+           when /\d\d/
+             obj.models << "info:fedora/wgbh:PROGRAM"
+           when /\w\w/
+             obj.models << "info:fedora/wgbh:SERIES"
+         end
 
          obj.member_of << self
 
@@ -31,9 +65,8 @@ module Openvault::DigitalObjects::Artesia
 
          Rubydora.repository.find(obj.pid)
        end.compact.each do |obj|
-         print "Adding Relationships: #{obj.pid}]n"
          assetProperties_links.select { |x| x[:subject] == obj.pid }.each do |link|
-           print "   ^-- -> #{link[:predicate]} -> #{link[:object] } "
+           print "#{obj.pid} -> #{link[:predicate]} - #{link[:object]}\n"
            obj.add_relationship(link[:predicate], "info:fedora/#{link[:object]}")
          end
        end.each do |obj|
@@ -45,24 +78,45 @@ module Openvault::DigitalObjects::Artesia
          files = []
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{name}"))
          files += Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
-         files.reject! { |x| x =~ /thumbnails\/.*\// }
+         files.reject! { |x| x =~ /thumbnails/ }
          files.reject! { |x| x =~ /audio/ and x =~ /flv/ }
+         print "#{obj.pid}: #{files.uniq.join(",")}\n"
          obj.add_media_datastreams!(files.uniq)
        end.each do |obj|
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
          name = uois.xpath('//UOIS/@NAME').first.to_s
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
-         thumbnail = files.select { |x| x =~ /thumbnails\/.*\// }.sort_by { |x| x.length }.first
+         thumbnail = files.select { |x| x =~ /thumbnails/ }.sort_by { |x| x.length }.first
 
          if thumbnail
+           print "#{obj.pid}[Thumbnail]: #{thumbnail}\n"
            ds = obj['Thumbnail']
            ds.dsLocation = Openvault::Media.filename_to_url(thumbnail)
            ds.mimeType = 'image/jpg'
            ds.controlGroup = 'R'
            ds.save
          end
+       end
 
+       sleep 5
 
+       print "info:fedora/wgbh:openvault:\n"
+       repository.find_by_sparql("SELECT ?pid FROM <#ri> WHERE {
+         ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <#{self.uri}> .
+                                 
+         OPTIONAL { 
+           { ?pid <info:wgbh/artesia:relations#ARTESIA.LINKTYPE.ISPLACEDGROF> ?object  } UNION 
+           { ?pid <info:wgbh/artesia:relations#BELONGTO> ?object . 
+             ?pid <info:fedora/fedora-system:def/view#disseminates> ?dsid .
+             ?dsid <info:fedora/fedora-system:def/view#disseminationType> <info:fedora/*/Transcript.tei.xml>
+           }
+         } .
+
+         FILTER(!bound(?object)) }                        
+       ").each do |obj|
+         print "#{obj.pid}\n"
+         obj.memberOfCollection << "info:fedora/wgbh:openvault"
+         obj.save
        end
 
        objects.each do |obj|
@@ -74,6 +128,7 @@ module Openvault::DigitalObjects::Artesia
                object = Rubydora.repository.find(link[:object])
                dsid = object.datastreams.keys.select { |x| x =~ /\.xml$/ }.first
                next unless dsid
+               print "#{obj.pid}[#{dsid}] = http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}\n"
                ds = obj[dsid]
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'text/xml'
@@ -82,8 +137,9 @@ module Openvault::DigitalObjects::Artesia
 
              when "PLACEDGR"                     
                object = Rubydora.repository.find(link[:object])
-               dsid = object.datastreams.keys.select { |x| x =~ /^Image/ }.first
+               dsid = object.datastreams.keys.select { |x| x =~ /Thumbnail/ or x =~ /^Image/ }.first
                next unless dsid
+               print "#{obj.pid}[Thumbnail] = http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}\n"
                ds = obj['Thumbnail']
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'image/jpg'
@@ -93,24 +149,37 @@ module Openvault::DigitalObjects::Artesia
          end
        end
 
-       sleep(5)
+       repository.sparql("SELECT ?tn ?pid FROM <#ri> WHERE {
+                            {
+                                    ?tn <info:wgbh/artesia:relations#ARTESIA.LINKTYPE.ISPLACEDGROF> ?pid
+                            } UNION {
+                                    ?pid <info:wgbh/artesia:relations#ARTESIA.LINKTYPE.PLACEDGR> ?tn
+
+                            } .
+                                    {
+                                    ?tn <info:fedora/fedora-system:def/relations-external#isMemberOf> <#{self.uri}> .
+                                    } UNION {
+                                    ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <#{self.uri}> .
+                                    }
+                                 }").map { |x| [x['pid'], x['tn']] }.uniq.each do |pid, tn_pid|
+         obj = Rubydora.repository.find(pid)
+         next if obj.datastreams.keys.include? 'Thumbnail'
+         tn = Rubydora.repository.find(tn_pid)
+         dsid = tn.datastreams.keys.select { |x| x =~ /Thumbnail/ or x =~ /^Image/ }.first
+         print "#{obj.pid}[Thumbnail] = http://local.fedora.server/fedora/get/#{tn.pid}/#{dsid}\n"
+
+         ds = obj['Thumbnail']
+         ds.dsLocation = "http://local.fedora.server/fedora/get/#{tn.pid}/#{dsid}"
+         ds.mimeType = 'image/jpg'
+         ds.controlGroup = 'E'
+         ds.save
+                                 end
 
        repository.find_by_sparql("SELECT ?pid FROM <#ri> WHERE {
          ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <#{self.uri}> .
-                                 
-         OPTIONAL { 
-           { ?pid <info:wgbh/artesia:relations#ARTESIA.LINKTYPE.ISPLACEDGROF> ?object  } UNION 
-           { ?pid <info:wgbh/artesia:relations#BELONGTO> ?object }
-         } .
-
-         FILTER(!bound(?object)) }                        
-       ").each do |obj|
-         obj.memberOfCollection << "info:fedora/wgbh:openvault"
-         sleep 1  
-         obj.save
+                         }").each do |obj|
          Blacklight.solr.add obj.to_solr
-       end
-
+                         end
        Blacklight.solr.commit
      end
 
@@ -130,8 +199,8 @@ module Openvault::DigitalObjects::Artesia
        
        @assetProperties_links ||= assetProperties(dsid).xpath('//LINK').map do |link|
          predicate = "info:wgbh/artesia:relations##{link['LINK_TYPE']}"
-         subject = "org.wgbh.mla:#{entities[link['SOURCE']]}"
-         object = "org.wgbh.mla:#{entities[link['DESTINATION']]}"
+         subject = "#{uoi_to_pid[entities[link['SOURCE']]]}"
+         object = "#{uoi_to_pid[entities[link['DESTINATION']]]}"
 
          { :subject => subject, :predicate => predicate, :object => object }
        end.map do |link|
