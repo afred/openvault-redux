@@ -86,6 +86,7 @@ class CatalogController < ApplicationController
 
     respond_to do |format|
       format.html {setup_next_and_previous_documents}
+      format.jpg { send_file @document.thumbnail.path(params), :type => 'image/jpeg', :disposition => 'inline' }
 
       # Add all dynamically added (such as by document extensions)
       # export formats.
