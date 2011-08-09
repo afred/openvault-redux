@@ -1,5 +1,11 @@
 class SolrDocument 
   include Blacklight::Solr::Document
+  SolrDocument.use_extension( BlacklightOaiProvider::SolrDocumentExtension )
+
+  include BlacklightHighlight::SolrDocumentExtension
+
+  include BlacklightMoreLikeThis::SolrDocumentExtension
+
   include BlacklightUserGeneratedContent::Document
   include BlacklightUserGeneratedContent::Commentable
   include BlacklightUserGeneratedContent::Taggable

@@ -1,4 +1,4 @@
 <div class="related-content">
 <h2>Related Content</h2>
-<%= render(:partial => 'blacklight_mlt/mlt', :collection => get_more_like_this.sort_by { |x| x.get('title_s') || '' }, :as => :document ) %>
+<%= render(:partial => 'blacklight_mlt/mlt', :collection => @document.more_like_this.sort_by { |x| x.get('title_s') || '' }, :as => :document ) %>
 </div>
