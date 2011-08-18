@@ -92,6 +92,7 @@ module Openvault::DigitalObjects::Artesia
        end.each do |obj|
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
          name = uois.xpath('//UOIS/@NAME').first.to_s
+         name = uois.xpath('//WGBH_SOURCE[@SOURCE_TYPE="Digital Video Essence URL"]/@SOURCE').first.to_s if name =~ /Complete Video/
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
          thumbnail = files.select { |x| x =~ /thumbnails/ }.sort_by { |x| x.length }.first
 
