@@ -19,7 +19,7 @@ Openvault::Application.routes.draw do
   match "radio" => redirect("/catalog?f%5Bri_collection_ancestors_s%5D%5B%5D=info:fedora/org.wgbh.mla:pledge")
   match "user_util_links", :to => 'utility#user_util_links'
 
-  match 'oai', :to => 'catalog#oai'
+  match 'oai', :to => 'catalog#oai', :as => 'oai_provider'
   # Catalog stuff.
   match 'catalog/range_limit', :as => "range_limit_catalog"
   match 'catalog/map', :as => "map_catalog"
