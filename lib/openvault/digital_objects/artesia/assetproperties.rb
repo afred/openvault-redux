@@ -15,21 +15,20 @@ module Openvault::DigitalObjects::Artesia
      def process!
        objects = assetProperties.xpath('//UOIS').map do |uois|
          next if uoi_to_pid[uois['UOI_ID']]
-         uoi_to_pid[uois['UOI_ID']] = "org.wgbh.mla:#{uois['UOI_ID']}"
+         
+         pid = nil
 
-         if uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first
-           uoi_to_pid[uois['UOI_ID']] = "org.wgbh.mla:#{uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first.to_s.parameterize}"
-         elsif
-           if uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first and not uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s =~ /wgbh/i
-           uoi_to_pid[uois['UOI_ID']] = "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first 
-           uoi_to_pid[uois['UOI_ID']] = "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first 
-           end
+         pid ||= "org.wgbh.mla:#{uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first.to_s.parameterize}" if uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first
+
+         if uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first and not uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s =~ /wgbh/i
+           pid ||= "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference ID"][not(@SOURCE_NOTE)]/@SOURCE').first 
+           pid ||= "#{uois.xpath('WGBH_RIGHTS[@RIGHTS_HOLDER]/@RIGHTS_HOLDER').first.to_s.parameterize}:#{uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first.to_s.parameterize}" if uois.xpath('WGBH_SOURCE[@SOURCE_TYPE="Source Reference"][not(@SOURCE_NOTE)]/@SOURCE').first 
          end
 
+         pid ||= "org.wgbh.mla:#{uois['UOI_ID']}"
 
-
-         pid = uoi_to_pid[uois['UOI_ID']]
-         print "#{pid}\n"
+         uoi_to_pid[uois['UOI_ID']] = pid
+         print "Deleting #{pid}\n"
 
          response = Blacklight.solr.find :q => "{!raw f=dc_identifier_s}#{uois['UOI_ID']}"
          response.docs.each { |d| d.fedora_object.delete rescue nil }
@@ -38,13 +37,20 @@ module Openvault::DigitalObjects::Artesia
          Rubydora.repository.find("org.wgbh.mla:#{uois['UOI_ID']}").delete rescue nil
          Rubydora.repository.find(pid).delete rescue nil
          [pid, uois]
+       end.compact.tap do |x|
+         h = {}
+         x.each { |pid, uois| h[pid] ||= 0; h[pid] += 1 }
+         x.each_with_index do |(pid, uois), i| 
+           x[i] = ["#{pid}-#{uois['UOI_ID'].slice(0,6)}", uois] if h[pid] > 1 and not uois.xpath('WGBH_IDENTIFIER[@NOLA_CODE]/@NOLA_CODE').first
+           uoi_to_pid[uois['UOI_ID']] = x[i].first
+           Rubydora.repository.find(x[i].first).delete rescue nil 
+         end
        end.map do |pid, uois|
-
-
+         print "Creating #{pid}\n"
          next if uois.xpath('WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /Not to be released to Open Vault/i and not x =~ /text-only record/ }
 
-
-         obj = Rubydora.repository.create(pid) 
+         obj = Rubydora.repository.find(pid) 
+         obj = Rubydora.repository.create(pid) if obj.new? 
          
          obj.models << 'info:fedora/artesia:asset'
          obj.models << 'info:fedora/wgbh:CONCEPT'
@@ -75,6 +81,7 @@ module Openvault::DigitalObjects::Artesia
          uois = Nokogiri::XML(obj['UOIS_XML'].content)
          next if uois.xpath('//WGBH_RIGHTS/@RIGHTS_NOTE').map { |x| x.to_s }.any? { |x| x =~ /text-only record/i }
          name = uois.xpath('//UOIS/@NAME').first.to_s
+         name = uois.xpath('//WGBH_SOURCE[@SOURCE_TYPE="Digital Video Essence URL"]/@SOURCE').first.to_s if name =~ /Complete Video/
          files = []
          files = Dir.glob(File.join(Rails.root, "public", "media/**/#{name}"))
          files += Dir.glob(File.join(Rails.root, "public", "media/**/#{File.basename(name, File.extname(name))}.*"))
