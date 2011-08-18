@@ -20,6 +20,13 @@ class CatalogController < ApplicationController
   before_filter :handle_search_start_over, :only => :index
   before_filter :redirect_show_requests, :only => :index
   before_filter :fix_capitalization, :only => :show
+  before_filter :fix_hashified_facets, :only => :index
+
+  def fix_hashified_facets
+    return unless params[:f]
+
+    params[:f].select { |k,v| v.is_a? Hash }.each { |k, v| params[:f][k] = params[:f][k].values }
+  end
 
   def fix_capitalization
     params[:id] = params[:id].downcase if params[:id] =~ /Vietnam/
