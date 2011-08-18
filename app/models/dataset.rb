@@ -7,7 +7,8 @@ class Dataset < ActiveRecord::Base
     obj = Rubydora.repository.find(pid)
     obj = Rubydora.repository.create(pid, { :label => metadata['description'], :logMessage => ""}) if obj.new?
     ds = obj.datastreams['File']
-    ds.content = %x[ tidy -xml -i -utf8 #{attachment.path} ]
+
+    ds.content = %x[ perl -p -e "s/&amp;#/\&#/g" #{attachment.path} | tidy -xml --input-encoding win1252 --output-encoding utf8 -i  ]
     ds.mimeType = 'text/xml'
 
     ds.save
@@ -35,5 +36,21 @@ class Dataset < ActiveRecord::Base
 
   def pid
     "teams-asset-file:#{name.parameterize}"
+  end
+
+  def collection= collection
+    Blacklight.solr.delete_by_query "{!raw f=ri_isMemberOf_s}info:fedora/#{self.pid}"
+
+
+    pids = Rubydora.repository.sparql("
+      SELECT ?pid FROM <#ri> WHERE {
+        ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/#{self.pid}> .
+        ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/wgbh:openvault>                              
+      }").map { |x| x['pid'] }.compact.map { |x| x.strip }
+
+    pids.each { |pid| Rubydora.repository.add_relationship :subject => pid, :predicate => "info:fedora/fedora-system:def/relations-external#isMemberOfCollection", :object => collection }
+
+    Blacklight.solr.add pids.map { |pid| Rubydora.repository.find(pid).to_solr }
+    Blacklight.solr.commit
   end
 end
