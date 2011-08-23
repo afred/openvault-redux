@@ -63,7 +63,6 @@ jQuery(document).ready(function($) {
         var plot;
         var config = $(container).closest('.facet_limit').data('plot-config') || {};
 
-        try {
           plot = $.plot($(container), [series_data],
               $.extend(true, config, { 
               yaxis: {  ticks: [], min: 0, autoscaleMargin: 0.1},
@@ -71,12 +70,21 @@ jQuery(document).ready(function($) {
             xaxis: { tickDecimals: 0 }, // force integer ticks
             series: { lines: { fill: true, steps: true }},
             grid: {clickable: true, hoverable: true, autoHighlight: false},
-            selection: {mode: "x"}
+            selection: {mode: "x"}, 
+            hooks: { draw: [function(plot, canvascontext) {
+        // initially entirely selected, to match slider
+        plot.setSelection( {xaxis: { from:min, to:max+0.9999}}  );
+        
+        // try to make slider width/orientation match chart's
+        var slider_container = $(container).closest(".limit_content").find(".profile .range");
+        slider_container.width(plot.width());
+        slider_container.css('margin-right', 'auto');
+        slider_container.css('margin-left', 'auto');   
+        // And set slider min/max to match charts, for sure
+        slider_container.slider("option", "min", min);
+        slider_container.slider("option", "max", max+1);        
+            }] }
           }));
-        }
-        catch(err) {
-          //alert(err); 
-        }
         
         // Div initially hidden to show hover mouseover legend for
         // each segment. 
@@ -119,17 +127,6 @@ jQuery(document).ready(function($) {
            plot.setSelection( normalized_selection(ui.values[0], Math.max(ui.values[0], ui.values[1]-1)), true);
         });
        
-        // initially entirely selected, to match slider
-        //plot.setSelection( {xaxis: { from:min, to:max+0.9999}}  );
-        
-        // try to make slider width/orientation match chart's
-        var slider_container = $(container).closest(".limit_content").find(".profile .range");
-        slider_container.width(plot.width());
-        slider_container.css('margin-right', 'auto');
-        slider_container.css('margin-left', 'auto');   
-        // And set slider min/max to match charts, for sure
-        slider_container.slider("option", "min", min);
-        slider_container.slider("option", "max", max+1);        
       }
     }
     
