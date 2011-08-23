@@ -1,6 +1,6 @@
 javascripts:
   openvault:
-    - public/javascripts/jquery.min.js
+    - public/javascripts/jquery-1.6.2.js
     - public/javascripts/jquery-ui-1.8.1.custom.min.js
     - public/javascripts/jquery.highlight.js
     - public/javascripts/jquery.scrollTo.js

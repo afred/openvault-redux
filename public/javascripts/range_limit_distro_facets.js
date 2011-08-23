@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
           }));
         }
         catch(err) {
-       //   alert(err); 
+          //alert(err); 
         }
         
         // Div initially hidden to show hover mouseover legend for
@@ -120,7 +120,7 @@ jQuery(document).ready(function($) {
         });
        
         // initially entirely selected, to match slider
-        plot.setSelection( {xaxis: { from:min, to:max+0.9999}}  );
+        //plot.setSelection( {xaxis: { from:min, to:max+0.9999}}  );
         
         // try to make slider width/orientation match chart's
         var slider_container = $(container).closest(".limit_content").find(".profile .range");
