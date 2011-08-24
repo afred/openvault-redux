@@ -1,5 +1,5 @@
 .blacklight-catalog-home {
-    @include padding-leader(2);
+    @include padding-leader(0);
   #hd, #bd, #mosaic {
   @include container;
   @include blueprint-typography-body;
@@ -10,6 +10,9 @@
 
 
   #hd {
+    padding-top: 29px;
+    background-image: image-url('OV_logo_shadow_home.png');
+    background-repeat: no-repeat;
 
     .site_title_container {
        @include column(5);
@@ -28,7 +31,7 @@
     }
 
     .user_util_links {
-      top: 10px;
+      top: 40px;
     }
   }
 
