@@ -47,7 +47,8 @@ html {
 
 body {	
   background-image: image-url("background.jpg");
-  background-color: #4282B2;
+  background-color: #3076aa;
+  background-position: center 0;
   min-width: 991px;
   background-repeat: no-repeat;
   height: 100%;
@@ -145,10 +146,10 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     top: 20px;
     font-size: 12.5px;
     text-align: right;
-    color: $link-visited-color;
+    color: #fff;
 
     a {
-      @include link-colors($link-visited-color, $link-hover-color, $link-active-color, $link-visited-color, $link-focus-color);
+      @include link-colors(#fff, #fff, #fff, #fff, #fff);
     }
     
     strong {
@@ -188,7 +189,7 @@ a.action, .tools a, .new_tag, .new_annotation, .sync {
     @include padding-trailer(0.5);
   
     a {
-      @include link-colors($footer-color, $footer-hover-color, $footer-active-color, $footer-visited-color, $footer-focus-color); 
+      @include link-colors(#fff, #fff, #fff, #fff, #fff);
     }
     margin: 0;
     
