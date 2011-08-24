@@ -35,9 +35,16 @@ $('#video-mp4,#audio-mp3,video,audio').each(function() {
 var start = 0;
 try {
   start = /t=(\d+)/.exec(location.hash).pop();
-  player.play().seek(start);
 }
 catch(err) {
 }
 
-
+if(start > 0) { 
+  player.onPlay(function() { 
+    if(start > 0) { 
+      player.seek(start) 
+      start = 0;
+    }
+  });
+player.play();
+}
