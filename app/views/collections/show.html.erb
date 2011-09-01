@@ -8,6 +8,7 @@
   
     <div class="document">
     <%= render_document_heading %>
+    <div class="tools"><%= render :partial => 'show_tools' %></div>
       <%= render_document_unapi_microformat @document %>
       <% post = Wordpress::Post.find(@document[:id]) %>
 
@@ -20,12 +21,12 @@
       <div class="collection-links">
       <%= raw(post.custom_fields['collection-links']) %>
       </div>
-      <div class="related-links">
-      <%= raw(post.custom_fields['related-links']) %>
-    </div>
       <hr />
       <div class="funders">
       <%= raw(post.custom_fields['funders']) %>
+    </div>
+      <div class="related-links">
+      <%= raw(post.custom_fields['related-links']) %>
     </div>
     </div>
   </div>

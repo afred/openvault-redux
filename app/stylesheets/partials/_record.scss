@@ -35,9 +35,23 @@
 
   div.tools {
     @include prepend(1.5);
-    @include column(2.5, true);
+    @include column(3.5, true);
     @include padding-leader(0.5);
   }
+
+  .addthis_toolbox {
+    display: inline-block;
+    margin-bottom: -5px;
+    min-width: 84px;
+  }
+
+  .at300bs {
+     display: none;
+   }
+
+   .addthis_toolbox .at300bs {
+     display: block;
+   }
 
   ul.tools {
     li {
@@ -356,14 +370,6 @@
   font-weight: bold;
 }
 
-.at300bs {
-  display: none !important;
-  background: none;
-  height: 0px;
-  width: 0px;
-  line-height: auto;
-}                                
-
 .blacklight-comments {
   .defList_container {
     @include column(14.5);
@@ -389,22 +395,23 @@
   }
 
   #document {
-    .document_heading {
-       @include column($document-grid-columns, true);
-    }
-
     hr { 
       @include margin-leader(1);
       @include margin-trailer(1);
     }
+
+    .document_heading {
+      padding-bottom: 0;
+    }
   }
 
   .featured_image {
-    float: left;
-    margin-right: 1em;
+    @include column(10);
   }
 
   .content {
+    @include column(8.5, true);
+    @include prepend(0.5);
     h1 {
       display: none;
     }
@@ -424,11 +431,16 @@
   }
 
   .related-links {
-    @include column(6, true);
+    @include column(8, true);
+    @include prepend(0.5);
   }
 
   .funders {
-    @include column($document-grid-columns, true);
+    @include column(10);
+
+    ul + h3, p + h3 {
+      margin-top: 1em;
+    }
   }
 }
 
