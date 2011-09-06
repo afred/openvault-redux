@@ -44,7 +44,7 @@ gem "blacklight"
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
 gem "blacklight_more_like_this"
-gem "blacklight_facet_extras", '0.0.1pre2'
+gem "blacklight_facet_extras", '0.0.1pre3'
 gem "blacklight_highlight"
 gem "blacklight_oai_provider"
 gem "blacklight_user_generated_content"
