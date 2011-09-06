@@ -73,6 +73,10 @@ module ApplicationHelper
     (link_to_unless(options[:suppress_link], item.value.html_safe, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select label") + "&nbsp;".html_safe + render_facet_count(item.hits)).html_safe
   end
 
+  def render_selected_facet_value(facet_solr_field, item)
+    link_to((render_facet_value(facet_solr_field, item, :suppress_link => true) + " " +  content_tag(:span, 'x', :class => 'remove')).html_safe, remove_facet_params(facet_solr_field, item.value, params), :class => "selected label")
+  end
+
   def render_index_field_value(args) 
     value = super(args)
 

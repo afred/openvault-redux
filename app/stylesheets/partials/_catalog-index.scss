@@ -336,6 +336,17 @@
       cursor: crosshair;
     }
   }
+
+  .selected {
+      @include link-colors(#333, $action-color, $action-color, #333, $action-color);
+      &:hover {
+      text-decoration: none;
+      }
+  }
+
+  .remove {
+     font-weight: bold;
+  }
 }
 
 ul.facet_extended_list { margin:0; clear: both; margin: 1.5em 0 1.5em 0;}
