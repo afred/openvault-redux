@@ -8,10 +8,11 @@
   
     <div class="document">
     <%= render_document_heading %>
+    <div class="tools"><%= render :partial => 'show_tools' %></div>
       <%= render_document_unapi_microformat @document %>
       <% post = Wordpress::Post.find(@document[:id]) %>
 
-      <%= image_tag post.images('full')['url'], :class => 'featured_image' rescue nil %>
+      <%= link_to(image_tag(post.images('full')['url'], :class => 'featured_image'), catalog_index_path(:f => { :ri_collection_ancestors_s => ["info:fedora/#{@document.get(:pid_s)}"] } )) rescue nil %>
       <div class="content">
       <%= raw(post.content) %>
     </div>
@@ -20,12 +21,12 @@
       <div class="collection-links">
       <%= raw(post.custom_fields['collection-links']) %>
       </div>
-      <div class="related-links">
-      <%= raw(post.custom_fields['related-links']) %>
-    </div>
       <hr />
       <div class="funders">
       <%= raw(post.custom_fields['funders']) %>
+    </div>
+      <div class="related-links">
+      <%= raw(post.custom_fields['related-links']) %>
     </div>
     </div>
   </div>

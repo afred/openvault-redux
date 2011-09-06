@@ -9,7 +9,7 @@ module Openvault::Solr::Document::Thumbnail
   end
 
   def export_as_jpg
-    open(thumbnail.url).read
+    open(thumbnail.url).read rescue nil
   end
 
   def export_as_jpg_with_redirect

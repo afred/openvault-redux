@@ -143,7 +143,7 @@ module Openvault::Solr::Document::Pbcore
   def setup_title_info
     text = self.get('title_display')
 
-    return nil if text.strip.blank?
+    return nil if text.try(:strip).blank?
     clean_end_punctuation(text.strip) + "."
 
   end

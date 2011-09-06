@@ -40,7 +40,7 @@ class CatalogController < ApplicationController
   after_filter :invalidate_cache, :only => :tag
 
   caches_action :show, :expires_in => 1.day, :if => proc { |c|
-    current_user.nil?
+    current_user.nil? 
   }
 
   caches_action :home, :expires_in => 1.hour, :if => proc { |c| current_user.nil? }
@@ -98,7 +98,7 @@ class CatalogController < ApplicationController
 
     respond_to do |format|
       format.html {setup_next_and_previous_documents}
-      format.jpg { send_file @document.thumbnail.path(params), :type => 'image/jpeg', :disposition => 'inline' }
+      format.jpg { send_data File.read(@document.thumbnail.path(params)), :type => 'image/jpeg', :disposition => 'inline' }
 
       # Add all dynamically added (such as by document extensions)
       # export formats.

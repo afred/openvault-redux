@@ -90,6 +90,7 @@ Blacklight.configure(:shared) do |config|
       "ri_collection_ancestors_s" => "Collection",
       "format" => "display partial",
       "timestamp_query" => "date indexed",
+      "uois_item_category_s" => "Format"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -255,9 +256,10 @@ Blacklight.configure(:shared) do |config|
   }
 
   config[:more_like_this] = {
-    'mlt.fl' => "title_t, dc_description_ts, pbcore_pbcoreTitle_ts, ri_collection_ancestors_s",
+    'mlt.fl' => "title_t, dc_description_ts, ri_collection_ancestors_s",
     'mlt.qf' => "title_ts^1000 ri_collection_ancestors_s^50",
-    'mlt.count' => 3
+    'mlt.count' => 3,
+    'mlt.maxqt' => 50
   }
 
   config[:highlight] = {
