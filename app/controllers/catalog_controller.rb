@@ -9,6 +9,11 @@ class CatalogController < ApplicationController
   include BlacklightHighlight::ControllerExtension
 
   include BlacklightMoreLikeThis::ControllerExtension
+  
+  include BlacklightFacetExtras::Query::ControllerExtension
+  include BlacklightFacetExtras::Tag::ControllerExtension
+  include BlacklightFacetExtras::Hierarchy::ControllerExtension
+  include BlacklightFacetExtras::Filter::ControllerExtension
 
   include Openvault::SolrHelper::DefaultSort
   include Openvault::SolrHelper::BoostMedia
