@@ -431,12 +431,11 @@
   }
 
   .related-links {
-    @include column(8, true);
-    @include prepend(0.5);
+	clear: left;
+	margin-bottom: 1.5em;
   }
 
   .funders {
-    @include column(10);
 
     ul + h3, p + h3 {
       margin-top: 1em;
