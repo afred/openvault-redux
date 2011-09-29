@@ -1,2 +1,2 @@
 require 'wordpress'
-Wordpress::Api.endpoint = "http://localhost/blog"
+Wordpress::Api.endpoint = "http://openvault.wgbh.org/blog"

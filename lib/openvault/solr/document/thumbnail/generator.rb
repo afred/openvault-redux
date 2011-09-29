@@ -52,7 +52,7 @@ module Openvault::Solr::Document::Thumbnail
 
         FileUtils.mkdir_p dir_path
 
-        return File.join(Rails.root, 'public', 'images', '1x1.gif') unless original
+        return File.join(Rails.root, 'app', 'assets', 'images', '1x1.gif') unless original
 
         if style
           tn = Paperclip::Thumbnail.new File.open(original), { :geometry => style }

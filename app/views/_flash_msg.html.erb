@@ -1,9 +1,9 @@
-<% if flash_notice = flash.delete(:notice) %>
-  <div class="ui-state-highlight ui-corner-all notice"><%= flash_notice %></div>
+<% if flash_notice = flash.delete(:notice) and not flash_notice.empty? %>
+  <div class="ui-state-highlight ui-corner-all notice"><%= raw flash_notice %></div>
 <% end %>
-<% if flash_alert = flash.delete(:alert) %>
-  <div class="ui-state-error ui-corner-all error"><%= flash_alert %></div>
+<% if flash_alert = flash.delete(:alert) and not flash_alert.empty?%>
+  <div class="ui-state-error ui-corner-all error"><%= raw flash_alert %></div>
 <% end %>
-<% if flash_error = flash.delete(:error) %>
-  <div class="ui-state-error ui-corner-all error"><%= flash_error %></div>
+<% if flash_error = flash.delete(:error) and not flash_error.empty? %>
+  <div class="ui-state-error ui-corner-all error"><%= raw flash_error %></div>
 <% end %>

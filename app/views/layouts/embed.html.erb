@@ -8,17 +8,11 @@
     
     <title><%= h(@page_title || application_name) %></title>
     <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
-    <%
-      stylesheet_links = []
-    stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
-    stylesheet_links << ["compiled/print", { :media => 'print' }]
-    stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
+    <%= stylesheet_link_tag    "embed", :media => 'all' %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "media" %>
 
-    javascript_includes = []
-    javascript_includes << ['jquery.min.js']
-  %>
-  <%= render_js_includes %>
-  <%= render_stylesheet_includes %>
+    <%= render_head_content %>
   </head>
     <body class="bp embed <%= render_body_class %>">
             <%= yield %>

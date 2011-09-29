@@ -1,8 +1,8 @@
 production:
-    url: http://127.0.0.1:8180/solr/development
+    url: http://localhost:8180/solr/production
 development:
-    url: http://127.0.0.1:8180/solr/development
+    url: http://openvault.wgbh.org/solr/production
 test: &TEST
-    url: http://127.0.0.1:8180/solr/development
+    url: http://localhost:8180/solr/production
 cucumber:
     <<: *TEST

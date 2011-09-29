@@ -5,12 +5,13 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
+  helper ApplicationHelper
+  helper :all
+
   protect_from_forgery
   def default_html_head
 
     stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
-    stylesheet_links << ["compiled/screen", { :media => 'screen, projection' }]
-    stylesheet_links << ["compiled/print", { :media => 'print' }]
 
     # js is included by jammit from config/assets.yml
     javascript_includes = []

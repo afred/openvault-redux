@@ -1,6 +1,13 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+//This is a manifest file that'll be compiled into including all the files listed below.
+// Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
+// be included in the compiled file accessible from http://example.com/assets/application.js
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
 //
+//= require jquery
+//= require jquery_ujs
+//= require_tree ./application
+//= require openvault/browse
 
 /* Blacklight default behavior is to collapse all facets; Open Vault facets are all open by default */ 
 Blacklight.do_facet_expand_contract_behavior.selector = '#facets h3';

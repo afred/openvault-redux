@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # Connects this user object to Blacklights Bookmarks and Folders. 
   include Blacklight::User
 
-  acts_as_authorization_subject  :association_name => :roles
+  acts_as_authorization_subject  :association_name => :roles, :join_table_name => 'roles_users'
   acts_as_tagger
 
   def login

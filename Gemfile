@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -37,26 +37,35 @@ group :development, :test do
   gem "aruba"
 end
 
-gem "mysql2", "~> 0.2.0"
-gem "jammit"
+gem "mysql2", "~> 0.3.2"
 
-gem "blacklight"
+# Rails 3.1 - Asset Pipeline
+gem 'json'
+gem 'sass-rails'
+gem 'coffee-script'
+gem 'uglifier'
+# Rails 3.1 - JavaScript
+gem 'jquery-rails'
+
+gem "blacklight", :path => '/Volumes/Scratch/blacklight'
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
-gem "blacklight_more_like_this"
-gem "blacklight_facet_extras", '0.0.1pre5'
-gem "blacklight_highlight"
+gem "blacklight_more_like_this", :path => '/Volumes/Scratch/blacklight_mlt'
+gem "blacklight_facet_extras", :path => '/Volumes/Scratch/blacklight_facet_extras'
+gem "blacklight_highlight", ">= 0.0.2"
 gem "blacklight_oai_provider"
-gem "blacklight_user_generated_content"
+gem "blacklight_user_generated_content", :path => '/Volumes/Scratch/blacklight_user_generated_content'
+gem "blacklight_oembed", :path => '/Volumes/Scratch/blacklight_oembed'
+gem "blacklight_unapi", ">= 0.0.2"
 gem "blacklight-sitemap"
 gem "rsolr", "1.0.1"
 gem "rsolr-ext", "1.0.1"
-gem "compass"
+gem "compass", "0.12.alpha.0"
 gem "nokogiri", "~>1.5.0"
 gem "streamly"
 gem "fastercsv"
 gem "rest-client"
-gem "acl9"
+gem "acl9", :git => 'https://github.com/be9/acl9.git'
 gem "cancan"
 gem "cql-ruby"
 gem "rubytree"
@@ -70,10 +79,11 @@ gem "rubydora" , "~>0.1.3"
 gem "devise"
 gem "paperclip"
 gem "rmagick"
-gem "render_inheritable"
-gem "data_migrate"
+# gem "render_inheritable"
+#gem "data_migrate"
 gem "dynamic_form"
 gem "activeadmin"
+gem "meta_search", :git => "git://github.com/ernie/meta_search.git"
 gem "retryable"
 gem "carmen"
 gem "trollop"
