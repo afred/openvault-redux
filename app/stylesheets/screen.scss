@@ -21,7 +21,10 @@ $document-grid-columns: 19.5;
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
 @import "blueprint/colors";
-$link-color: #0a9cd5;
+$link-color: #006699;
+$link-visited-color: #006699;
+$link-hover-color: #006699;
+$link-focus-color: #006699;
 $link-active-color: $link-hover-color;
 $dark-link-color: #006699;
 
