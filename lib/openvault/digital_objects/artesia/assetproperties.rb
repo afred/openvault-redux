@@ -138,6 +138,7 @@ module Openvault::DigitalObjects::Artesia
                next unless dsid
                print "#{obj.pid}[#{dsid}] = http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}\n"
                ds = obj[dsid]
+	       next unless ds.new?
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'text/xml'
                ds.controlGroup = 'E'
@@ -149,6 +150,7 @@ module Openvault::DigitalObjects::Artesia
                next unless dsid
                print "#{obj.pid}[Thumbnail] = http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}\n"
                ds = obj['Thumbnail']
+	       next unless ds.new?
                ds.dsLocation = "http://local.fedora.server/fedora/get/#{object.pid}/#{dsid}"
                ds.mimeType = 'image/jpg'
                ds.controlGroup = 'E'
