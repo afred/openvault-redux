@@ -62,7 +62,8 @@ jQuery(document).ready(function($) {
 
         var plot;
         var config = $(container).closest('.facet_limit').data('plot-config') || {};
-
+$(container).width('177px');
+$(container).height('160px');
           plot = $.plot($(container), [series_data],
               $.extend(true, config, { 
               yaxis: {  ticks: [], min: 0, autoscaleMargin: 0.1},
