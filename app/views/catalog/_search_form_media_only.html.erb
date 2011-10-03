@@ -1,0 +1,5 @@
+<%= form_tag catalog_index_path, :method => :get, :class => 'media_only' do %>
+  <%= check_box_tag 'media_only', true, !params[:media_only].blank? %> <%= label_tag 'media_only_true', 'Records with media only' %>
+    <%= search_as_hidden_fields(:omit_keys => [:qt, :page, :id, :media_only]) %>        
+    <%= submit_tag('Submit', :alt => "search", :class => 'submit') %>
+<% end %>

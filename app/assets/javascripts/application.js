@@ -33,6 +33,10 @@ $(function() {
   }
 });
   
+$(function() {
+  $('.media_only .submit').hide();
+  $('.media_only input:checkbox').change(function() { $(this).parent().submit() });
+});
 
 $(function() {
   $('.facet_limit').not(':has(h3)').hide();
