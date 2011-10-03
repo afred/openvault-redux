@@ -15,9 +15,10 @@ html {
 body {
   font-weight: normal;
   padding: 0;
-  background-color: #4282B2;
+  background-color: #3076AA;
   background-image: url('/images/background.jpg?1308243933');
   background-repeat: no-repeat;
+  background-position: center 0;
   height: 100%;
   min-width: 997px;
 }
@@ -239,23 +240,23 @@ border: 1px solid #CCC;
 }
 /* line 150, ../../../app/stylesheets/screen.scss */
 .user_util_links a, .user_util_links .ui-widget-content a, .ui-widget-content .user_util_links a {
-  color: #004c99;
+  color: #fff;
 }
 /* line 18, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 .user_util_links a:visited, .user_util_links .ui-widget-content a:visited, .ui-widget-content .user_util_links a:visited {
-  color: #004c99;
+  color: #fff;
 }
 /* line 21, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 .user_util_links a:focus, .user_util_links .ui-widget-content a:focus, .ui-widget-content .user_util_links a:focus {
-  color: #0099ff;
+  color: #fff;
 }
 /* line 24, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 .user_util_links a:hover, .user_util_links .ui-widget-content a:hover, .ui-widget-content .user_util_links a:hover {
-  color: #0099ff;
+  color: #fff;
 }
 /* line 27, ../../../../../../../../Users/chris_beer/.rvm/gems/ruby-1.8.7-p334@openvault/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 .user_util_links a:active, .user_util_links .ui-widget-content a:active, .ui-widget-content .user_util_links a:active {
-  color: #0099ff;
+  color: #fff;
 }
 /* line 154, ../../../app/stylesheets/screen.scss */
 .user_util_links strong {
