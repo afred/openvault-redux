@@ -58,7 +58,7 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
-                     "merlot_s",
+      "merlot_s",
       "keywords_cv",
       "person_cv",
       "place_cv",
