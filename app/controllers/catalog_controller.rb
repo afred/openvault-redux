@@ -155,12 +155,12 @@ class CatalogController < ApplicationController
     response, documents = get_solr_response_for_field_values("pid_short_s",params[:id])
     redirect_to url_for(:id => documents.first.id), :status=>301 and return if documents.length > 0
 
-    if RAILS_ENV == "development"
+    if Rails.env == "development"
       render # will give us the stack trace
     else
     #  flash[:notice] = "Sorry, you have requested a record that doesn't exist."
     #  redirect_to root_path, :status => 404
-      render(:file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => 404)
+      render(:file => "#{Rails.env}/public/404.html", :layout => false, :status => 404)
     end
     
   end
