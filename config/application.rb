@@ -42,5 +42,10 @@ module Openvault
     config.filter_parameters += [:password]
 
     config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10485760)
+
+    config.assets.enabled = true
+    config.sass.load_paths << "#{Gem.loaded_specs['compass'].full_gem_path}/frameworks/compass/stylesheets"
+    config.sass.load_paths << "#{Gem.loaded_specs['compass'].full_gem_path}/frameworks/blueprint/stylesheets"
+    
   end
 end

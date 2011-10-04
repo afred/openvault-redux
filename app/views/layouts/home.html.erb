@@ -9,13 +9,17 @@
     <title><%= h(@page_title || application_name) %></title>
     <link href="<%= opensearch_catalog_url(:format => 'xml') %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     
-    <%= include_javascripts :openvault %>
-    <%= include_javascripts :media %>
+    <%= stylesheet_link_tag    "screen", :media => 'all' %>
+    <%= stylesheet_link_tag    "print", :media => 'print' %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "media" %>
+
     <%= render_head_content %>
     <!--[if lt IE 9]><link rel="stylesheet" href="/stylesheets/compiled/ie.css" type="text/css" media="screen,projection" /><![endif]-->
     <!--[if lt IE 9]>
-    <%= include_javascripts :ie %>
+    <%= javascript_include_tag "ie", :media => 'all' %>
     <![endif]-->
+   
   </head>
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
     <body onload="$('input#q').focus();" class="<%= render_body_class %>">

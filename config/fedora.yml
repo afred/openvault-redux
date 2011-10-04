@@ -1,10 +1,14 @@
 production:
-    url: http://127.0.0.1:8180/fedora
+    url: http://localhost:8180/fedora
+    user: 'fedoraAdmin'
+    pass: 'fedora'
 development:
-    url: http://127.0.0.1:8180/fedora
+    url: http://openvault.wgbh.org/fedora
     user: 'fedoraAdmin'
     pass: 'fedora'
 test: &TEST
-    url: http://127.0.0.1:8180/fedora
+    url: http://localhost:8180/fedora
+    user: 'fedoraAdmin'
+    pass: 'fedora'
 cucumber:
     <<: *TEST

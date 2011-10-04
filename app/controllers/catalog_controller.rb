@@ -20,8 +20,6 @@ class CatalogController < ApplicationController
   include Openvault::SolrHelper::Restrictions
  # include Openvault::SolrHelper::FacetDomsearch
 
-  render_inheritable
-
   before_filter :handle_search_start_over, :only => :index
   before_filter :redirect_show_requests, :only => :index
   before_filter :fix_capitalization, :only => :show

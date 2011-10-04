@@ -110,18 +110,24 @@
 /* Search results header */
 
 .search-results-header {
-  @include column($document-grid-columns - 0.5);
+  @include column($document-grid-columns);
   @include padding-trailer(1);
   border-bottom: 1px solid #CCC;
 }
 
 .pageEntriesInfo {
-  @include column(5.5);
-  @include prepend(5);
+  @include column(5);
+  @include prepend(8.5);
 
   b { 
      font-weight: normal;
   }
+}
+
+.media_only {
+   @include column(6);
+  @include pull(9.75);
+    
 }
 
 #startOverLink {
@@ -130,7 +136,7 @@
 
 #sortAndPerPage {
   @include column(4);
-  @include pull(10.5);
+  @include pull(13.5);
 
   .sort {
     margin-top: -0.3em;
