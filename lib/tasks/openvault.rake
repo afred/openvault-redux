@@ -16,21 +16,28 @@ namespace :openvault do
 }
                                       FILTER (?object = <info:fedora/wgbh:openvault>) }"
 
-      pids =  Rubydora.repository.sparql(sparql) 
+    pids =  Rubydora.repository.sparql(sparql) 
 
     pbar = ProgressBar.new("indexing", pids.length)
 
-    Blacklight.solr.delete_by_query('*:*')
-    Blacklight.solr.commit
+#    Blacklight.solr.delete_by_query('*:*')
+#   Blacklight.solr.commit
 
     arr = []
 
     solrdocs = pids.each do |x| 
-      arr <<  Rubydora.repository.find(x['pid']).to_solr rescue nil
+      next if x['pid'] =~ /asset:/ or x['pid'] =~ /thumbnail:/
+	begin
+	print "#{x['pid']}\n"
+      arr <<  Rubydora.repository.find(x['pid']).to_solr 
+	rescue
+	  print "ERROR (#{x['pid']}) : " + $! + "\n" 
+	end
       pbar.inc
 
       if arr.length > 100 
         Blacklight.solr.add arr.compact
+      #  Blacklight.solr.commit
         arr = []
       end
     end
@@ -56,17 +63,26 @@ namespace :openvault do
     dsids = Rubydora.repository.sparql(sparql)
 
     pbar = ProgressBar.new("indexing", dsids.length)
-
+    i = 0
+      errors = 0
     mapping = dsids.map do |x|
-    begin
-      dsid = x['dsid'].gsub('info:fedora/', '')
-      headers = Streamly.head "http://localhost:8180/fedora/get/#{dsid}"
-      dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first.gsub('openvault.wgbh.org/media', 'openvault.wgbh.org:8080') 
-      pbar.inc
-      print [dsid, dsLocation].join("\t") + "\n"
-      [dsid, dsLocation]
-      rescue
-        nil
+      i += 1
+      sleep 1
+
+      begin
+        dsid = x['dsid'].gsub('info:fedora/', '')
+        headers = Streamly.head "http://localhost:8180/fedora/get/#{dsid}"
+        dsLocation = headers.scan(/Location: ([^\r]+)/).flatten.first.gsub('openvault.wgbh.org/media', 'openvault.wgbh.org:8080') 
+        pbar.inc
+        print [dsid, dsLocation].join("\t") + "\n"
+        [dsid, dsLocation]
+      rescue  
+	sleep 3
+	errors += 1
+	retry if errors < 2
+      errors = 0
+	print "ERROR: #{x}.inspect; #{$!.inspect}\n"
+	nil
       end
     end.compact
 

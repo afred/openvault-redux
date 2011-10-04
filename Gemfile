@@ -47,7 +47,7 @@ gem 'uglifier'
 # Rails 3.1 - JavaScript
 gem 'jquery-rails'
 
-gem "blacklight", :path => '/Volumes/Scratch/blacklight'
+gem "blacklight", :path => './blacklight'
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
 gem "blacklight_more_like_this", :path => '/Volumes/Scratch/blacklight_mlt'

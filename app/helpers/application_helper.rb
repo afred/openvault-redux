@@ -10,7 +10,7 @@ module ApplicationHelper
 
 
   def datastream_url datastream, options = {}
-    "#{Rubydora.repository.client.url}/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
+    "http://openvault.wgbh.org/fedora/get/#{datastream.digital_object.pid}/#{datastream.dsid}"
   end
 
   # Widon't 2.1 (the update based on Matthew Mullenweg's regular expression)
