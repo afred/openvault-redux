@@ -10,9 +10,11 @@ require 'blacklight-sitemap'
 Rake::BlacklightSitemapTask.new do |sm|
   # below are configuration options with their default values shown.
 
+  sm.resource_url = "http://openvault.wgbh.org"
+
   # FIXME: you'll definitely want to change the url value
   # sm.url = 'http://localhost:3000'
-  sm.url = "http://openvault.wgbh.org/catalog"
+  sm.public_url = "http://openvault.wgbh.org"
 
   # base filename given to generated sitemap files
   # sm.base_filename = 'blacklight'
