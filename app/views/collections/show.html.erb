@@ -19,14 +19,14 @@
 
       <hr />
       <div class="collection-links">
-      <%= raw(post.custom_fields['collection-links']) %>
+      <%= raw(post.custom_fields['collection-links'].first) %>
       </div>
       <hr />
       <div class="related-links">
-      <%= raw(post.custom_fields['related-links']) %>
+      <%= raw(post.custom_fields['related-links'].first) %>
     </div>
       <div class="funders">
-      <%= raw(post.custom_fields['funders']) %>
+      <%= raw(post.custom_fields['funders'].first) %>
     </div>
     </div>
   </div>
