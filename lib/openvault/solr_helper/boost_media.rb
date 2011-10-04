@@ -1,8 +1,7 @@
 module Openvault::SolrHelper
   module BoostMedia
     def self.included(some_class)
-      some_class.solr_search_params_logic << :apply_media_bq_params
-      some_class.solr_search_params_logic << :apply_media_only_restriction
+      some_class.solr_search_params_logic += [ :apply_media_bq_params, :apply_media_only_restriction]
     end
  
   def apply_media_bq_params solr_parameters, user_parameters

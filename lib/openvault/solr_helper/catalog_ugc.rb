@@ -1,6 +1,6 @@
 module Openvault::SolrHelper::CatalogUgc
     def self.included(some_class)
-      some_class.solr_search_params_logic << :restrict_to_records_with_comments
+      some_class.solr_search_params_logic += [ :restrict_to_records_with_comments]
     end
 
     def restrict_to_records_with_comments solr_parameters, user_parameters

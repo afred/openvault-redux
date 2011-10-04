@@ -1,7 +1,7 @@
 module Openvault::SolrHelper
   module DefaultSort
     def self.included(some_class)
-      some_class.solr_search_params_logic << :apply_default_sort_params
+      some_class.solr_search_params_logic += [ :apply_default_sort_params]
     end
  
   def apply_default_sort_params solr_parameters, user_parameters

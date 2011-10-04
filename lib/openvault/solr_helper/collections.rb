@@ -1,6 +1,6 @@
 module Openvault::SolrHelper::Collections
     def self.included(some_class)
-      some_class.solr_search_params_logic << :restrict_to_collections
+      some_class.solr_search_params_logic += [ :restrict_to_collections]
     end
 
     def restrict_to_collections solr_parameters, user_parameters

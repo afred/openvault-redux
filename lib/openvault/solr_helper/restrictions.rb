@@ -1,6 +1,6 @@
 module Openvault::SolrHelper::Restrictions
   def self.included(some_class)
-    some_class.solr_search_params_logic << :apply_authorization_params
+    some_class.solr_search_params_logic += [ :apply_authorization_params]
   end
 
   def apply_authorization_params solr_parameters, user_parameters
