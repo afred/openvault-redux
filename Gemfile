@@ -29,7 +29,7 @@ gem 'exception_notification'
 
 group :development, :test do
   gem "rspec"
-  gem "rspec-rails", "~>2.5.0"
+  gem "rspec-rails", "~>2.6.0"
   gem "cucumber-rails"
   gem "database_cleaner"
   gem "capybara"
@@ -44,18 +44,20 @@ gem 'json'
 gem 'sass-rails'
 gem 'coffee-script'
 gem 'uglifier'
+gem 'execjs'
+gem 'therubyracer'
 # Rails 3.1 - JavaScript
 gem 'jquery-rails'
 
 gem "blacklight", :path => './blacklight'
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
-gem "blacklight_more_like_this", :path => '/Volumes/Scratch/blacklight_mlt'
-gem "blacklight_facet_extras", :path => '/Volumes/Scratch/blacklight_facet_extras'
+gem "blacklight_more_like_this" #, :path => '/Volumes/Scratch/blacklight_mlt'
+gem "blacklight_facet_extras" #, :path => '/Volumes/Scratch/blacklight_facet_extras'
 gem "blacklight_highlight", ">= 0.0.2"
 gem "blacklight_oai_provider"
-gem "blacklight_user_generated_content", :path => '/Volumes/Scratch/blacklight_user_generated_content'
-gem "blacklight_oembed", :path => '/Volumes/Scratch/blacklight_oembed'
+gem "blacklight_user_generated_content", ">= 0.0.8" #, :path => '/Volumes/Scratch/blacklight_user_generated_content'
+gem "blacklight_oembed", :path => './blacklight_oembed'
 gem "blacklight_unapi", ">= 0.0.2"
 gem "blacklight-sitemap"
 gem "rsolr", "1.0.1"
