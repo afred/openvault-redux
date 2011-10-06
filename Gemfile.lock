@@ -116,7 +116,7 @@ GEM
       blacklight
       oai
       rails (~> 3.0)
-    blacklight_oembed (0.0.3)
+    blacklight_oembed (0.0.5)
       blacklight
       rails (~> 3.0)
     blacklight_range_limit (1.1.0)
@@ -363,7 +363,7 @@ DEPENDENCIES
   blacklight_highlight (>= 0.0.2)
   blacklight_more_like_this
   blacklight_oai_provider
-  blacklight_oembed
+  blacklight_oembed (>= 0.0.5)
   blacklight_range_limit
   blacklight_unapi (>= 0.0.2)
   blacklight_user_generated_content (>= 0.0.8)
