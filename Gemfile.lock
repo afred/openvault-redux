@@ -39,13 +39,6 @@ PATH
       rsolr-ext (~> 1.0)
       unicode
 
-PATH
-  remote: /Volumes/Scratch/blacklight_oembed
-  specs:
-    blacklight_oembed (0.0.1)
-      blacklight
-      rails (~> 3.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -122,6 +115,9 @@ GEM
     blacklight_oai_provider (0.0.1)
       blacklight
       oai
+      rails (~> 3.0)
+    blacklight_oembed (0.0.3)
+      blacklight
       rails (~> 3.0)
     blacklight_range_limit (1.1.0)
       blacklight
@@ -367,7 +363,7 @@ DEPENDENCIES
   blacklight_highlight (>= 0.0.2)
   blacklight_more_like_this
   blacklight_oai_provider
-  blacklight_oembed!
+  blacklight_oembed
   blacklight_range_limit
   blacklight_unapi (>= 0.0.2)
   blacklight_user_generated_content (>= 0.0.8)
