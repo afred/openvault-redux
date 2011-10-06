@@ -19,7 +19,7 @@ $blueprint-font-size: 11px;
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
 @import "blueprint/colors";
-@import "blueprint/buttons";
+//@import "blueprint/buttons";
 
 
 
@@ -140,7 +140,7 @@ body.bp a {
     border-width: 2px;
   }
  input[type="submit"] {
-   @include button-colors;
+  // @include button-colors;
    border: 1px solid #CCC;
    width: 24px;
    height: 27px;
