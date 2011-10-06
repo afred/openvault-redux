@@ -160,7 +160,7 @@ class CatalogController < ApplicationController
     else
     #  flash[:notice] = "Sorry, you have requested a record that doesn't exist."
     #  redirect_to root_path, :status => 404
-      render(:file => "#{Rails.env}/public/404.html", :layout => false, :status => 404)
+      render(:file => "#{Rails.root}/public/404.html", :layout => false, :status => 404)
     end
     
   end
