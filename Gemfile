@@ -57,7 +57,7 @@ gem "blacklight_facet_extras" #, :path => '/Volumes/Scratch/blacklight_facet_ext
 gem "blacklight_highlight", ">= 0.0.2"
 gem "blacklight_oai_provider"
 gem "blacklight_user_generated_content", ">= 0.0.8" #, :path => '/Volumes/Scratch/blacklight_user_generated_content'
-gem "blacklight_oembed", :path => './blacklight_oembed'
+gem "blacklight_oembed"
 gem "blacklight_unapi", ">= 0.0.2"
 gem "blacklight-sitemap"
 gem "rsolr", "1.0.1"
