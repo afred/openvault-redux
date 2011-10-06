@@ -38,7 +38,7 @@ Openvault::Application.routes.draw do
       get 'cite'
       get 'print'
       get 'image'
-      get 'embed', :as => 'embed_catalog'
+      get 'embed'
     end
     resources :comments, :constraints => { :id => /[0-9]+/ }
     resource :tags
