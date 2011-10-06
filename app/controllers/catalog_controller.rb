@@ -5,6 +5,7 @@ class CatalogController < ApplicationController
   include Blacklight::SolrHelper
   include Blacklight::Catalog
   include BlacklightOaiProvider::ControllerExtension
+  include BlacklightOembed::ControllerExtension
 
   include BlacklightHighlight::ControllerExtension
 
