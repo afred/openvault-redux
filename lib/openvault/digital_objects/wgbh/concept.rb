@@ -72,7 +72,7 @@ OPTIONAL {  ?collection3 <fedora-rels-ext:isMemberOfCollection> ?collection4 . }
 
        collection_prefix_s = doc['ri_collection_ancestors_s'].map { |x| collection_prefix_map[x] }.compact.first
 
-       doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s']}" unless doc['slug_s'].blank? 
+       doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s'].slice(0,100)}" unless doc['slug_s'].blank? 
        doc['id'] = "#{collection_prefix_s}-#{doc['id']}" if collection_prefix_s
      end
 
