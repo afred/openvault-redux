@@ -42,6 +42,9 @@ class CatalogController < ApplicationController
     current_user.nil? 
   }
 
+  caches_action :embed, :expires_in => 1.day
+  caches_action :oembed, :expires_in => 1.day
+
   caches_action :home, :expires_in => 1.hour, :if => proc { |c| current_user.nil? }
 
   def redirect_show_requests
