@@ -11,13 +11,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   def default_html_head
 
-    stylesheet_links << ['jquery/ui-lightness/jquery-ui-1.8.1.custom.css',  {:plugin=>:blacklight, :media=>'all'}]
-
-    # js is included by jammit from config/assets.yml
+    # handled by the asset pipeline
+    stylesheet_links = []
     javascript_includes = []
-    # javascript_includes << ['jquery.min.js','jquery-ui-1.8.1.custom.min.js', 'rails.js', 'jquery.uiext.ajaxydialog.js']
-    # javascript_includes << [ 'blacklight' ]
-    # javascript_includes << ["jquery.highlight.js", "jquery.scrollTo.js", "swfobject.js", "jwplayer.js", "application"]
     
     extra_head_content << ('<!--[if IE]>' + view_context.javascript_include_tag("flot/excanvas.min.js") + '<![endif]-->').html_safe  
 
