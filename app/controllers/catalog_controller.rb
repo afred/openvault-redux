@@ -130,6 +130,8 @@ class CatalogController < ApplicationController
 
   def embed
     @response, @document = get_solr_response_for_doc_id    
+    @width = params[:width].try(:to_i) || 640
+    @height = params[:height].try(:to_i) || (3 * @width / 4)
     respond_to do |format|
       format.html {render :layout => 'embed' }
       
