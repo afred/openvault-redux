@@ -19,4 +19,8 @@ class Comment < ActiveRecord::Base
     self.commentable.save
   end
 
+  def commentable
+    SolrDocument.new(:id => self.commentable_id)
+  end
+
 end
