@@ -3,8 +3,9 @@ module Openvault::Solr::Document::Pbcore
     document.will_export_as(:pbcore, "text/xml+pbcore")
     document.will_export_as(:openurl_ctx_kev, "application/x-openurl-ctx-kev")
   end
+
   def to_pbcore
-    self.fedora_object.datastream["PBCore"].content.gsub('<?xml version="1.0" encoding="UTF-8"?>', '')
+    pbcore.gsub('<?xml version="1.0" encoding="UTF-8"?>', '')
   end
   def export_as_pbcore
     self.to_pbcore
@@ -173,6 +174,11 @@ module Openvault::Solr::Document::Pbcore
 
   def name_reverse(name)
     name
+  end
+
+  private
+  def pbcore
+    self.fedora_object.datastream["PBCore"].content || ""
   end
   
 end
