@@ -61,6 +61,10 @@ class SolrDocument
     force_to_utf8(super(*args))
   end
 
+  def updated_at
+    Time.try(:parse, get(:timestamp)) || Time.now
+  end
+
   private
   def force_to_utf8(value)
     case value

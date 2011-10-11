@@ -98,18 +98,19 @@ class CatalogController < ApplicationController
 
     redirect_to(collection_url(params[:id])) and return if @document.get(:format) == 'collection' and params[:controller] == 'catalog'
 
-    respond_to do |format|
-      format.html {setup_next_and_previous_documents}
-      format.jpg { send_data File.read(@document.thumbnail.path(params)), :type => 'image/jpeg', :disposition => 'inline' }
+    if stale?(:last_modified => @document.updated_at)
+      respond_to do |format|
+        format.html {setup_next_and_previous_documents}
+        format.jpg { send_data File.read(@document.thumbnail.path(params)), :type => 'image/jpeg', :disposition => 'inline' }
 
-      # Add all dynamically added (such as by document extensions)
-      # export formats.
-      @document.export_formats.each_key do | format_name |
-        # It's important that the argument to send be a symbol;
-        # if it's a string, it makes Rails unhappy for unclear reasons. 
-        format.send(format_name.to_sym) { render :text => @document.export_as(format_name), :layout => false }
+        # Add all dynamically added (such as by document extensions)
+        # export formats.
+        @document.export_formats.each_key do | format_name |
+          # It's important that the argument to send be a symbol;
+          # if it's a string, it makes Rails unhappy for unclear reasons. 
+          format.send(format_name.to_sym) { render :text => @document.export_as(format_name), :layout => false }
+        end
       end
-        
     end
   end
 
@@ -118,7 +119,10 @@ class CatalogController < ApplicationController
     response, @document_list = get_solr_response_for_field_values("pid_s",pids, :rows => 90, :fl => 'id,pid_s,title_display')
     @sprite = Sprite.new(:home_mosaic, @document_list)
     @sprite.generate!
-    render :layout => 'home'
+
+    if stale?(:last_modified => Time.new.beginning_of_week, :etag => pids)
+      render :layout => 'home'
+    end
   end
 
   def print
