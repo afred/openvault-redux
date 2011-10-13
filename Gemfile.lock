@@ -30,7 +30,7 @@ GIT
 PATH
   remote: ./blacklight
   specs:
-    blacklight (3.2.0)
+    blacklight (3.1.1)
       kaminari
       marc (~> 0.4.3)
       nokogiri (~> 1.5)
