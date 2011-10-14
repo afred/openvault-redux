@@ -1,0 +1,31 @@
+<%- # local params:
+    # label 
+    # display_label
+    # options =>
+    #   :remove => url for a remove constraint link
+    #   :classes => array of classes to add to container span
+    options ||= {}
+    options[:escape_label] = true unless options.has_key?(:escape_label)
+    options[:escape_value] = true unless options.has_key?(:escape_value)
+-%>
+
+<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
+      <%- unless label.blank? -%>
+        <span class="filterName"><%= options[:escape_label] ? h(label) : raw(label) %></span> 
+      <%- end -%>
+      <%- unless display_label.blank? -%>
+      <%- unless options[:remove].blank? -%>
+        <% accessible_remove_label =               
+                if label.blank?
+                  "Remove constraint #{options[:escape_value] ? h(display_label) : display_label}"
+                else
+                  "Remove constraint #{options[:escape_value] ? h(label) : label}: #{options[:escape_value] ? h(display_label) : display_label}"
+                end              
+        %>                
+        <span class="filterValue"><%= link_to((options[:escape_value] ? display_label : display_label.html_safe), options[:remove], :title => accessible_remove_label) %></span>
+      <% else %>
+        <span class="filterValue"><%= options[:escape_value] ? h(display_label) : raw(display_label) %></span>
+
+      <%- end -%>
+      <%- end -%>
+</span>

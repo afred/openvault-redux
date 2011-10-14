@@ -53,7 +53,7 @@ gem "blacklight", :path => './blacklight'
 gem "blacklight_advanced_search"
 gem "blacklight_range_limit"
 gem "blacklight_more_like_this" #, :path => '/Volumes/Scratch/blacklight_mlt'
-gem "blacklight_facet_extras" #, :path => '/Volumes/Scratch/blacklight_facet_extras'
+gem "blacklight_facet_extras", ">= 0.0.2" #, :path => '/Volumes/Scratch/blacklight_facet_extras'
 gem "blacklight_highlight", ">= 0.0.2"
 gem "blacklight_oai_provider"
 gem "blacklight_user_generated_content", ">= 0.0.8" #, :path => '/Volumes/Scratch/blacklight_user_generated_content'
