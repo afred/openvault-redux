@@ -10,7 +10,7 @@ require 'blacklight-sitemap'
 Rake::BlacklightSitemapTask.new do |sm|
   # below are configuration options with their default values shown.
 
-  sm.resource_url = "http://openvault.wgbh.org"
+  sm.resource_url = "http://openvault.wgbh.org/catalog"
 
   # FIXME: you'll definitely want to change the url value
   # sm.url = 'http://localhost:3000'

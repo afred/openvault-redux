@@ -98,7 +98,7 @@ class CatalogController < ApplicationController
 
     redirect_to(collection_url(params[:id])) and return if @document.get(:format) == 'collection' and params[:controller] == 'catalog'
 
-    if stale?(:last_modified => @document.updated_at)
+    if current_user or stale?(:last_modified => @document.updated_at)
       respond_to do |format|
         format.html {setup_next_and_previous_documents}
         format.jpg { send_data File.read(@document.thumbnail.path(params)), :type => 'image/jpeg', :disposition => 'inline' }
@@ -116,11 +116,11 @@ class CatalogController < ApplicationController
 
   def home
     pids = open(File.join(Rails.root, 'config', 'home.csv')).read.split(",").map(&:strip)
-    response, @document_list = get_solr_response_for_field_values("pid_s",pids, :rows => 90, :fl => 'id,pid_s,title_display')
+    response, @document_list = get_solr_response_for_field_values("pid_s",pids, :rows => 90, :fl => 'id,pid_s,title_display', :sort => 'random_1234 desc')
     @sprite = Sprite.new(:home_mosaic, @document_list)
     @sprite.generate!
 
-    if stale?(:last_modified => Time.new.beginning_of_week, :etag => pids)
+    if current_user or stale?(:last_modified => Time.new.beginning_of_week, :etag => pids)
       render :layout => 'home'
     end
   end
