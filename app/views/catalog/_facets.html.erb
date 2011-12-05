@@ -3,7 +3,7 @@
   <h2>Filter Results</h2>
   <% facet_field_names.each do |solr_fname| %>
 	  <div class="facet_limit blacklight-<%= solr_fname.parameterize %>">
-      <%= render_facet_limit(solr_fname) %>
+      <%= render_facet_limit(solr_fname).try(:force_encoding, "UTF-8") %>
     </div>
   <% end %>
 </div>
