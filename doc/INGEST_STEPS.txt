@@ -1,0 +1,34 @@
+Receive Artesia UOIS XML export and media-to-be-uploaded from the MLA deptfs folder OpenVault_Uploads
+
+Upload media files to splat:/wgbh/http/streaming/htdocs. Note the type-specific folders, e.g.:
+
+    ./audio
+    ./images
+    ./thumbnails
+    ./videos
+
+Ensure the media files are chmod 664 (or better). (n.b. Files scp'ed from the deptfs may be chmod 700)
+
+Upload the Artesia export to splat.
+
+In /wgbh/http/openvault/blacklight-app:
+
+Run the `rake openvault:ingest` to process the Artesia export into Open Vault-style Fedora objects (and index the objects into solr), e.g.:
+    
+    RAILS_ENV=production bundle exec rake openvault:ingest file=/home/cbeer/barcode24136_clip1.xml collection=org.wgbh.mla:ntw
+
+This will ingest all the objects from the file barcode24136_clip1.xml (except those with WGBH_RIGHTS statements that forbid uploading to Open Vault), and add the objects to the org.wgbh.mla:ntw collection.
+
+Related Files:
+./lib/tasks/openvault.rake
+./lib/openvault/digital_objects/artesia/assetproperties.rb
+
+Artesia objects will be assigned Fedora PIDs (based on existing unique identifiers: NOLA codes, source reference numbers, etc, or the Artesia UOI_ID), and will replace existing records on Open Vault with that shared PID (or, UOI_ID).
+
+
+After ingesting, we also need to update the media rewrite map, e.g.
+
+    RAILS_ENV=production bundle exec rake openvault:rewrite > fedora_data_rewrite_map.20120227.txt
+
+    /usr/sbin/httxt2dbm -i fedora_data_rewrite_map.20120227.txt -o fedora_data_rewrite_map.dbm
+
