@@ -5,12 +5,14 @@ module Openvault::DigitalObjects::Artesia
      end
 
      def add_metadata_sdef_datastreams!
+         Rails.logger.info "  Adding DublinCore sdef datastream"
          ds = self['DublinCore']
          ds.dsLocation = "http://local.fedora.server/fedora/get/#{self.pid}/sdef:METADATA/DublinCore"
          ds.mimeType = 'text/xml'
          ds.controlGroup = 'E'
          ds.save
      
+         Rails.logger.info "  Adding PBCore sdef datastream"
          ds = self['PBCore']
          ds.dsLocation = "http://local.fedora.server/fedora/get/#{self.pid}/sdef:METADATA/PBCore"
          ds.mimeType = 'text/xml'
@@ -49,6 +51,7 @@ module Openvault::DigitalObjects::Artesia
              dsid = dsid.split(".").insert(1, root_name.downcase).join(".")
            end
            dsid.gsub!('Text', 'Transcript') if dsid =~ /xml$/ and (dsid =~ /tei/ or dsid =~ /newsml/)
+           Rails.logger.info "  Adding #{f} as #{self.pid}/#{dsid} from #{Openvault::Media.filename_to_url(f)}"
              
            ds = self[dsid]
            #ds.file = open(f)
