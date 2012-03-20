@@ -118,7 +118,7 @@ class CatalogController < ApplicationController
     pids = open(File.join(Rails.root, 'config', 'home.csv')).read.split(",").map(&:strip)
     response, @document_list = get_solr_response_for_field_values("pid_s",pids, :rows => 90, :fl => 'id,pid_s,title_display', :sort => 'random_1234 desc')
     @sprite = Sprite.new(:home_mosaic, @document_list)
-    @sprite.generate!
+    @sprite.generate! true
 
     if current_user or stale?(:last_modified => Time.new.beginning_of_week, :etag => pids)
       render :layout => 'home'
