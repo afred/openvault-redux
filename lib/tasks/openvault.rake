@@ -31,10 +31,14 @@ namespace :openvault do
 	print "#{x['pid']}\n"
       arr <<  Rubydora.repository.find(x['pid']).to_solr 
 	rescue
-	  print "ERROR (#{x['pid']}) : " + $! + "\n" 
+	  print "ERROR (#{x['pid']}) : " + ($!).inspect + "\n" 
 	end
       pbar.inc
 
+      if (arr.length % 15) == 0
+        sleep 2
+      end
+ 
       if arr.length > 100 
         Blacklight.solr.add arr.compact
       #  Blacklight.solr.commit
@@ -94,10 +98,21 @@ namespace :openvault do
   desc "Ingest Artesia Asset Properties"
   task :ingest => :environment do
 
+    Rails.logger = Logger.new(STDOUT)
+    Rails.logger.level = 0
+
     ### Load the file
     file = ENV['file']
+
+    unless file
+      Rails.logger.warning "USAGE: rake openvault:ingest file=[file]"
+      exit
+    end
     cmodel = 'artesia:assetProperties'
     pid = "wgbh:#{File.basename(file, File.extname(file))}"
+
+    Rails.logger.info "(Re-)creating Fedora object #{pid}, with File datastream containing #{file}"
+    
     Rubydora.repository.find(pid).delete rescue nil
     obj = Rubydora::DigitalObject.create(pid)
 
@@ -105,11 +120,31 @@ namespace :openvault do
     obj.save
 
     ds = obj['File']
-    ds.file = open(file)
+    # ds.content = open(file)
+    ds.content = %x[ perl -p -e "s/&amp;#/\&#/g" #{file} | tidy -xml --input-encoding win1252 --output-encoding utf8 -i  ]
     ds.mimeType = 'text/xml'
     ds.save
 
     Rubydora.repository.find(obj.pid).process!
+
+
+    #exit
+    # TODO
+    if collection = ENV['collection']
+
+        Blacklight.solr.delete_by_query "{!raw f=ri_isMemberOf_s}info:fedora/#{obj.pid}"
+        pids = Rubydora.repository.sparql("
+      SELECT ?pid FROM <#ri> WHERE {
+        ?pid <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/#{obj.pid}> .
+        ?pid <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/wgbh:openvault>                              
+      }").map { |x| x['pid'] }.compact.map { |x| x.strip }
+
+    pids.each { |pid| Rubydora.repository.add_relationship :subject => pid, :predicate => "info:fedora/fedora-system:def/relations-external#isMemberOfCollection", :object => "info:fedora/#{collection}" }
+
+    Blacklight.solr.add pids.map { |pid| Rubydora.repository.find(pid).to_solr }
+    Blacklight.solr.commit
+    end
+ 
   end
 
   desc "Pre-render object thumbnails"
