@@ -270,7 +270,7 @@ Blacklight.configure(:shared) do |config|
      :repository_name => 'WGBH Open Vault',
      :repository_url => 'http://openvault.wgbh.org',
      :record_prefix => 'http://openvault.wgbh.org/catalog',
-     :admin_email => 'chris_beer@wgbh.org'
+     :admin_email => 'openvault_tech@wgbh.org'
   },
   :document => {
    :timestamp => 'timestamp'
