@@ -1,7 +1,7 @@
 <%= render :partial => 'organizations/header', :locals => { :organization => @dataset.organization } if @dataset.organization %>
 <h1 >Editing dataset</h1>
 
-<% semantic_form_for(@dataset, :html => { :multipart => true }) do |f| %>
+<%= semantic_form_for(@dataset, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 <%= f.hidden_field :organization_id, :value => @dataset.organization.id if @dataset.organization %>
 
