@@ -58,19 +58,9 @@ OPTIONAL {  ?collection3 <fedora-rels-ext:isMemberOfCollection> ?collection4 . }
        prefix = doc['pid_s'].split(':').last
        prefix = prefix.slice(-6, 6) if prefix.length > 10 
 
-       doc['pid_short_s'] = prefix.parameterize.gsub('_', '-').to_s 
+       doc['pid_short_s'] = prefix.parameterize.gsub('_', '').to_s 
 
-       collection_prefix_map = { 'info:fedora/org.wgbh.mla:vietnam' => 'vietnam',
-                                 'info:fedora/org.wgbh.mla:sbro' => 'sbro',
-                                 'info:fedora/org.wgbh.mla:ntw' => 'ntw',
-                                 'info:fedora/org.wgbh.mla:tocn' => 'tocn',
-                                 'info:fedora/org.wgbh.mla:pledge' => 'radio',
-                                 'info:fedora/org.wgbh.mla:wpna' => 'wpna',
-                                 'info:fedora/umb:collection-id-11' => 'sully',
-                                 'info:fedora/org.wgbh.mla:27afb5495dec3586bbcb00e19f6c2841745a248d' => 'march'
-       }
-
-       collection_prefix_s = doc['ri_collection_ancestors_s'].map { |x| collection_prefix_map[x] }.compact.first
+       collection_prefix_s = doc['ri_collection_ancestors_s'].map { |x| Blacklight.config[:collection_prefix_map][x] }.compact.first
 
        doc['id'] = "#{doc['pid_short_s']}-#{doc['slug_s'].slice(0,100)}" unless doc['slug_s'].blank? 
        doc['id'] = "#{collection_prefix_s}-#{doc['id']}" if collection_prefix_s
