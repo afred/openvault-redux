@@ -21,27 +21,10 @@ GIT
     acts-as-taggable-on (2.1.1)
       rails
 
-GIT
-  remote: https://github.com/be9/acl9.git
-  revision: b1876369c9188f59776b38b9c8377f25e4f5f666
-  specs:
-    acl9 (0.12.0)
-
-PATH
-  remote: ./blacklight
-  specs:
-    blacklight (3.1.1)
-      kaminari
-      marc (~> 0.4.3)
-      nokogiri (~> 1.5)
-      rails (~> 3.0)
-      rsolr (~> 1.0)
-      rsolr-ext (~> 1.0)
-      unicode
-
 GEM
   remote: http://rubygems.org/
   specs:
+    acl9 (0.12.0)
     actionmailer (3.1.0)
       actionpack (= 3.1.0)
       mail (~> 2.3.0)
@@ -93,6 +76,14 @@ GEM
     bcat (0.6.2)
       rack (~> 1.0)
     bcrypt-ruby (3.0.1)
+    blacklight (3.1.1)
+      kaminari
+      marc (~> 0.4.3)
+      nokogiri (~> 1.5)
+      rails (~> 3.0)
+      rsolr (~> 1.0)
+      rsolr-ext (~> 1.0)
+      unicode
     blacklight-sitemap (1.1.0)
       nokogiri
     blacklight_advanced_search (1.1.1)
@@ -209,7 +200,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    marc (0.4.3)
+    marc (0.4.4)
     mime-types (1.16)
     multi_json (1.0.3)
     mysql2 (0.3.7)
@@ -335,7 +326,7 @@ GEM
     uglifier (1.0.3)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    unicode (0.4.0)
+    unicode (0.4.4)
     warden (1.0.6)
       rack (>= 1.0)
     wasabi (2.0.0)
@@ -351,13 +342,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acl9!
+  acl9
   activeadmin
   acts-as-taggable-on!
   acts_as_commentable!
   acts_as_rateable
   aruba
-  blacklight!
+  blacklight
   blacklight-sitemap
   blacklight_advanced_search
   blacklight_facet_extras (>= 0.0.2)

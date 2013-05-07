@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+# gem 'rails', '3.1.0'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -49,17 +50,35 @@ gem 'therubyracer'
 # Rails 3.1 - JavaScript
 gem 'jquery-rails'
 
-# gem "blacklight", :path => './blacklight'
-gem "blacklight"
+gem "blacklight", "~> 3.5.0"
+
+# causes bundle update to fail
 gem "blacklight_advanced_search"
+
+# causes bundle update to fail
 gem "blacklight_range_limit"
+
+# causes bundle update to fail
 gem "blacklight_more_like_this" #, :path => '/Volumes/Scratch/blacklight_mlt'
+
+# causes bundle update to fail
 gem "blacklight_facet_extras", ">= 0.0.2" #, :path => '/Volumes/Scratch/blacklight_facet_extras'
+
+# causes bundle update to fail
 gem "blacklight_highlight", ">= 0.0.2"
+
+# causes bundle update to fail
 gem "blacklight_oai_provider"
+
+# causes bundle update to fail
 gem "blacklight_user_generated_content", ">= 0.0.8" #, :path => '/Volumes/Scratch/blacklight_user_generated_content'
+
+# causes bundle update to fail
 gem "blacklight_oembed", ">= 0.0.5"
+
+# causes bundle update to fail
 gem "blacklight_unapi", ">= 0.0.2"
+
 gem "blacklight-sitemap"
 gem "rsolr", "1.0.1"
 gem "rsolr-ext", "1.0.1"
@@ -68,7 +87,6 @@ gem "nokogiri", "~>1.5.0"
 gem "streamly"
 gem "fastercsv"
 gem "rest-client"
-#gem "acl9", :git => 'https://github.com/be9/acl9.git'
 gem "acl9"
 gem "cancan"
 gem "cql-ruby"
@@ -81,10 +99,11 @@ gem "progressbar"
 gem "parslet"
 gem "rubydora" , "~>0.1.3"
 gem "devise"
+gem "devise-encryptable"
 gem "paperclip"
 gem "rmagick"
-# gem "render_inheritable"
-#gem "data_migrate"
+gem "render_inheritable"
+# gem "data_migrate"
 gem "dynamic_form"
 gem "activeadmin"
 gem "meta_search", :git => "git://github.com/ernie/meta_search.git"

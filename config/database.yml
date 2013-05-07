@@ -3,7 +3,8 @@
 development:
   adapter: mysql2
   database: ov2
-  user: root
+  username: ov2
+  password: ov2
   pool: 5
   timeout: 5000
 
@@ -19,9 +20,9 @@ test: &test
 production:
   adapter: mysql2
   database: ov2
-  user: root
+  username: root
   pool: 5
   timeout: 5000
 
-cucumber:
-  <<: *test
+#cucumber:
+#  <<: *test
